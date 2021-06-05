@@ -1,0 +1,146 @@
+{
+  "news": {
+    "approval" : "Phê duyệt tin tức",
+    "title": "Quản lý tin tức",
+    "insert_btn": "Thêm mới tin tức",
+    "title_add": "Thêm mới tin tức",
+    "title_edit": "Sửa thông tin tin tức",
+    "title_delete": "Xác nhận xóa tin tức",
+    "title_highlights": "Xác nhận đặt thành tin tức nổi bật",
+    "title_offHighlights": "Xác nhận huỷ trạng thái tin tức nổi bật",
+    "unknown_error": "Lỗi không xác định",
+    "content_add_success": "Thêm tin tức thành công",
+    "content_edit_success": "Sửa thông tin thành công",
+    "delete_success": "Xóa tin tức thành công",
+    "highlights_success": "Đặt tin tức nổi bật thành công",
+    "offHighlights_success": "Huỷ trạng thái tin tức nổi bật thành công"
+  },
+  "order": {
+    "title": "Quản lý bán hàng",
+    "title_add": "Thêm mới phiếu bán hàng",
+    "title_edit": "Sửa thông tin phiếu bán hàng",
+    "title_delete": "Xác nhận xóa phiếu bán hàng",
+    "unknown_error": "Lỗi không xác định",
+    "content_edit_success": "Sửa thông tin thành công",
+    "delete_success": "Xóa phiếu bán hàng thành công"
+  },
+  "image": {
+    "title": "Quản lý hình ảnh",
+    "title_lock": "Xác nhận khoá hình ảnh",
+    "unknown_error": "Lỗi không xác định",
+    "content_add_success": "Upload hình ảnh thành công",
+    "lock_success": "Khoá tin tức thành công",
+    "title_delete": "Xác nhận xóa tin tức",
+    "delete_success": "Xóa tin tức thành công"
+  },
+  "category": {
+    "title": "Quản lý Chủ đề",
+    "title_add": "Thêm mới Chủ đề",
+    "title_edit": "Sửa Chủ đề",
+    "title_delete": "Xác nhận xóa Chủ đề",
+    "content_add_success": "Thêm Chủ đề thành công",
+    "content_edit_success": "Sửa Chủ đề thành công",
+    "message_delete": "Bạn có chắc muốn xóa Chủ đề",
+    "delete_success": "Xóa Chủ đề thành công",
+    "title_map_popup": "Chủ đề"
+  },
+  "knowledges": {
+    "title": "Quản lý điều trị và tri thức",
+    "title_add": "Thêm mới điều trị và tri thức",
+    "title_edit": "Sửa điều trị và tri thức",
+    "title_delete": "Xác nhận xóa điều trị và tri thức",
+    "content_add_success": "Thêm điều trị và tri thức thành công",
+    "content_edit_success": "Sửa điều trị và tri thức thành công",
+    "message_delete": "Bạn có chắc muốn xóa điều trị và tri thức",
+    "delete_success": "Xóa điều trị và tri thức thành công",
+    "title_map_popup": "điều trị và tri thức"
+  },
+  "type_disease": {
+    "title": "Quản lý bệnh",
+    "title_add": "Thêm mới bệnh",
+    "title_edit": "Sửa bệnh",
+    "title_delete": "Xác nhận xóa bệnh",
+    "content_add_success": "Thêm bệnh thành công",
+    "content_edit_success": "Sửa bệnh thành công",
+    "message_delete": "Bạn có chắc muốn xóa bệnh",
+    "delete_success": "Xóa bệnh thành công",
+    "title_map_popup": "bệnhề"
+  },
+  "general_signs": {
+    "title": "Quản lý dấu hiệu chung",
+    "title_add": "Thêm mới dấu hiệu chung",
+    "title_edit": "Sửa dấu hiệu chung",
+    "title_delete": "Xác nhận xóa dấu hiệu chung",
+    "content_add_success": "Thêm dấu hiệu chung thành công",
+    "content_edit_success": "Sửa dấu hiệu chung thành công",
+    "message_delete": "Bạn có chắc muốn xóa dấu hiệu chung",
+    "delete_success": "Xóa dấu hiệu chung thành công",
+    "title_map_popup": "bệnhề"
+  },
+  "stage": {
+    "title": "Quản lý bệnh theo giai đoạn",
+    "title_add": "Thêm mới bệnh theo giai đoạn",
+    "title_edit": "Sửa bệnh theo giai đoạn",
+    "title_delete": "Xác nhận xóa bệnh theo giai đoạn",
+    "content_add_success": "Thêm bệnh theo giai đoạn thành công",
+    "content_edit_success": "Sửa bệnh theo giai đoạn thành công",
+    "message_delete": "Bạn có chắc muốn xóa bệnh theo giai đoạn",
+    "delete_success": "Xóa bệnh theo giai đoạn thành công",
+    "title_map_popup": "bệnh theo giai đoạn"
+  },
+  "clinical": {
+    "title": "Quản lý bệnh lâm sàn",
+    "title_add": "Thêm mới bệnh lâm sàn",
+    "title_edit": "Sửa bệnh lâm sàn",
+    "title_delete": "Xác nhận xóa bệnh lâm sàn",
+    "content_add_success": "Thêm bệnh lâm sàn thành công",
+    "content_edit_success": "Sửa bệnh lâm sàn thành công",
+    "message_delete": "Bạn có chắc muốn xóa bệnh lâm sàn",
+    "delete_success": "Xóa bệnh lâm sàn thành công",
+    "title_map_popup": "bệnhề"
+  },
+  "subclinical": {
+    "title": "Quản lý bệnh cận lâm sàn",
+    "title_add": "Thêm mới bệnh cận lâm sàn",
+    "title_edit": "Sửa bệnh cận lâm sàn",
+    "title_delete": "Xác nhận xóa bệnh cận lâm sàn",
+    "content_add_success": "Thêm bệnh cận lâm sàn thành công",
+    "content_edit_success": "Sửa bệnh cận lâm sàn thành công",
+    "message_delete": "Bạn có chắc muốn xóa bệnh cận lâm sàn",
+    "delete_success": "Xóa bệnh cận lâm sàn thành công",
+    "title_map_popup": "bệnhề"
+  },
+  "test_disease": {
+    "title": "Quản lý xét nghiệm",
+    "title_add": "Thêm mới xét nghiệm",
+    "title_edit": "Sửa xét nghiệm",
+    "title_delete": "Xác nhận xóa xét nghiệm",
+    "content_add_success": "Thêm xét nghiệm thành công",
+    "content_edit_success": "Sửa xét nghiệm thành công",
+    "message_delete": "Bạn có chắc muốn xóa xét nghiệm",
+    "delete_success": "Xóa xét nghiệm thành công",
+    "title_map_popup": "xét nghiệm"
+  },
+  "type_symptom": {
+    "title": "Quản lý triệu chứng",
+    "title_add": "Thêm mới triệu chứng",
+    "title_edit": "Sửa triệu chứng",
+    "title_delete": "Xác nhận xóa triệu chứng",
+    "content_add_success": "Thêm triệu chứng thành công",
+    "content_edit_success": "Sửa triệu chứng thành công",
+    "message_delete": "Bạn có chắc muốn xóa triệu chứng",
+    "delete_success": "Xóa triệu chứng thành công",
+    "title_map_popup": "bệnhề"
+  },
+  "import_products": {
+    "title": "Quản lý nhập hàng",
+    "insert_btn": "Tạo mới phiếu nhập hàng",
+    "title_add": "Tạo mới phiếu nhập hàng",
+    "title_edit": "Sửa thông tin phiếu nhập hàng",
+    "title_delete": "Xác nhận xóa phiếu nhập hàng",
+    "unknown_error": "Lỗi không xác định",
+    "content_add_success": "Thêm phiếu nhập hàng thành công",
+    "content_edit_success": "Sửa thông tin thành công",
+    "delete_success": "Xóa tin tức thành công"
+  }
+}
