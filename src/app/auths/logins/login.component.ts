@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.inputUser.value).subscribe(res => {
         this.submitted = false;
         if (res.status === 200) {
-          this.router.navigate(['/admin/home']);
+          this.router.navigate([res.body.path]);
           localStorage.setItem('objects', JSON.stringify(res.body.listObjects));
           localStorage.setItem('httpHeaders', res.body.httpHeaders.Authorization);
           localStorage.setItem('users', res.body.customUserDetails.fullName);

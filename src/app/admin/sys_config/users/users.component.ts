@@ -20,7 +20,6 @@ export class UsersComponent implements OnInit {
     this.search(0);
   }
 
-  isLoad: boolean;
 
   constructor(
     private toastr: ToastrService,
@@ -31,6 +30,7 @@ export class UsersComponent implements OnInit {
     private dialogService: NbDialogService) {
   }
 
+  isLoad: boolean;
   listStatus = [
     {name: 'common.status.1', code: 1},
     {name: 'common.status.0', code: 0}
@@ -46,8 +46,10 @@ export class UsersComponent implements OnInit {
     {name: 'common.table.item_username', prop: 'name', flexGrow: 1},
     {name: 'common.table.item_fullName', prop: 'fullName', flexGrow: 1},
     {name: 'common.table.item_email', prop: 'mail', flexGrow: 1},
-    {name: 'common.table.item_tel', prop: 'phone', flexGrow: 1},
+    {name: 'common.table.item_tel', prop: 'phone', flexGrow: 0.7},
+    {name: 'common.table.item_avatar', prop: 'pathUrl', flexGrow: 0.5},
     {name: 'common.table.item_dateOfBirth', prop: 'dateOfBirth', flexGrow: 1},
+    {name: 'common.table.item_role', prop: 'rolesName', flexGrow: 1},
     {name: 'common.table.item_status', prop: 'status', flexGrow: 1},
     {name: 'common.table.item_action', prop: 'action_btn', flexGrow: 1}
   ];
@@ -66,17 +68,21 @@ export class UsersComponent implements OnInit {
     this.search(pageInfo.offset);
   }
 
-  editUsers(data) {
+  viewUsers(data) {
     let title;
+    let isCheck;
     if (data == null) {
       title = this.translate.instant('users.title_add');
+      isCheck = 0;
     } else {
-      title = this.translate.instant('users.title_edit');
+      title = this.translate.instant('users.title_view');
+      isCheck = 1;
     }
     this.dialogService.open(UserUpdateComponent, {
       context: {
         title: title,
         data: data,
+        isCheck: isCheck
       },
       dialogClass: 'modal-full',
     }).onClose.subscribe(

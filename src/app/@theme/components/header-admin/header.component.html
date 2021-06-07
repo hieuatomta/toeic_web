@@ -15,7 +15,7 @@
     (click)="openMenu = !openMenu"
     [picture]="user?.picture">
   </nb-user>
-  <div class="dropdown-content">
+  <div class="dropdown-content" style="min-width: 180px !important;">
     <li>
       <ng-select [items]="themes" bindLabel="name" bindValue="value"
                  fullWidth
@@ -29,6 +29,7 @@
                  (ngModelChange)="changeLanguage($event)"  [(ngModel)]="currentLanguage" fullWidth>
       </ng-select>
     </li>
+    <li (click)="viewUsers(null)">{{ 'common.header.menu.profile' | translate}}</li>
     <li (click)="router.navigate(['auths/changePass'])">{{ 'common.header.menu.changePass' | translate}}</li>
     <li (click)="logout()">{{ 'common.header.menu.logout' | translate}}</li>
   </div>

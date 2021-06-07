@@ -17,26 +17,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   totalPrice = null;
   public removeEventListener: () => void;
   public anchors;
-
-  openOrder() {
-    const data = JSON.parse(localStorage.getItem('list_order'));
-    if (data === undefined || data === null || data.data === undefined || data.data === null) {
-      this.obj = [];
-    } else {
-      this.obj = data.data;
-      this.size = data.totalOrder;
-      this.totalPrice = data.totalPrice.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
-    }
-
-  }
-
-  sangThanhToan() {
-    this.router.navigate(['/thanh-toan']);
-    (function ($) {
-      $('.js-sidebar').removeClass('show-sidebar');
-      $('.js-panel-cart').removeClass('show-header-cart');
-    })(jQuery);
-  }
+  user: any;
 
   public handleAnchorClick = (event: Event) => {
     // Prevent opening anchors the default way
@@ -46,14 +27,6 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    const data = JSON.parse(localStorage.getItem('list_order'));
-    // this.obj = data?.data;
-    this.size = data?.totalOrder;
-    if (data === undefined || data === null || data.data === undefined || data.data === null) {
-      this.obj = [];
-    } else {
-      this.obj = data.data;
-    }
     this.search();
     // this.size = this.obj?.length;
     this.removeEventListener = this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
@@ -204,19 +177,6 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       link: 'chan-doan',
       check: true
     },
-    // {
-    //   id: 5,
-    //   parenID: 0,
-    //   tendulieu: 'Dịch vụ',
-    //   // link: 'danh-sach-san-pham',
-    //   check: false
-    // }, {
-    //   id: 6,
-    //   parenID: 0,
-    //   tendulieu: 'Đào taọ trực tuyến',
-    //   // link: 've-chung-toi',
-    //   check: false
-    // },
     {
       id: 7,
       parenID: 0,
@@ -321,31 +281,48 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  isCheck = true;
   search() {
-    this.categoriesService.doSearchByClient({
-      status: 1,
-    }).subscribe(
-      (res) => {
-        for (let i = 0; i < res.body.data.list?.length; i++) {
-          const obj = {
-            id: null,
-            parenID: 3,
-            tendulieu: null,
-            link: null,
-            check: false
-          };
-          obj.id = 999 + i;
-          obj.tendulieu = res.body.data.list[i].name;
-          obj.link = 'tin-tuc/' + res.body.data.list[i].code;
-          this.tree.push(obj);
-        }
-        this.menudacap = this.dequy(0, 0, 1);
-      },
-      (error) => {
-        // this.isLoad = false;
-      },
-      // () => this.isLoad = false,
-    );
+    this.user = localStorage.getItem('users');
+    if ( this.user === undefined || this.user === null || this.user === '') {
+      this.isCheck = true;
+    } else {
+      this.isCheck = false;
+    }
+    const token = localStorage.getItem('userDetails');
+    if (token === undefined || token === null || token === '') {
+      localStorage.clear();
+      // this.router.navigate(['/auths/login']);
+      return false;
+    } else {
+      this.menudacap = this.dequy(0, 0, 1);
+
+      // this.categoriesService.doSearchByClient({
+      //   status: 1,
+      // }).subscribe(
+      //   (res) => {
+      //     for (let i = 0; i < res.body.data.list?.length; i++) {
+      //       const obj = {
+      //         id: null,
+      //         parenID: 3,
+      //         tendulieu: null,
+      //         link: null,
+      //         check: false
+      //       };
+      //       obj.id = 999 + i;
+      //       obj.tendulieu = res.body.data.list[i].name;
+      //       obj.link = 'tin-tuc/' + res.body.data.list[i].code;
+      //       this.tree.push(obj);
+      //     }
+      //   },
+      //   (error) => {
+      //     // this.isLoad = false;
+      //   },
+      //   // () => this.isLoad = false,
+      // );
+    }
+
+
   }
 
 }

@@ -4,9 +4,8 @@ import {NbDialogRef, NbToastrService} from '@nebular/theme';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RolesService} from '../../../../@core/services/roles.service';
 import {UsersService} from '../../../../@core/services/users.service';
-import {passwordsMatchValidator} from '../../../../validator';
 import {TranslateService} from '@ngx-translate/core';
-import * as moment from 'moment';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -29,15 +28,19 @@ export class UserUpdateComponent implements OnInit {
   itemRoles: any;
   loading = false;
   title: string;
+  isCheck: number;
   data: any;
-  showPassword = false;
-  showPassword1 = false;
   mask;
+  isDis = null;
+  url: SafeUrl = '';
+  selectedFiles: FileList;
+
 
   constructor(
     private toastr1: ToastrService,
     public ref: NbDialogRef<UserUpdateComponent>,
     private rolesService: RolesService,
+    private sanitizer: DomSanitizer,
     protected cd: ChangeDetectorRef,
     private toastr: NbToastrService,
     private translate: TranslateService,
@@ -50,36 +53,26 @@ export class UserUpdateComponent implements OnInit {
       fullName: new FormControl(this.data?.fullName, [Validators.required]),
       phone: new FormControl(this.data?.phone, [Validators.pattern(/^\d{10}$/)]),
       mail: new FormControl(this.data?.mail, [Validators.required]),
-      pass: new FormControl(this.randomPass(10), []),
-      rePassword: new FormControl(null, []),
-      imageUrl: new FormControl(this.data?.imageUrl, []),
+      pathUrl: new FormControl(this.data?.pathUrl, []),
+      resetDate: new FormControl(this.data?.resetDate, []),
+      resetKey: new FormControl(this.data?.resetKey, []),
+      rolesId: new FormControl(this.data?.rolesId, []),
       dateOfBirth: new FormControl(null, []),
       status: new FormControl(this.data?.status, [Validators.required]),
-      lstRole: new FormControl(null, []),
-    }, {
-      validators: passwordsMatchValidator,
     });
-
-    this.inputUser.get('status').setValue(true);
-    if (this.data) {
+    this.url = this.inputUser.get('pathUrl').value;
+    console.log(this.isCheck);
+    if (this.isCheck === 0) {
+      this.isDis = null;
+    } else {
+      this.isDis = true;
       this.inputUser.patchValue(this.data);
-      const status = this.data.status === 1 ? true : false;
-      this.inputUser.get('status').patchValue(status);
+      this.rolesService.query().subscribe(res => {
+        this.lstRole1 = res.body.data.list;
+      }, err => {
+      });
     }
-    ;
-    this.userService.query(this.data?.id).subscribe(res => {
-      if (res.body.DS_ROLES.length > 0) {
-        this.inputUser.get('lstRole').setValue(res.body.DS_ROLES.toString().split(',').map(item => Number(item)));
-      }
-    }, err => {
-      console.log(err);
-    });
-
-    this.rolesService.query().subscribe(res => {
-      this.lstRole1 = res.body.data.list;
-    }, err => {
-    });
-    this.inputUser.get('dateOfBirth').setValue(new Date(this.data?.dateOfBirth.toString()))
+    this.inputUser.get('dateOfBirth').setValue(new Date(this.data?.dateOfBirth.toString()));
   };
 
   randomPass(length) {
@@ -98,37 +91,14 @@ export class UserUpdateComponent implements OnInit {
     }
   }
 
-  toggleShowPassword(a: number) {
-    if (a === 1) {
-      this.showPassword = !this.showPassword;
-    }
-    if (a === 2) {
-      this.showPassword1 = !this.showPassword1;
-    }
-  }
-
-  getInputType(a: number) {
-    if (a === 1) {
-      if (this.showPassword) {
-        return 'text';
-      }
-    }
-    if (a === 2) {
-      if (this.showPassword1) {
-        return 'text';
-      }
-    }
-    return 'password';
-  }
 
   submit() {
-    this.inputUser.get('status').patchValue(this.inputUser.get('status').value ? 1 : 0);
     this.inputUser.markAllAsTouched();
     if (this.inputUser.valid) {
       this.loading = true;
       const data = Object.assign({}, this.inputUser.value);
+      console.log(data);
       data.id = this.data?.id;
-      data.listRole = this.inputUser.get('lstRole').value;
       if (this.data == null) {
         this.userService.insert(data).subscribe(
           (value) => this.ref.close(value),
@@ -139,16 +109,39 @@ export class UserUpdateComponent implements OnInit {
           () => this.loading = false,
         );
       } else {
-        this.userService.update(data).subscribe(
-          (value) => this.ref.close(value),
-          (error) => {
-            this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
-            this.loading = false;
-          },
-          () => this.loading = false,
-        );
+        if (this.selectedFiles === null || this.selectedFiles === undefined) {
+          this.userService.update(data).subscribe(
+            (value) => this.ref.close(value),
+            (error) => {
+              this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
+              this.loading = false;
+            },
+            () => this.loading = false,
+          );
+        } else {
+          this.userService.updateImg(this.inputUser.value, this.selectedFiles?.item(0)).subscribe(
+            (value) => this.ref.close(value),
+            (error) => {
+              this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
+              this.loading = false;
+            },
+            () => this.loading = false,
+          );
+        }
       }
     } else {
+    }
+  }
+
+
+  selectFile(event) {
+    if (event !== null) {
+      this.selectedFiles = event.target.files;
+      this.url = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(event.target.files[0])
+      );
+    } else {
+      this.selectedFiles = null;
     }
   }
 

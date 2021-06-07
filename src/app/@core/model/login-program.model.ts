@@ -7,5 +7,6 @@ export class LoginProgramModel {
   fullName: string;
   customUserDetails: any;
   data: any;
+  path: any;
   detail: any;
 }

@@ -1,5 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
+import {
+  NbDialogService,
+  NbMediaBreakpointsService,
+  NbMenuService,
+  NbSidebarService,
+  NbThemeService, NbToastrService
+} from '@nebular/theme';
 
 import {UserData} from '../../../@core/data/users';
 import {LayoutService} from '../../../@core/utils';
@@ -7,6 +13,7 @@ import {map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import {UserUpdateComponent} from '../../../admin/sys_config/users/user-update/user-update.component';
 
 @Component({
   selector: 'ngx-header',
@@ -57,33 +64,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
+  viewUsers(data) {
+    const obj = JSON.parse(localStorage.getItem('userDetails'));
+    console.log(obj);
+    this.dialogService.open(UserUpdateComponent, {
+      context: {
+        title: this.translate.instant('users.title_edit'),
+        data: obj,
+        isCheck: 0
+      },
+      dialogClass: 'modal-full',
+    }).onClose.subscribe(
+      value => {
+        if (value) {
+            this.toastrService.success(this.translate.instant('users.content_edit_success'),
+              this.translate.instant('common.title_notification'));
+          // this.search(0);
+        }
+      }
+    );
+  }
+
   currentTheme = 'cosmic';
   language = 'vi';
   currentLanguage = this.getLanguage();
-
-  menuClick(e) {
-    if (e.menuId === 3) {
-      localStorage.clear();
-      this.router.navigate(['auths/login']);
-    }
-    if (e.menuId === 2) {
-      console.log('Thực hiện mở popup đổi mật khẩu');
-    }
-    if (e.menuId === 1) {
-      console.log('Thực hiện mở popup thông tin cá nhân');
-    }
-  }
 
   logout() {
     localStorage.clear();
     this.router.navigate(['auths/login']);
   }
 
-  userMenu = [
-    {menuId: 1, title: 'Thông tin cá nhân'},
-    {menuId: 2, title: 'Đổi mật khẩu'},
-    {menuId: 3, title: 'Đăng xuất'},
-  ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -92,6 +102,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
               private translate: TranslateService,
+              private toastrService: NbToastrService,
+              private dialogService: NbDialogService,
               public router: Router) {
   }
 
@@ -106,9 +118,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
-    this.menuService.onItemClick().subscribe((event) => {
-      this.menuClick(event.item);
-    });
     this.themeService.onThemeChange()
       .pipe(
         map(({name}) => name),

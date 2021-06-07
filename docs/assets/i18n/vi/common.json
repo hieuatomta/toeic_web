@@ -3,7 +3,7 @@
     "header": {
       "title": "Hệ thống thông tin y tế",
       "menu": {
-        "profile": "Thông tin cá nhân",
+        "profile": "Quản lý tài khoản",
         "changePass": "Đổi mật khẩu",
         "logout": "Đăng xuất"
       }

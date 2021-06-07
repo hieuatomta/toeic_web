@@ -12,27 +12,11 @@
       }
     },
     "title_notification": "Thông báo",
-    "title_cd": "Chẩn đoán",
-    "title_tt": "Tiếp tục",
-    "title_ql": "Quay lại",
     "status": {
       "active": "Hoạt động",
       "inactive": "Không hoạt động",
       "0": "Bị khóa",
       "1": "Hoạt động"
-    },
-    "typeDT": {
-      "0": "Điều trị",
-      "1": "Tri thức"
-    },
-    "typeTS": {
-        "0": "Nhẹ",
-      "1": "Trung Bình",
-      "2": "Nặng"
-    },
-    "typeCD": {
-      "0": "Tần suất",
-      "1": "Số lượng triệu chứng"
     },
     "type": {
       "0": "Admin",
@@ -43,16 +27,6 @@
       "1": "Đang đợi phê duyệt",
       "2": "Từ chối phê duyệt"
     },
-    "highlightsStatus": {
-      "0": "Tin tức nổi bật"
-    },
-    "typeSymptom": {
-      "0": "Dấu hiệu chung",
-      "1": "Dấu hiệu nhận biết",
-      "2": "Lâm sàn",
-      "3": "Cận lâm sàn",
-      "4": "Giai đoạn"
-    },
     "table": {
       "item_number": "STT",
       "item_username": "Tên đăng nhập",
@@ -61,12 +35,8 @@
       "item_passwordHash": "Mật khẩu",
       "item_repassword": "Nhập lại mật khẩu",
       "item_tel": "Số điện thoại",
-      "item_name_evaluate": "Đánh giá",
-      "item_content": "Nội dung đánh giá",
-      "item_name_type": "Bệnh",
-      "item_code": "Mã",
-      "item_name_ex": "Tên điều trị và tri thức",
       "item_email": "Email",
+      "item_avatar": "Avatar",
       "item_dateOfBirth": "Ngày sinh",
       "item_role": "Quyền người dùng",
       "item_status": "Trạng thái",
@@ -155,6 +125,7 @@
     "offHighlights": "Bỏ trạng thái nổi bật",
     "cancel": "Huỷ bỏ",
     "edit": "Sửa",
+    "view": "Chi tiết",
     "copy": "Copy",
     "delete": "Xóa",
     "come": "Quay lại",

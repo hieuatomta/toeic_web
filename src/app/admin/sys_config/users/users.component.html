@@ -3,7 +3,7 @@
     <nb-card>
       <nb-card-header class="d-flex">
         <label>{{ 'users.title' | translate }}</label>
-        <button nbButton status="primary" size="tiny" class="ml-auto" (click)="editUsers(null)">
+        <button nbButton status="primary" size="tiny" class="ml-auto" (click)="viewUsers(null)">
           <nb-icon icon="plus" pack="eva"></nb-icon>
           {{ 'users.insert_btn' | translate }}
         </button>
@@ -80,22 +80,25 @@
                   {{ page.offset * page.limit + rowIndex + 1 }}
                 </ng-container>
                 <ng-container
-                  *ngIf="col.prop ==='mail' || col.prop ==='name'|| col.prop ==='fullName' || col.prop ==='phone' "
+                  *ngIf="col.prop ==='mail' || col.prop ==='name'|| col.prop ==='rolesName'|| col.prop ==='fullName' || col.prop ==='phone' "
                   class="text-right">
                   <span class="row-data-show"
                         title="{{value}}">{{value.length > 50 ? value.substring(0, 50).concat('...') : value}}</span>
                 </ng-container>
                 <ng-container *ngIf="col.prop ==='dateOfBirth'">
-                  {{ value }}
+                  {{ value | date: 'dd-MM-yyyy'}}
+                </ng-container>
+                <ng-container  *ngIf="col.prop ==='pathUrl'">
+                  <img style="height: 50px;width: 50px;border-radius: 50%; border: 0;" [src]="value ? value : 'https://www.w3schools.com/howto/img_avatar.png'" alt="">
                 </ng-container>
                 <ng-container *ngIf="col.prop ==='status'">
                   {{  'common.status.' + value | translate }}
                 </ng-container>
                 <ng-container *ngIf="col.prop ==='action_btn'" class="text-right">
                   <div>
-                    <button class="p-1" nbButton status="info" ghost title="{{ 'common.edit' | translate}}"
-                            (click)="editUsers(row)">
-                      <nb-icon icon="edit-outline" pack="eva" size="tiny"></nb-icon>
+                    <button class="p-1" nbButton status="info" ghost title="{{ 'common.view' | translate}}"
+                            (click)="viewUsers(row)">
+                      <nb-icon icon="eye-outline" pack="eva" size="tiny"></nb-icon>
                     </button>
                     <button class="p-1" nbButton status="danger" ghost title="{{ 'common.delete' | translate }}"
                             (click)="deleteUsers(row)">
