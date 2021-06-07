@@ -25,18 +25,12 @@ export class UsersService {
     });
   }
 
-  public update(data: any): Observable<any> {
-    return this.http.put<any>(`${environment.apiUrl}/users`, data, {
-      observe: 'response'
-    });
-  }
-
-  public updateImg(data: any, file?: File): Observable<any> {
+  public update(data: any, file?: File): Observable<any> {
     const model: any = data;
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('model', JSON.stringify(model));
-    return this.http.put<any>(`${environment.apiUrl}/users-img`, formData, {
+    return this.http.put<any>(`${environment.apiUrl}/users`, formData, {
       observe: 'response'
     });
   }

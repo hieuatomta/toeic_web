@@ -6,6 +6,7 @@ import {RolesService} from '../../../../@core/services/roles.service';
 import {UsersService} from '../../../../@core/services/users.service';
 import {TranslateService} from '@ngx-translate/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import {getFormattedDate} from '../../../../shares/utils/date-util';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -54,8 +55,6 @@ export class UserUpdateComponent implements OnInit {
       phone: new FormControl(this.data?.phone, [Validators.pattern(/^\d{10}$/)]),
       mail: new FormControl(this.data?.mail, [Validators.required]),
       pathUrl: new FormControl(this.data?.pathUrl, []),
-      resetDate: new FormControl(this.data?.resetDate, []),
-      resetKey: new FormControl(this.data?.resetKey, []),
       rolesId: new FormControl(this.data?.rolesId, []),
       dateOfBirth: new FormControl(null, []),
       status: new FormControl(this.data?.status, [Validators.required]),
@@ -97,10 +96,12 @@ export class UserUpdateComponent implements OnInit {
     if (this.inputUser.valid) {
       this.loading = true;
       const data = Object.assign({}, this.inputUser.value);
-      console.log(data);
       data.id = this.data?.id;
+      data.dateOfBirth = getFormattedDate(this.inputUser.get('dateOfBirth').value);
+      console.log(data);
+
       if (this.data == null) {
-        this.userService.insert(data).subscribe(
+        this.userService.insert(data, this.selectedFiles?.item(0)).subscribe(
           (value) => this.ref.close(value),
           error => {
             this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
@@ -109,8 +110,7 @@ export class UserUpdateComponent implements OnInit {
           () => this.loading = false,
         );
       } else {
-        if (this.selectedFiles === null || this.selectedFiles === undefined) {
-          this.userService.update(data).subscribe(
+          this.userService.update(data, this.selectedFiles?.item(0)).subscribe(
             (value) => this.ref.close(value),
             (error) => {
               this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
@@ -118,16 +118,6 @@ export class UserUpdateComponent implements OnInit {
             },
             () => this.loading = false,
           );
-        } else {
-          this.userService.updateImg(this.inputUser.value, this.selectedFiles?.item(0)).subscribe(
-            (value) => this.ref.close(value),
-            (error) => {
-              this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
-              this.loading = false;
-            },
-            () => this.loading = false,
-          );
-        }
       }
     } else {
     }
