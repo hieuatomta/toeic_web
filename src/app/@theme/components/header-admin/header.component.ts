@@ -13,7 +13,7 @@ import {map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {UserUpdateComponent} from '../../../admin/sys_config/users/user-update/user-update.component';
+import {UserUpdateComponent} from '../../../admin/sys-users/user-update/user-update.component';
 
 @Component({
   selector: 'ngx-header',
@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log(obj);
     this.dialogService.open(UserUpdateComponent, {
       context: {
-        title: this.translate.instant('users.title_edit'),
+        title: this.translate.instant('sys-users.title_edit'),
         data: obj,
         isCheck: 0
       },
@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }).onClose.subscribe(
       value => {
         if (value) {
-            this.toastrService.success(this.translate.instant('users.content_edit_success'),
+            this.toastrService.success(this.translate.instant('sys-users.content_edit_success'),
               this.translate.instant('common.title_notification'));
           // this.search(0);
         }
