@@ -1,11 +1,20 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef, EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {ToastrService} from '../../../@core/mock/toastr-service';
 import {NbDialogRef, NbToastrService} from '@nebular/theme';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RolesService} from '../../../@core/services/roles.service';
 import {UsersService} from '../../../@core/services/users.service';
 import {TranslateService} from '@ngx-translate/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {getFormattedDate} from '../../../shares/utils/date-util';
 
 @Component({
@@ -90,7 +99,6 @@ export class UserUpdateComponent implements OnInit {
     }
   }
 
-
   submit() {
     this.inputUser.markAllAsTouched();
     if (this.inputUser.valid) {
@@ -102,7 +110,9 @@ export class UserUpdateComponent implements OnInit {
 
       if (this.data == null) {
         this.userService.insert(data, this.selectedFiles?.item(0)).subscribe(
-          (value) => this.ref.close(value),
+          (value) => {
+            this.ref.close(value);
+          },
           error => {
             this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
             this.loading = false;
@@ -110,14 +120,21 @@ export class UserUpdateComponent implements OnInit {
           () => this.loading = false,
         );
       } else {
-          this.userService.update(data, this.selectedFiles?.item(0)).subscribe(
-            (value) => this.ref.close(value),
-            (error) => {
-              this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
-              this.loading = false;
-            },
-            () => this.loading = false,
-          );
+        this.userService.update(data, this.selectedFiles?.item(0)).subscribe(
+          (value) => {
+            const rs = value.body.data?.list;
+            if (rs.isCheck === 1) {
+              localStorage.setItem('userDetails', JSON.stringify(rs));
+            }
+            this.ref.close(value);
+          },
+          (error) => {
+            this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
+            this.loading = false;
+          },
+          () => this.loading = false
+        )
+        ;
       }
     } else {
     }

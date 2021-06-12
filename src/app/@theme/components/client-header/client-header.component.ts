@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {CategoriesService} from '../../../@core/services/categories.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {LoginService} from '../../../@core/services/login.service';
 
 declare const jQuery: any;
 
@@ -18,17 +19,110 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   public removeEventListener: () => void;
   public anchors;
   user: any;
+  htmlStrTxt: any;
+  isCheck = true;
+  menu = [];
+  menu12 = [];
+  cap: any;
+  menudacap: any;
+  tree = [];
+  tree1 = [
+    {
+      id: 1111,
+      parenID: 0,
+      tendulieu: 'Trang chủ',
+      link: 'trang-chu',
+      check: false
+    },
+    {
+      id: 2111,
+      parenID: 0,
+      tendulieu: 'Giới thiệu',
+      link: 'danh-sach-san-pham',
+      check: false
+    }
+  ];
+  tree2 = [
+    {
+      id: 7111,
+      parenID: 0,
+      tendulieu: 'Liên lạc',
+      link: 'lien-he',
+      check: false
+    },
+  ];
+  userPictureOnly: boolean = false;
+  // user: any;
+  openMenu = false;
 
-  public handleAnchorClick = (event: Event) => {
-    // Prevent opening anchors the default way
-    event.preventDefault();
-    const anchor = event.target as HTMLAnchorElement;
-    this.router.navigate([anchor.href.replace (/^[a-z]{4,5}\:\/{2}[a-z]{1,}\:[0-9]{1,4}.(.*)/, '$1').slice(4)]);
+  constructor(private router: Router,
+              private categoriesService: CategoriesService,
+              public domSanitizer: DomSanitizer,
+              public el: ElementRef,
+              private loginService: LoginService,
+              private renderer: Renderer2,
+              private elementRef: ElementRef
+  ) {
+    try {
+      const token = localStorage.getItem('httpHeaders');
+      if (token.trim().length === 0 && token === null) {
+        localStorage.setItem('objectsC', null);
+      } else {
+        this.loginService.authenticationcate({}).subscribe(res => {
+            if (res.status === 200 && res.body.customUserDetails.rolesId === 2) {
+              let menu1 = [];
+              this.menu12 = [];
+              this.obj = res.body.listObjects;
+              localStorage.setItem('objectsC', JSON.stringify(this.obj));
+
+              menu1 = this.formatListPractices(this.obj, 0);
+              for (let i = 0; i < menu1.length; i++) {
+                this.menu.push(menu1[i]);
+              }
+              for (let i = 0; i < this.menu?.length; i++) {
+                const objMenu = {
+                  id: null,
+                  parenID: null,
+                  link: null,
+                  check: null,
+                  tendulieu: null
+                };
+                objMenu.tendulieu = this.menu[i].title;
+                objMenu.id = this.menu[i].id;
+                objMenu.parenID = this.menu[i].parenId;
+                objMenu.check = this.menu[i].check;
+                this.menu12.push(objMenu);
+              }
+            }
+          }, err => {
+            // nếu có lỗi xảy ra trong qúa trình xác thực lại user thì bắn ra lỗi
+            // localStorage.clear();
+            // this.router.navigate(['auths/login']);
+
+          }, () => {
+            this.tree.push.apply(this.tree, this.tree1);
+            if (this.menu12?.length !== 0) {
+              this.tree.push.apply(this.tree, this.menu12);
+            }
+            this.tree.push.apply(this.tree, this.tree2);
+            this.search();
+          }
+        );
+      }
+    } catch (e) {
+      localStorage.setItem('objectsC', null);
+      this.tree.push.apply(this.tree, this.tree1);
+      this.tree.push.apply(this.tree, this.tree2);
+      this.menudacap = this.dequy(0, 0, 1);
+    }
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['auths/login']);
   }
 
   ngOnInit() {
-    this.search();
-    // this.size = this.obj?.length;
     this.removeEventListener = this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
       if (event.target instanceof HTMLAnchorElement) {
         // Your custom anchor click event handler
@@ -141,90 +235,48 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     })(jQuery);
   }
 
-  ngOnDestroy() {
-    this.anchors.forEach((anchor: HTMLAnchorElement) => {
-      anchor.removeEventListener('click', this.handleAnchorClick)
-    })
+  public handleAnchorClick = (event: Event) => {
+    // Prevent opening anchors the default way
+    event.preventDefault();
+    const anchor = event.target as HTMLAnchorElement;
+    this.router.navigate([anchor.href.replace(/^[a-z]{4,5}\:\/{2}[a-z]{1,}\:[0-9]{1,4}.(.*)/, '$1').slice(4)]);
+  };
+
+
+  formatListPractices(data, paren) {
+    const arr = [];
+    for (let i = 0; i < data.length; i++) {
+      const dataItem = data[i];
+      if (data[i].parenId === 0) {
+        dataItem.check = true;
+        arr.push(dataItem);
+      } else {
+        for (let j = 0; j < data.length; j++) {
+          if (dataItem.id === data[j].parenId) {
+            dataItem.check = true;
+            break;
+          } else {
+            dataItem.check = false;
+          }
+        }
+        arr.push(dataItem);
+      }
+    }
+    return arr;
   }
 
-  htmlStrTxt: any;
-  cap: any;
-  menudacap: any;
-  tree = [
-    {
-      id: 1,
-      parenID: 0,
-      tendulieu: 'Trang chủ',
-      link: 'trang-chu',
-      check: false
-    },
-    {
-      id: 2,
-      parenID: 0,
-      tendulieu: 'Giới thiệu',
-      link: 'danh-sach-san-pham',
-      check: true
-    }, {
-      id: 3,
-      parenID: 0,
-      tendulieu: 'Tin tức',
-      link: 'tin-tuc/tin-tuc-noi-bat',
-      check: true
-    }, {
-      id: 4,
-      parenID: 0,
-      tendulieu: 'Hệ chuyên gia',
-      link: 'chan-doan',
-      check: true
-    },
-    {
-      id: 7,
-      parenID: 0,
-      tendulieu: 'Liên lạc',
-      link: 'lien-he',
-      check: false
-    },
-    {
-      id: 11,
-      parenID: 2,
-      tendulieu: 'Ban giám đốc',
-      link: 'ban-giam-doc',
-      check: false
-    }, {
-      id: 12,
-      parenID: 2,
-      tendulieu: 'Lịch sử bệnh viện',
-      check: false,
-      link: 've-chung-toi'
-    },
-    {
-      id: 13,
-      parenID: 4,
-      tendulieu: 'Tri thức về bệnh',
-      check: false,
-      link: 'tri-thuc'
-    },
-    {
-      id: 14,
-      parenID: 4,
-      tendulieu: 'Chẩn đoán',
-      check: false,
-      link: 'chan-doan'
-    }, {
-      id: 14,
-      parenID: 4,
-      tendulieu: 'Điều trị',
-      check: false,
-      link: 'dieu-tri'
-    }
-  ];
+  ngOnDestroy() {
+    this.anchors.forEach((anchor: HTMLAnchorElement) => {
+      anchor.removeEventListener('click', this.handleAnchorClick);
+    });
+  }
 
   ngAfterViewInit() {
     // Solution for catching click events on anchors using querySelectorAll:
     this.anchors = this.elementRef.nativeElement.querySelectorAll('a');
     this.anchors.forEach((anchor: HTMLAnchorElement) => {
-      anchor.addEventListener('click', this.handleAnchorClick)
-    })
+      anchor.addEventListener('click', this.handleAnchorClick);
+    });
   }
 
   dequy(parent, level, a) {
@@ -271,20 +323,9 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   out() {
   }
 
-  constructor(private router: Router,
-              private categoriesService: CategoriesService,
-              public domSanitizer: DomSanitizer,
-              public el: ElementRef,
-              private renderer: Renderer2,
-              private elementRef: ElementRef
-  ) {
-
-  }
-
-  isCheck = true;
   search() {
     this.user = localStorage.getItem('users');
-    if ( this.user === undefined || this.user === null || this.user === '') {
+    if (this.user === undefined || this.user === null || this.user === '') {
       this.isCheck = true;
     } else {
       this.isCheck = false;
@@ -296,33 +337,6 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     } else {
       this.menudacap = this.dequy(0, 0, 1);
-
-      // this.categoriesService.doSearchByClient({
-      //   status: 1,
-      // }).subscribe(
-      //   (res) => {
-      //     for (let i = 0; i < res.body.data.list?.length; i++) {
-      //       const obj = {
-      //         id: null,
-      //         parenID: 3,
-      //         tendulieu: null,
-      //         link: null,
-      //         check: false
-      //       };
-      //       obj.id = 999 + i;
-      //       obj.tendulieu = res.body.data.list[i].name;
-      //       obj.link = 'tin-tuc/' + res.body.data.list[i].code;
-      //       this.tree.push(obj);
-      //     }
-      //   },
-      //   (error) => {
-      //     // this.isLoad = false;
-      //   },
-      //   // () => this.isLoad = false,
-      // );
     }
-
-
   }
-
 }

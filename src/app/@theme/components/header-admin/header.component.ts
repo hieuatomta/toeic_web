@@ -14,6 +14,8 @@ import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {UserUpdateComponent} from '../../../admin/sys-users/user-update/user-update.component';
+import {UsersService} from '../../../@core/services/users.service';
+import {HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'ngx-header',
@@ -59,14 +61,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (language === undefined || language === null) {
       language = 'vi';
     }
-
     return language;
-
   }
+
+  // protected onSuccess(data: any | null, headers: HttpHeaders, page: number): void {
+  //   this.page.count = data.count;
+  //   this.page.offset = page || 0;
+  //   this.rows = data.list || [];
+  // }
+  //
+  // public search(pageToLoad: number) {
+  //   this.isLoad = true;
+  //   this.page.offset = pageToLoad;
+  //   this.userService1.doSearch({
+  //     page: 0,
+  //     page_size: 5,
+  //   }).subscribe(
+  //     (res) => {
+  //       this.onSuccess(res.body.data, res.headers, pageToLoad);
+  //     },
+  //     (error) => {
+  //       this.isLoad = false;
+  //     },
+  //     () => this.isLoad = false,
+  //   );
+  // }
 
   viewUsers(data) {
     const obj = JSON.parse(localStorage.getItem('userDetails'));
-    console.log(obj);
     this.dialogService.open(UserUpdateComponent, {
       context: {
         title: this.translate.instant('sys-users.title_edit'),
@@ -79,7 +101,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (value) {
             this.toastrService.success(this.translate.instant('sys-users.content_edit_success'),
               this.translate.instant('common.title_notification'));
-          // this.search(0);
         }
       }
     );
@@ -100,6 +121,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
+              private userService1: UsersService,
               private breakpointService: NbMediaBreakpointsService,
               private translate: TranslateService,
               private toastrService: NbToastrService,
@@ -109,7 +131,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.user = localStorage.getItem('users');
+    this.user = JSON.parse(localStorage.getItem('userDetails'));
     this.currentTheme = this.themeService.currentTheme;
     const {xl} = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -145,7 +167,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
     this.layoutService.changeLayoutSize();
-
     return false;
   }
 

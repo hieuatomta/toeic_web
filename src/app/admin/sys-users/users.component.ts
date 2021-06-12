@@ -87,6 +87,7 @@ export class UsersComponent implements OnInit {
       dialogClass: 'modal-full',
     }).onClose.subscribe(
       value => {
+        console.log(value);
         if (value) {
           if (data == null) {
             this.toastrService.success(this.translate.instant('sys-users.content_add_success'),
@@ -107,7 +108,7 @@ export class UsersComponent implements OnInit {
     this.rows = data.list || [];
   }
 
-  search(pageToLoad: number) {
+  public search(pageToLoad: number) {
     this.isLoad = true;
     this.page.offset = pageToLoad;
     this.userService.doSearch({

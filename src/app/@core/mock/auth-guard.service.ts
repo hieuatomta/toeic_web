@@ -14,6 +14,11 @@ export class AuthGuardService implements CanActivate {
       this.router.navigate(['/auths/login']);
       return false;
     }
+    const users = JSON.parse(localStorage.getItem('userDetails'));
+    if (users.rolesId === 2) {
+      this.router.navigate(['/trang-chu']);
+      return false;
+    }
     let checkRole = false;
     const obj = JSON.parse(localStorage.getItem('objects'));
     try {

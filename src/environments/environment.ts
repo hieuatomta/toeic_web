@@ -10,6 +10,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://3.0.101.39:8080/toeic-web/api',
+  apiUrl: 'http://13.213.4.23:8080/toeic-web/api',
   // apiUrl: 'http://localhost:1608/api',
 };

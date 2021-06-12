@@ -46,6 +46,22 @@ ngb-carousel {
   z-index: 20;
 }
 
+a.carousel-control-prev {
+  width: 5% !important;
+  height: 100px !important;
+  justify-content: end;
+  display: block;
+  margin: auto;
+}
+
+a.carousel-control-next {
+  width: 5% !important;
+  height: 100px !important;
+  justify-content: end;
+  display: block;
+  margin: auto;
+}
+
 .carousel-indicators {
   z-index: 20;
 }

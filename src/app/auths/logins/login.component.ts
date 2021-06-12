@@ -108,14 +108,21 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.inputUser.value).subscribe(res => {
         this.submitted = false;
         if (res.status === 200) {
-          this.router.navigate([res.body.path]);
-          localStorage.setItem('objects', JSON.stringify(res.body.listObjects));
+          console.log(res.body);
+          if (res.body.customUserDetails.rolesId === 1) {
+            this.router.navigate(['/admin/home']);
+            localStorage.setItem('objects', JSON.stringify(res.body.listObjects));
+            console.log('admin');
+          } else if ( res.body.customUserDetails.rolesId === 2) {
+            this.router.navigate(['/trang-chu']);
+            localStorage.setItem('objectsC', JSON.stringify(res.body.listObjects));
+            console.log('client');
+          }
           localStorage.setItem('httpHeaders', res.body.httpHeaders.Authorization);
           localStorage.setItem('users', res.body.customUserDetails.fullName);
           localStorage.setItem('userDetails', JSON.stringify(res.body.customUserDetails));
           this.isLoad = false;
           this.captchaError = false;
-
         }
       }, err => {
         const title = this.translateService.instant('login.error');

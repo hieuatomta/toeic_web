@@ -11,9 +11,9 @@
   <nb-user
     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
     [onlyPicture]="false"
-    [name]="user"
+    [name]="user.fullName"
     (click)="openMenu = !openMenu"
-    [picture]="user?.picture">
+    [picture]="user?.pathUrl ? user?.pathUrl : 'https://www.w3schools.com/howto/img_avatar.png'">
   </nb-user>
   <div class="dropdown-content" style="min-width: 180px !important;">
     <li>
