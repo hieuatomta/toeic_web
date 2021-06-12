@@ -52,7 +52,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     },
   ];
   userPictureOnly: boolean = false;
-  // user: any;
+  users: any;
   openMenu = false;
 
   constructor(private router: Router,
@@ -117,12 +117,26 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  login() {
+    this.router.navigate(['auths/login']);
+  }
+
+  dk() {
+    this.router.navigate(['auths/login']);
+  }
+
   logout() {
     localStorage.clear();
     this.router.navigate(['auths/login']);
   }
 
   ngOnInit() {
+    this.users = JSON.parse(localStorage.getItem('userDetails'));
+    if (this.users === undefined || this.users === null || this.users === '') {
+      this.isCheck = true;
+    } else {
+      this.isCheck = false;
+    }
     this.removeEventListener = this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
       if (event.target instanceof HTMLAnchorElement) {
         // Your custom anchor click event handler
@@ -324,15 +338,10 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   search() {
-    this.user = localStorage.getItem('users');
-    if (this.user === undefined || this.user === null || this.user === '') {
-      this.isCheck = true;
-    } else {
-      this.isCheck = false;
-    }
+
     const token = localStorage.getItem('userDetails');
     if (token === undefined || token === null || token === '') {
-      localStorage.clear();
+      // localStorage.clear();
       // this.router.navigate(['/auths/login']);
       return false;
     } else {

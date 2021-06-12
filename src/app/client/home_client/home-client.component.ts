@@ -12,6 +12,12 @@ export class HomeClientComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  arr = [
+    {id: 1, link: 'assets/images/banner/banner.png'},
+    {id: 2, link: 'assets/images/banner/banner.png'},
+    {id: 3, link: 'assets/images/banner/banner2.png'},
+  ];
+
   ngOnInit(): void {
 
     const $topeContainer = $('.isotope-grid');

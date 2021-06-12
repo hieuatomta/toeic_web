@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from '../../@core/mock/toastr-service';
-import {checkUser, notSpaceLogin} from '../../validator';
+import {checkUser, notSpaceLogin, validEmail} from '../../validator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../@core/services/login.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,12 +10,12 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'ngx-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss'],
 })
 
 
-export class LoginComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
   ngOnInit() {
     this.initForm();
   }
@@ -58,9 +58,10 @@ export class LoginComponent implements OnInit {
   }
   initForm() {
     this.inputUser = new FormGroup({
-      name: new FormControl(this.getCookie('name'), [checkUser, Validators.maxLength(50), Validators.required]),
-      pass: new FormControl(this.getCookie('pass'), [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
-      remember: new FormControl(this.getCookie('remember'), []),
+      name: new FormControl(null, [checkUser, Validators.maxLength(50), Validators.required]),
+      email: new FormControl('', [validEmail, Validators.required]),
+      pass: new FormControl(null, [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
+      newPass: new FormControl(null, [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
       recaptchaReactive: new FormControl(null, [])
     });
   }
@@ -74,14 +75,14 @@ export class LoginComponent implements OnInit {
     event.target.value = event.target.value.trim();
   }
 
-  getInputType() {
+  getInputType(a: number) {
     if (this.showPassword) {
       return 'text';
     }
     return 'password';
   }
 
-  toggleShowPassword() {
+  toggleShowPassword(a: number) {
     this.showPassword = !this.showPassword;
   }
 

@@ -124,13 +124,13 @@ span.caret {
   font-size: 14px !important;
 }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
+/* The container <div> - needed to position the dropdown1 content */
+.dropdown1 {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-content {
+.dropdown1-content {
   display: none;
   position: absolute;
   right: 0;
@@ -154,20 +154,20 @@ li.menu {
 nb-user {
   cursor: pointer;
 }
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
+/* Change color of dropdown1 links on hover */
+.dropdown1-content a:hover {
   background-color: #ddd;
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+/* Show the dropdown1 menu on hover */
+.dropdown1:hover .dropdown1-content {
   display: block;
 }
-.info-container:hover .dropdown-content {
+.info-container:hover .dropdown1-content {
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
+/* Change the background color of the dropdown1 button when the dropdown1 content is shown */
+.dropdown1:hover .dropbtn {
   background-color: #3e8e41;
 }

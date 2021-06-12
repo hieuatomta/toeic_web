@@ -12,43 +12,57 @@
                      placeholder="{{ 'login.name' | translate}}">
               <span class="icon"><img src="assets/images/business-contact-86.svg"></span>
             </div>
-
+            <ngx-inline-message [message]="'login.name'|translate"
+                                [formName]="inputUser.get('name')"></ngx-inline-message>
           </div>
-          <ngx-inline-message [message]="'login.name'|translate"
-                              [formName]="inputUser.get('name')"></ngx-inline-message>
+          <div class="form-group">
+            <div class="input-icon">
+              <input class="form-control" formControlName="email"
+                     [ngClass]="{'status-danger': this.inputUser.get('email').errors}" type="text"
+                     placeholder="{{ 'login.email' | translate}}">
+              <span class="icon" style="width: 18px;"><img src="assets/images/gmail.svg"></span>
+            </div>
+            <ngx-inline-message [message]="'login.emailC'|translate"
+                                [formName]="inputUser.get('email')"></ngx-inline-message>
+          </div>
+
           <div class="form-group">
             <div class="input-icon -show">
-              <input [type]="getInputType()" name="pass" (keyup)="trimValue($event)" fullWidth
+              <input [type]="getInputType(1)" name="pass" (keyup)="trimValue($event)" fullWidth
                      formControlName="pass" type="password" class="form-control"
                      placeholder="{{ 'login.pass' | translate}}"
                      [ngClass]="{'status-danger': this.inputUser.get('pass').errors}">
               <span class="icon"><img src="assets/images/lock.svg"></span>
-              <span id="passwordShow" (click)="toggleShowPassword()" class="icon-show fa  fa-eye"
+              <span id="passwordShow" (click)="toggleShowPassword(1)" class="icon-show fa  fa-eye"
                     style="margin-right:1em;">
               								</span>
             </div>
             <ngx-inline-message [message]="'login.pass'|translate"
                                 [formName]="inputUser.get('pass')"></ngx-inline-message>
           </div>
-
-          <div class="form-group form-check" style="margin-top: 0.5rem;">
-            <input type="checkbox" name="remember" id="remember" formControlName="remember"
-                   class="form-check-input"/>
-            <label for="remember" class="form-check-label"
-                   style="color: #292D34 !important;justify-content: center;">{{ 'login.remember' | translate}}</label>
+          <div class="form-group">
+            <div class="input-icon -show">
+              <input (keyup)="trimValue($event)" [type]="getInputType(1)" formControlName="newPass" type="password"
+                     class="form-control" placeholder="{{ 'login.newPass' | translate}}"
+                     [ngClass]="{'status-danger': this.inputUser.get('newPass').errors}">
+              <span class="icon"><img src="assets/images/lock.svg"></span>
+              <span class="icon-show fa  fa-eye" (click)="toggleShowPassword(1)" style="margin-right:1em;">
+          								</span>
+            </div>
           </div>
 <!--          <div class="form-group">-->
 <!--            <re-captcha style="display: flex; justify-content: center;"-->
 <!--                        formControlName="recaptchaReactive"></re-captcha>-->
+<!--          <ngx-inline-message [message]="'login.recaptchaReactive'|translate"-->
+<!--                              [formName]="inputUser.get('recaptchaReactive')"></ngx-inline-message>-->
 <!--          </div>-->
-          <ngx-inline-message [message]="'login.recaptchaReactive'|translate"
-                              [formName]="inputUser.get('recaptchaReactive')"></ngx-inline-message>
+
           <div class="modal-buttons">
             <a routerLink="/auths/confirmEmail">{{ 'login.confirmEmail' | translate}}</a>
 <!--            <ng-select [clearable]="false" bindLabel="name"  bindValue="value" [items]="languages"-->
 <!--                       (ngModelChange)="changeLanguage($event)"  [(ngModel)]="currentLanguage" fullWidth>-->
 <!--            </ng-select>-->
-            <button class="btn btn-main" [disabled]="inputUser.invalid">{{ 'login.login' | translate}}</button>
+            <button class="btn btn-main" [disabled]="inputUser.invalid">{{ 'login.registration' | translate}}</button>
           </div>
         </form>
       </div>
@@ -56,7 +70,7 @@
         <img
           src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80"
           alt="">
-        <h5 class="modal-title" style="color: #292D34; text-align: center; margin-bottom: 5vh; position: absolute; top: 45%; left: 35%; padding: 15px; background: white">{{ 'login.login' | translate}}</h5>
+        <h5 class="modal-title" style="color: #292D34; text-align: center; margin-bottom: 5vh; position: absolute; top: 45%; left: 35%; padding: 15px; background: white">{{ 'login.registration' | translate}}</h5>
       </div>
     </div>
 

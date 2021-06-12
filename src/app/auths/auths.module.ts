@@ -22,6 +22,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {SharedModule} from '../shares/shared.module';
 import { ChangePassComponent } from './changePass/changePass.component';
 import {NgSelectModule} from '@ng-select/ng-select';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
     ChangePassComponent,
     LoginComponent,
     AuthsComponent,
+    RegistrationComponent,
     ConfirmEmailComponent,
     ChangePassEmailComponent,
   ],

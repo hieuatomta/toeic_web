@@ -7,6 +7,7 @@ import {AuthsComponent} from './auths.component';
 import {ConfirmEmailComponent} from './confirmEmail/confirmEmail.component';
 import {ChangePassEmailComponent} from './changePassEmail/changePassEmail.component';
 import {ChangePassComponent} from './changePass/changePass.component';
+import {RegistrationComponent} from './registration/registration.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'registration',
+        component: RegistrationComponent,
       },
       {
         path: 'changePass',
