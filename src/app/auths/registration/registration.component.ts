@@ -58,11 +58,10 @@ export class RegistrationComponent implements OnInit {
   }
   initForm() {
     this.inputUser = new FormGroup({
-      name: new FormControl(null, [checkUser, Validators.maxLength(50), Validators.required]),
-      email: new FormControl('', [validEmail, Validators.required]),
-      pass: new FormControl(null, [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
-      newPass: new FormControl(null, [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
-      recaptchaReactive: new FormControl(null, [])
+      // name: new FormControl(null, [checkUser, Validators.maxLength(50), Validators.required]),
+      mail: new FormControl('', [validEmail, Validators.required]),
+      // pass: new FormControl(null, [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
+      // oldPass: new FormControl(null, [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
     });
   }
 
@@ -97,33 +96,11 @@ export class RegistrationComponent implements OnInit {
     this.submitted = true;
     this.captchaError = true;
     if (this.inputUser.valid) {
-      if (this.inputUser.value.remember) {
-        document.cookie = 'name=' + this.inputUser.value.name;
-        document.cookie = 'pass=' + this.inputUser.value.pass;
-        document.cookie = 'remember=' + true;
-      } else {
-        document.cookie = 'name=' + '';
-        document.cookie = 'pass=' + '';
-        document.cookie = 'remember=' + false;
-      }
-      this.loginService.login(this.inputUser.value).subscribe(res => {
+      this.loginService.registration(this.inputUser.value).subscribe(res => {
         this.submitted = false;
         if (res.status === 200) {
-          console.log(res.body);
-          if (res.body.customUserDetails.rolesId === 1) {
-            this.router.navigate(['/admin/home']);
-            localStorage.setItem('objects', JSON.stringify(res.body.listObjects));
-            console.log('admin');
-          } else if ( res.body.customUserDetails.rolesId === 2) {
-            this.router.navigate(['/trang-chu']);
-            localStorage.setItem('objectsC', JSON.stringify(res.body.listObjects));
-            console.log('client');
-          }
-          localStorage.setItem('httpHeaders', res.body.httpHeaders.Authorization);
-          localStorage.setItem('users', res.body.customUserDetails.fullName);
-          localStorage.setItem('userDetails', JSON.stringify(res.body.customUserDetails));
           this.isLoad = false;
-          this.captchaError = false;
+          console.log(res.body);
         }
       }, err => {
         const title = this.translateService.instant('login.error');
@@ -136,7 +113,6 @@ export class RegistrationComponent implements OnInit {
           this.isLoad = false;
           this.captchaError = false;
           this.toastr.showToast('danger', title, body1);
-          grecaptcha.reset();
         }
       });
     } else {
