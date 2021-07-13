@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {PagesComponent} from './pages.component';
 import {HomeComponent} from './homes/home.component';
+import {InforUsersComponent} from "./infor_users/infor-users.component";
 
 const routes: Routes = [{
   path: '',
@@ -11,6 +12,9 @@ const routes: Routes = [{
     {
       path: 'home',
       component: HomeComponent,
+    }, {
+      path: 'info-users',
+      component: InforUsersComponent,
     },
     {
       path: 'users',

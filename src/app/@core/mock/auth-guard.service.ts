@@ -22,17 +22,19 @@ export class AuthGuardService implements CanActivate {
     let checkRole = false;
     const obj = JSON.parse(localStorage.getItem('objects'));
     try {
-      if (state.url === '/admin/home' || state.url === '/admin/404') {
+      if (state.url === '/admin/home' || state.url === '/admin/404' || state.url === '/admin/info-users') {
         return true;
-      }
-      for (let i = 0; i < obj?.length; i++) {
-        const path =  state.url.substring(0, obj[i].link?.length);
-        if (obj[i].link !== '' && obj[i].link === path) {
-          role.slice(0, role.length);
-          role.push(obj[i]);
-          checkRole = true;
+      } else {
+        for (let i = 0; i < obj?.length; i++) {
+          const path = state.url.substring(0, obj[i].link?.length);
+          if (obj[i].link !== '' && obj[i].link === path) {
+            role.slice(0, role.length);
+            role.push(obj[i]);
+            checkRole = true;
+          }
         }
       }
+
       if (!checkRole) {
         this.router.navigate(['/admin/home']);
         return false;

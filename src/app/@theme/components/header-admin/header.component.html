@@ -16,19 +16,19 @@
     [picture]="user?.pathUrl ? user?.pathUrl : 'https://www.w3schools.com/howto/img_avatar.png'">
   </nb-user>
   <div class="dropdown-content" style="min-width: 180px !important;">
-    <li>
-      <ng-select [items]="themes" bindLabel="name" bindValue="value"
-                 fullWidth
-                 [(ngModel)]="currentTheme"
-                 (ngModelChange)="changeTheme($event)"
-                 [clearable]="false">
-      </ng-select>
-    </li>
-    <li>
-      <ng-select [clearable]="false" bindLabel="name"  bindValue="value" [items]="languages"
-                 (ngModelChange)="changeLanguage($event)"  [(ngModel)]="currentLanguage" fullWidth>
-      </ng-select>
-    </li>
+<!--    <li>-->
+<!--&lt;!&ndash;      <ng-select [items]="themes" bindLabel="name" bindValue="value"&ndash;&gt;-->
+<!--&lt;!&ndash;                 fullWidth&ndash;&gt;-->
+<!--&lt;!&ndash;                 [(ngModel)]="currentTheme"&ndash;&gt;-->
+<!--&lt;!&ndash;                 (ngModelChange)="changeTheme($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                 [clearable]="false">&ndash;&gt;-->
+<!--&lt;!&ndash;      </ng-select>&ndash;&gt;-->
+<!--&lt;!&ndash;    </li>&ndash;&gt;-->
+<!--&lt;!&ndash;    <li>&ndash;&gt;-->
+<!--&lt;!&ndash;      <ng-select [clearable]="false" bindLabel="name"  bindValue="value" [items]="languages"&ndash;&gt;-->
+<!--&lt;!&ndash;                 (ngModelChange)="changeLanguage($event)"  [(ngModel)]="currentLanguage" fullWidth>&ndash;&gt;-->
+<!--&lt;!&ndash;      </ng-select>&ndash;&gt;-->
+<!--    </li>-->
     <li (click)="viewUsers(null)">{{ 'common.header.menu.profile' | translate}}</li>
     <li (click)="router.navigate(['auths/changePass'])">{{ 'common.header.menu.changePass' | translate}}</li>
     <li (click)="logout()">{{ 'common.header.menu.logout' | translate}}</li>

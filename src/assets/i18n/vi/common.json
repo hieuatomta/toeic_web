@@ -16,7 +16,8 @@
       "active": "Hoạt động",
       "inactive": "Không hoạt động",
       "0": "Bị khóa",
-      "1": "Hoạt động"
+      "1": "Hoạt động",
+      "2": "Chưa xác thực"
     },
     "type": {
       "0": "Admin",
