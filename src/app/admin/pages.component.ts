@@ -59,6 +59,8 @@ export class PagesComponent implements OnInit {
       if (token.trim().length === 0 && token === null) {
         localStorage.setItem('objects', null);
       } else {
+        // login thanh cong r, nhung van gui them 1 api xac thuc nua -- fix
+        console.log("test");
         this.loginService.authenticationcate({}).subscribe(res => {
           if (res.status === 200) {
             this.obj = res.body.listObjects;
