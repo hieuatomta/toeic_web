@@ -13,6 +13,10 @@ export class LoginService {
   constructor(protected http: HttpClient) {
   }
 
+  registration(login: LoginProgramModel): Observable<EntityResponseType> {
+    return this.http.post<LoginProgramModel>(`${environment.apiUrl}/registration`, login, {observe: 'response'});
+  }
+
   login(login: LoginProgramModel): Observable<EntityResponseType> {
     return this.http.post<LoginProgramModel>(`${environment.apiUrl}/login`, login, {observe: 'response'});
   }

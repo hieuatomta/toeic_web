@@ -50,6 +50,7 @@ export class ConfirmEmailComponent implements OnInit {
     this.submitted = true;
     if (this.inputUser.valid) {
       this.http.sendSimpleEmail(this.inputUser.value).subscribe(res => {
+        console.log(res);
         if (res.status === 200) {
           this.submitted = false;
           this.isLoad = false;
@@ -63,6 +64,7 @@ export class ConfirmEmailComponent implements OnInit {
 
         }
       }, err => {
+        console.log(err);
         const title = this.translateService.instant('login.error');
         let body: any;
         try {

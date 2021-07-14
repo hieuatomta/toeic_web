@@ -41,15 +41,14 @@
 <!--            <re-captcha style="display: flex; justify-content: center;"-->
 <!--                        formControlName="recaptchaReactive"></re-captcha>-->
 <!--          </div>-->
-          <ngx-inline-message [message]="'login.recaptchaReactive'|translate"
-                              [formName]="inputUser.get('recaptchaReactive')"></ngx-inline-message>
+<!--          <ngx-inline-message [message]="'login.recaptchaReactive'|translate"-->
+<!--                              [formName]="inputUser.get('recaptchaReactive')"></ngx-inline-message>-->
           <div class="modal-buttons">
             <a routerLink="/auths/confirmEmail">{{ 'login.confirmEmail' | translate}}</a>
-<!--            <ng-select [clearable]="false" bindLabel="name"  bindValue="value" [items]="languages"-->
-<!--                       (ngModelChange)="changeLanguage($event)"  [(ngModel)]="currentLanguage" fullWidth>-->
-<!--            </ng-select>-->
+            <a routerLink="/auths/registration">Đăng ký</a>
             <button class="btn btn-main" [disabled]="inputUser.invalid">{{ 'login.login' | translate}}</button>
           </div>
+
         </form>
       </div>
       <div class="modal-right" style="position: relative">
