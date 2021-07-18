@@ -28,6 +28,7 @@ import {SharedModule} from '../../shares/shared.module';
 import {UsersComponent} from './users.component';
 import {NgxMaskModule} from 'ngx-mask';
 import {HeroPickerModule} from '../../shares/directives/hero-picker/hero-picker.module';
+import {UserUpdateClientComponent} from "./user-update-client/user-update-client.component";
 
 
 @NgModule({
@@ -57,7 +58,7 @@ import {HeroPickerModule} from '../../shares/directives/hero-picker/hero-picker.
   entryComponents: [
     UserUpdateComponent
   ],
-  declarations: [UsersComponent, UserUpdateComponent],
+  declarations: [UsersComponent, UserUpdateComponent, UserUpdateClientComponent],
 })
 export class UsersModule {
 }

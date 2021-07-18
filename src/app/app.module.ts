@@ -33,6 +33,7 @@ import {FacebookModule} from 'ngx-facebook';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PdfViewerModule} from 'ng2-pdf-viewer';
 import {AgmCoreModule} from '@agm/core';
+import {NbMomentDateModule} from "@nebular/moment";
 
 registerLocaleData(vi, 'vi-VI', viEt);
 
@@ -49,6 +50,8 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    NbDateFnsDateModule,
+    NbMomentDateModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NgbModule,

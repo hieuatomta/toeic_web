@@ -3,6 +3,10 @@ import {Router} from '@angular/router';
 import {CategoriesService} from '../../../@core/services/categories.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LoginService} from '../../../@core/services/login.service';
+import {UserUpdateComponent} from "../../../admin/sys-users/user-update/user-update.component";
+import {NbDialogService, NbToastrService} from "@nebular/theme";
+import {TranslateService} from "@ngx-translate/core";
+import {UserUpdateClientComponent} from "../../../admin/sys-users/user-update-client/user-update-client.component";
 
 declare const jQuery: any;
 
@@ -59,6 +63,9 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
               private categoriesService: CategoriesService,
               public domSanitizer: DomSanitizer,
               public el: ElementRef,
+              private translate: TranslateService,
+              private toastrService: NbToastrService,
+              private dialogService: NbDialogService,
               private loginService: LoginService,
               private renderer: Renderer2,
               private elementRef: ElementRef
@@ -123,6 +130,27 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dk() {
     this.router.navigate(['auths/login']);
+  }
+
+  viewUsers(data) {
+    this.router.navigate(['admin/info-users']);
+    const obj = JSON.parse(localStorage.getItem('userDetails'));
+    console.log(obj);
+    this.dialogService.open(UserUpdateClientComponent, {
+      context: {
+        title: this.translate.instant('sys-users.title_edit'),
+        data: obj,
+        isCheck: 0
+      },
+      dialogClass: 'modal-full',
+    }).onClose.subscribe(
+      value => {
+        if (value) {
+            this.toastrService.success(this.translate.instant('sys-users.content_edit_success'),
+              this.translate.instant('common.title_notification'));
+        }
+      }
+    );
   }
 
   logout() {

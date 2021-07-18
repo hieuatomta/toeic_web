@@ -1,25 +1,23 @@
-import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {NbToastrService} from '@nebular/theme';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ToastrService} from '../../../@core/mock/toastr-service';
+import {NbDialogRef, NbToastrService} from '@nebular/theme';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-
+import {RolesService} from '../../../@core/services/roles.service';
+import {UsersService} from '../../../@core/services/users.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {ToastrService} from "../../@core/mock/toastr-service";
-import {RolesService} from "../../@core/services/roles.service";
-import {UsersService} from "../../@core/services/users.service";
-import {getFormattedDate} from "../../shares/utils/date-util";
-
+import {getFormattedDate} from '../../../shares/utils/date-util';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'ngx-user-update',
-  styleUrls: ['./infor-users.component.scss'],
-  templateUrl: './infor-users.component.html',
+  styleUrls: ['./user-update-client.component.scss'],
+  templateUrl: './user-update-client.component.html',
 })
-export class InforUsersComponent implements OnInit {
-  // @Input() value: any;
-  // @Input() readonly: boolean;
-  // @ViewChild('inputElement', {static: false}) inputElement: ElementRef;
+export class UserUpdateClientComponent implements OnInit {
+  @Input() value: any;
+  @Input() readonly: boolean;
+  @ViewChild('inputElement', {static: false}) inputElement: ElementRef;
 
   listRole = null;
   lstRole1 = [];
@@ -37,10 +35,11 @@ export class InforUsersComponent implements OnInit {
   isDis = null;
   url: SafeUrl = '';
   selectedFiles: FileList;
-  user: any;
+
 
   constructor(
     private toastr1: ToastrService,
+    public ref: NbDialogRef<UserUpdateClientComponent>,
     private rolesService: RolesService,
     private sanitizer: DomSanitizer,
     protected cd: ChangeDetectorRef,
@@ -50,8 +49,6 @@ export class InforUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data = JSON.parse(localStorage.getItem('userDetails'));
-    console.log(this.data)
     this.inputUser = new FormGroup({
       name: new FormControl(this.data?.name, [Validators.required]),
       fullName: new FormControl(this.data?.fullName, [Validators.required]),
@@ -62,9 +59,36 @@ export class InforUsersComponent implements OnInit {
       dateOfBirth: new FormControl(null, []),
       status: new FormControl(this.data?.status, [Validators.required]),
     });
-    this.inputUser.get('dateOfBirth').setValue(new Date(this.data?.dateOfBirth));
+    if (this.data?.status === 1) {
+      this.inputUser.get('status').setValue("Hoạt động");
+    } else if (this.data?.status === 0) {
+      this.inputUser.get('status').setValue("Khóa");
+
+    }
+    this.url = this.inputUser.get('pathUrl').value;
+    console.log(this.isCheck);
+    if (this.isCheck === 0) {
+      this.isDis = null;
+    } else {
+      this.isDis = true;
+      this.inputUser.patchValue(this.data);
+      this.rolesService.query().subscribe(res => {
+        this.lstRole1 = res.body.data.list;
+      }, err => {
+      });
+    }
+    this.inputUser.get('dateOfBirth').setValue(new Date(this.data?.dateOfBirth.toString()));
   };
 
+  randomPass(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 
   changeValue() {
     if (!this.cd['destroyed']) {
@@ -84,7 +108,7 @@ export class InforUsersComponent implements OnInit {
       if (this.data == null) {
         this.userService.insert(data, this.selectedFiles?.item(0)).subscribe(
           (value) => {
-            // this.ref.close(value);
+            this.ref.close(value);
           },
           error => {
             this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
@@ -99,7 +123,7 @@ export class InforUsersComponent implements OnInit {
             if (rs.isCheck === 1) {
               localStorage.setItem('userDetails', JSON.stringify(rs));
             }
-            // this.ref.close(value);
+            this.ref.close(value);
           },
           (error) => {
             this.toastr.danger(error.error.message, this.translate.instant('common.title_notification'));
@@ -123,5 +147,9 @@ export class InforUsersComponent implements OnInit {
     } else {
       this.selectedFiles = null;
     }
+  }
+
+  cancel() {
+    this.ref.close();
   }
 }

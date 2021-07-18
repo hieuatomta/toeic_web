@@ -22,17 +22,12 @@
           <nb-user style="  height: 100%;"
             data-toggle="dropdown1" aria-haspopup="true" aria-expanded="false"
             [onlyPicture]="false"
-            [name]="users.fullName"
+            [name]="users.fullName ? users.fullName : users.mail?.toLowerCase()"
             (click)="false"
             [picture]="users?.pathUrl ? users?.pathUrl : 'https://www.w3schools.com/howto/img_avatar.png'">
           </nb-user>
           <div class="dropdown1-content" style="min-width: 180px !important;">
-            <!--        <li>-->
-            <!--          <ng-select [clearable]="false" bindLabel="name"  bindValue="value" [items]="languages"-->
-            <!--                     (ngModelChange)="changeLanguage($event)"  [(ngModel)]="currentLanguage" fullWidth>-->
-            <!--          </ng-select>-->
-            <!--        </li>-->
-            <!--        <li (click)="viewUsers(null)">{{ 'common.header.menu.profile' | translate}}</li>-->
+            <li class="menu" (click)="viewUsers(null)">{{ 'common.header.menu.profile' | translate}}</li>
             <li class="menu">{{ 'common.header.menu.changePass' | translate}}</li>
             <li class="menu" (click)="logout()">{{ 'common.header.menu.logout' | translate}}</li>
           </div>
