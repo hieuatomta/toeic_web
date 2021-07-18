@@ -98,7 +98,7 @@
             <div class="col-lg-12 form-group" style="display: flex">
               <div class="col-lg-3">
                 <label class="label">
-                  {{ 'common.table.item_status' | translate }} <span style="color: red">(*)</span>
+                  {{ 'common.table.item_status' | translate }}
                 </label>
               </div>
               <div class="col-lg-6">
@@ -110,9 +110,9 @@
 <!--                  <ng-option *ngFor="let item of listStatus" [value]="item.code"> {{ item.name | translate }}-->
 <!--                  </ng-option>-->
 <!--                </ng-select>-->
-                <input disabled class="custom-border" formControlName="status" type="text" nbInput
+                <input disabled class="custom-border" type="text" nbInput
                        fullWidth placeholder="{{'common.table.placeHolder' |translate}}"
-                       trim="blur" value="2"
+                       trim="blur" value="{{  'common.status.' + valueStatus | translate }}"
                        [ngClass]="{'status-danger': this.inputUser.get('status').touched && this.inputUser.get('status').errors}">
                 <ngx-inline-message [message]="'common.table.item_status'|translate"
                                     [formName]="inputUser.get('status')"></ngx-inline-message>

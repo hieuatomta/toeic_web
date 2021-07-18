@@ -48,6 +48,8 @@ export class UserUpdateClientComponent implements OnInit {
     private userService: UsersService) {
   }
 
+  valueStatus: any;
+
   ngOnInit(): void {
     this.inputUser = new FormGroup({
       name: new FormControl(this.data?.name, [Validators.required]),
@@ -59,12 +61,9 @@ export class UserUpdateClientComponent implements OnInit {
       dateOfBirth: new FormControl(null, []),
       status: new FormControl(this.data?.status, [Validators.required]),
     });
-    if (this.data?.status === 1) {
-      this.inputUser.get('status').setValue("Hoạt động");
-    } else if (this.data?.status === 0) {
-      this.inputUser.get('status').setValue("Khóa");
 
-    }
+    this.valueStatus = this.data?.status;
+
     this.url = this.inputUser.get('pathUrl').value;
     console.log(this.isCheck);
     if (this.isCheck === 0) {
