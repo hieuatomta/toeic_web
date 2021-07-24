@@ -43,9 +43,9 @@ export class UsersComponent implements OnInit {
   };
   columns = [
     {name: 'common.table.item_number', prop: 'index', flexGrow: 0.3},
-    {name: 'common.table.item_username', prop: 'name', flexGrow: 1},
-    {name: 'common.table.item_fullName', prop: 'fullName', flexGrow: 1},
+    // {name: 'common.table.item_username', prop: 'name', flexGrow: 1},
     {name: 'common.table.item_email', prop: 'mail', flexGrow: 1},
+    {name: 'common.table.item_fullName', prop: 'fullName', flexGrow: 1},
     {name: 'common.table.item_tel', prop: 'phone', flexGrow: 0.7},
     {name: 'common.table.item_avatar', prop: 'pathUrl', flexGrow: 0.5},
     {name: 'common.table.item_dateOfBirth', prop: 'dateOfBirth', flexGrow: 1},
@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
   ];
 
   inputForm = new FormGroup({
-    name: new FormControl(null, []),
+    // name: new FormControl(null, []),
     fullName: new FormControl(null, []),
     mail: new FormControl(null, []),
     phone: new FormControl(null, []),
@@ -114,7 +114,7 @@ export class UsersComponent implements OnInit {
     this.userService.doSearch({
       page: this.page.offset,
       page_size: this.page.limit,
-      name: this.inputForm.get("name").value,
+      // name: this.inputForm.get("name").value,
       fullName: this.inputForm.get("fullName").value,
       mail: this.inputForm.get("mail").value,
       phone: this.inputForm.get("phone").value,
@@ -135,7 +135,7 @@ export class UsersComponent implements OnInit {
     this.dialogService.open(ConfirmDialogComponent, {
       context: {
         title: this.translate.instant('common.title_notification'),
-        message: this.translate.instant('sys-users.title_delete') + ' ' + data.name
+        message: this.translate.instant('sys-users.title_delete') + ' ' + data.mail
       },
     }).onClose.subscribe(res => {
       if (res) {

@@ -9,14 +9,6 @@
         <form (ngSubmit)="onSubmit()" [formGroup]="inputUser">
           <div class="form-group">
             <div class="input-icon -show">
-              <input (keyup)="trimValue($event)" [type]="getInputType(1)" formControlName="userName" type="text"
-                     class="form-control" placeholder="{{ 'login.name' | translate}}"
-                     [ngClass]="{'status-danger': this.inputUser.get('userName').errors}">
-              <span class="icon"><img src="assets/images/business-contact-86.svg"></span>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="input-icon -show">
               <input (keyup)="trimValue($event)" [type]="getInputType(1)" formControlName="oldPass" type="password"
                      class="form-control" placeholder="{{ 'login.oldPass' | translate}}"
                      [ngClass]="{'status-danger': this.inputUser.get('oldPass').errors}">
@@ -50,7 +42,7 @@
           <ngx-inline-message [message]="'login.comPass'|translate"
                               [formName]="inputUser.get('comPass')"></ngx-inline-message>
           <div class="modal-buttons" style="margin-top: 2em;">
-            <a routerLink="/auths/login">{{ 'login.login' | translate}}</a>
+            <a routerLink="/admin/home">{{ 'common.come' | translate}}</a>
             <button class="btn btn-main" [disabled]="inputUser.invalid">{{ 'login.changePass' | translate}}</button>
           </div>
         </form>
