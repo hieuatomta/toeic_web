@@ -10,5 +10,17 @@
     "content_add_success": "Thêm người dùng thành công",
     "content_edit_success": "Sửa thông tin thành công",
     "delete_success": "Xóa người dùng thành công"
+  },
+  "sys-topic": {
+    "title": "Quản lý chủ đề",
+    "insert_btn": "Thêm mới chủ đề",
+    "title_add": "Thêm mới chủ đề",
+    "title_edit": "Thông tin chủ đề",
+    "title_view": "Xem chi tiết thông tin chủ đề",
+    "title_delete": "Xác nhận xóa chủ đề",
+    "unknown_error": "Lỗi không xác định",
+    "content_add_success": "Thêm chủ đề thành công",
+    "content_edit_success": "Sửa chủ đề thành công",
+    "delete_success": "Xóa chủ đề thành công"
   }
 }

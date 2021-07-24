@@ -29,6 +29,7 @@ import {Ng2SmartTableModule} from "ng2-smart-table";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {NbDateFnsDateModule} from "@nebular/date-fns";
 import {NbMomentDateModule} from "@nebular/moment";
+
 @NgModule({
   imports: [
     PagesRoutingModule,
