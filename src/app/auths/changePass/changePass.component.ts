@@ -20,6 +20,7 @@ export class ChangePassComponent implements OnInit {
 
   inputUser: FormGroup;
   data: any;
+  checkKey: any;
   body: any;
   submitted = false;
   isLoad: boolean;
@@ -29,7 +30,11 @@ export class ChangePassComponent implements OnInit {
               private toastr: ToastrService,
               private translateService: TranslateService,
               private router: Router) {
-
+    this.checkKey = localStorage.getItem('httpHeaders');
+    if (this.checkKey === null) {
+      // tai khoan chua login - cho quay ve trang login
+      this.router.navigate(['auths/login']);
+    }
   }
 
   showPassword = false;
@@ -73,7 +78,7 @@ export class ChangePassComponent implements OnInit {
 
   initForm() {
     this.inputUser = new FormGroup({
-        userName: new FormControl(this.data?.userName, [checkUser, Validators.maxLength(50), Validators.required]),
+        userName: new FormControl(this.checkKey, []),
         oldPass: new FormControl('', [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
         newPass: new FormControl('', [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
         comPass: new FormControl('', [notSpaceLogin, Validators.minLength(6), Validators.maxLength(60), Validators.required]),
@@ -102,7 +107,7 @@ export class ChangePassComponent implements OnInit {
             this.isLoad = false;
           }
           this.toastr.showToast('success', this.translateService.instant('login.notification'), this.body);
-          this.router.navigate(['auths/login']);
+          this.router.navigate(['admin/home']);
         }
       }, err => {
         const title = this.translateService.instant('login.error');

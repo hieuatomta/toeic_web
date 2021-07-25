@@ -15,6 +15,10 @@ const routes: Routes = [{
     }, {
       path: 'info-users',
       component: InforUsersComponent,
+    }, {
+      path: 'topic',
+      loadChildren: () => import('./sys-topic/topic.module')
+        .then(m => m.TopicModule),
     },
     {
       path: 'users',

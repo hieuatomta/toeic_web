@@ -53,7 +53,7 @@ export class InforUsersComponent implements OnInit {
     this.data = JSON.parse(localStorage.getItem('userDetails'));
     console.log(this.data)
     this.inputUser = new FormGroup({
-      name: new FormControl(this.data?.name, [Validators.required]),
+      // name: new FormControl(this.data?.name, [Validators.required]),
       fullName: new FormControl(this.data?.fullName, [Validators.required]),
       phone: new FormControl(this.data?.phone, [Validators.pattern(/^\d{10}$/)]),
       mail: new FormControl(this.data?.mail, [Validators.required]),
@@ -62,6 +62,7 @@ export class InforUsersComponent implements OnInit {
       dateOfBirth: new FormControl(null, []),
       status: new FormControl(this.data?.status, [Validators.required]),
     });
+    this.url = this.inputUser.get('pathUrl').value;
     this.inputUser.get('dateOfBirth').setValue(new Date(this.data?.dateOfBirth));
   };
 

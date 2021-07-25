@@ -59,7 +59,7 @@ export class UserUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputUser = new FormGroup({
-      name: new FormControl(this.data?.name, [Validators.required]),
+      // name: new FormControl(this.data?.name, [Validators.required]),
       fullName: new FormControl(this.data?.fullName, [Validators.required]),
       phone: new FormControl(this.data?.phone, [Validators.pattern(/^\d{10}$/)]),
       mail: new FormControl(this.data?.mail, [Validators.required]),

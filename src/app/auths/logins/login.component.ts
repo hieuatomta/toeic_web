@@ -135,7 +135,7 @@ export class LoginComponent implements OnInit {
           this.isLoad = false;
           this.captchaError = false;
           this.toastr.showToast('danger', title, body1);
-          grecaptcha.reset();
+          // grecaptcha.reset();
         }
       });
     } else {
