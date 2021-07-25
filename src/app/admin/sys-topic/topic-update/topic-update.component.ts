@@ -1,22 +1,12 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef, EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ToastrService} from '../../../@core/mock/toastr-service';
 import {NbDialogRef, NbToastrService} from '@nebular/theme';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RolesService} from '../../../@core/services/roles.service';
-import {UsersService} from '../../../@core/services/users.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {getFormattedDate} from '../../../shares/utils/date-util';
 import {TopicService} from "../../../@core/services/topic.service";
+import {ObjectsService} from "../../../@core/services/objects.service";
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -45,10 +35,9 @@ export class TopicUpdateComponent implements OnInit {
   isDis = null;
   url: SafeUrl = '';
   selectedFiles: FileList;
-
-
   constructor(
     private toastr1: ToastrService,
+    private objectsService: ObjectsService,
     public ref: NbDialogRef<TopicUpdateComponent>,
     private rolesService: RolesService,
     private sanitizer: DomSanitizer,
@@ -58,40 +47,59 @@ export class TopicUpdateComponent implements OnInit {
     private topicService: TopicService) {
   }
 
+  listTopic: any;
+  listPart: any;
+
   ngOnInit(): void {
+    console.log(this.data);
+
     this.inputUser = new FormGroup({
-      // name: new FormControl(this.data?.name, [Validators.required]),
-      fullName: new FormControl(this.data?.fullName, [Validators.required]),
-      phone: new FormControl(this.data?.phone, [Validators.pattern(/^\d{10}$/)]),
-      mail: new FormControl(this.data?.mail, [Validators.required]),
-      pathUrl: new FormControl(this.data?.pathUrl, []),
-      rolesId: new FormControl(this.data?.rolesId, []),
-      dateOfBirth: new FormControl(null, []),
-      status: new FormControl(this.data?.status, [Validators.required]),
+      code: new FormControl(null, []),
+      name: new FormControl(this.data?.name, [Validators.required]),
+      idType: new FormControl(this.data?.idType, [Validators.required]),
+      nameType: new FormControl(null, []),
+      idPartTopic: new FormControl(this.data?.idPartTopic, [Validators.required]),
+      namePartTopic: new FormControl(this.data?.namePartTopic, []),
+      creationTime: new FormControl(null, []),
     });
-    this.url = this.inputUser.get('pathUrl').value;
-    console.log(this.isCheck);
-    if (this.isCheck === 0) {
-      this.isDis = null;
-    } else {
-      this.isDis = true;
-      this.inputUser.patchValue(this.data);
-      this.rolesService.query().subscribe(res => {
-        this.lstRole1 = res.body.data.list;
-      }, err => {
-      });
+    this.getTopic(0)
+    console.log(this.data?.idType)
+    if (this.data?.idType !== null) {
+      this.getTopic(this.data?.idType)
+      // this.inputUser.get('namePartTopidPartTopicic').setValue(this.data?.idType);
     }
-    this.inputUser.get('dateOfBirth').setValue(new Date(this.data?.dateOfBirth.toString()));
   };
 
-  randomPass(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+
+  public getTopic(id) {
+    this.loading = true;
+    this.objectsService.queryTopic(id
+    ).subscribe(
+      (res) => {
+        if (id === 0) {
+          this.listTopic = res.body;
+        } else {
+          this.listPart = res.body
+        }
+      },
+      (error) => {
+        this.loading = false;
+      },
+      () => this.loading = false,
+    );
+  };
+
+  channeTyoe() {
+    console.log(this.inputUser.get('idType').value);
+    if (this.inputUser.get('idType').value !== null) {
+      if (this.inputUser.get('idPartTopic').value !== null) {
+        this.inputUser.get('idPartTopic').setValue(null);
+        this.listPart = null;
+      }
+      this.getTopic(this.inputUser.get('idType').value);
+    } else {
+      this.listPart = null;
     }
-    return result;
   }
 
   changeValue() {
@@ -101,12 +109,12 @@ export class TopicUpdateComponent implements OnInit {
   }
 
   submit() {
+    console.log("as");
     this.inputUser.markAllAsTouched();
     if (this.inputUser.valid) {
       this.loading = true;
       const data = Object.assign({}, this.inputUser.value);
       data.id = this.data?.id;
-      data.dateOfBirth = getFormattedDate(this.inputUser.get('dateOfBirth').value);
       console.log(data);
 
       if (this.data == null) {
@@ -123,10 +131,6 @@ export class TopicUpdateComponent implements OnInit {
       } else {
         this.topicService.update(data).subscribe(
           (value) => {
-            const rs = value.body.data?.list;
-            if (rs.isCheck === 1) {
-              localStorage.setItem('userDetails', JSON.stringify(rs));
-            }
             this.ref.close(value);
           },
           (error) => {
@@ -138,18 +142,6 @@ export class TopicUpdateComponent implements OnInit {
         ;
       }
     } else {
-    }
-  }
-
-
-  selectFile(event) {
-    if (event !== null) {
-      this.selectedFiles = event.target.files;
-      this.url = this.sanitizer.bypassSecurityTrustUrl(
-        window.URL.createObjectURL(event.target.files[0])
-      );
-    } else {
-      this.selectedFiles = null;
     }
   }
 

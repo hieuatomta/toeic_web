@@ -4,11 +4,10 @@ import {ToastrService} from '../../@core/mock/toastr-service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {TopicUpdateComponent} from './topic-update/topic-update.component';
 import {TranslateService} from '@ngx-translate/core';
-import {UsersService} from '../../@core/services/users.service';
 import {HttpHeaders} from '@angular/common/http';
 import {ConfirmDialogComponent} from '../../shares/directives/confirm-dialog/confirm-dialog.component';
-import {RolesService} from '../../@core/services/roles.service';
 import {TopicService} from "../../@core/services/topic.service";
+import {ObjectsService} from "../../@core/services/objects.service";
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -27,8 +26,9 @@ export class TopicComponent implements OnInit {
     private translate: TranslateService,
     private toastrService: NbToastrService,
     private topicService: TopicService,
-    private rolesService: RolesService,
+    private objectsService: ObjectsService,
     private dialogService: NbDialogService) {
+    this.getTopic(0);
   }
 
   isLoad: boolean;
@@ -44,24 +44,24 @@ export class TopicComponent implements OnInit {
   };
   columns = [
     {name: 'common.table.item_number', prop: 'index', flexGrow: 0.3},
-    // {name: 'common.table.item_username', prop: 'name', flexGrow: 1},
-    {name: 'common.table.item_email', prop: 'mail', flexGrow: 1},
-    {name: 'common.table.item_fullName', prop: 'fullName', flexGrow: 1},
-    {name: 'common.table.item_tel', prop: 'phone', flexGrow: 0.7},
-    {name: 'common.table.item_avatar', prop: 'pathUrl', flexGrow: 0.5},
-    {name: 'common.table.item_dateOfBirth', prop: 'dateOfBirth', flexGrow: 1},
-    {name: 'common.table.item_role', prop: 'rolesName', flexGrow: 1},
-    {name: 'common.table.item_status', prop: 'status', flexGrow: 1},
-    {name: 'common.table.item_action', prop: 'action_btn', flexGrow: 1}
+    {name: 'common.table.item_category_type', prop: 'nameType', flexGrow: 0.5},
+    {name: 'common.table.item_category_part_topic', prop: 'namePartTopic', flexGrow: 0.7},
+    {name: 'common.table.item_category_name', prop: 'name', flexGrow: 0.7},
+    {name: 'common.table.item_impact_time', prop: 'creationTime', flexGrow: 0.5},
+    {name: 'common.table.item_update_time', prop: 'creationTime', flexGrow: 0.5},
+    {name: 'common.table.item_action', prop: 'action_btn', flexGrow: 0.5}
   ];
 
+  listTopic: any;
+  listPart: any;
   inputForm = new FormGroup({
-    // name: new FormControl(null, []),
-    fullName: new FormControl(null, []),
-    mail: new FormControl(null, []),
-    phone: new FormControl(null, []),
-    dateOfBirth: new FormControl(null, []),
-    status: new FormControl(null, []),
+    code: new FormControl(null, []),
+    name: new FormControl(null, []),
+    idType: new FormControl(null, []),
+    nameType: new FormControl(null, []),
+    idPartTopic: new FormControl(null, []),
+    namePartTopic: new FormControl(null, []),
+    creationTime: new FormControl(null, []),
   });
 
   pageCallback(pageInfo: { count?: number, pageSize?: number, limit?: number, offset?: number }) {
@@ -109,18 +109,49 @@ export class TopicComponent implements OnInit {
     this.rows = data.list || [];
   }
 
+  public getTopic(id) {
+    this.isLoad = true;
+    this.objectsService.queryTopic(id
+    ).subscribe(
+      (res) => {
+        console.log(res);
+        if ( id === 0) {
+          this.listTopic = res.body;
+        } else  {
+          this.listPart = res.body
+        }
+        // this.onSuccess(res.body.data, res.headers, pageToLoad);
+      },
+      (error) => {
+        this.isLoad = false;
+      },
+      () => this.isLoad = false,
+    );
+  }
+  channeTyoe() {
+    console.log(this.inputForm.get('idType').value);
+    if (this.inputForm.get('idType').value !== null) {
+      if (this.inputForm.get('idPartTopic').value !== null) {
+        this.inputForm.get('idPartTopic').setValue(null);
+        this.listPart = null;
+      }
+      this.getTopic(this.inputForm.get('idType').value);
+    } else {
+      this.listPart = null;
+    }
+  }
   public search(pageToLoad: number) {
     this.isLoad = true;
     this.page.offset = pageToLoad;
     this.topicService.doSearch({
       page: this.page.offset,
       page_size: this.page.limit,
-      // name: this.inputForm.get("name").value,
-      fullName: this.inputForm.get("fullName").value,
-      mail: this.inputForm.get("mail").value,
-      phone: this.inputForm.get("phone").value,
-      dateOfBirth: this.inputForm.get("dateOfBirth").value,
-      status: this.inputForm.get("status").value,
+      // // name: this.inputForm.get("name").value,
+      // fullName: this.inputForm.get("fullName").value,
+      // mail: this.inputForm.get("mail").value,
+      // phone: this.inputForm.get("phone").value,
+      // dateOfBirth: this.inputForm.get("dateOfBirth").value,
+      // status: this.inputForm.get("status").value,
     }).subscribe(
       (res) => {
         this.onSuccess(res.body.data, res.headers, pageToLoad);
@@ -136,7 +167,7 @@ export class TopicComponent implements OnInit {
     this.dialogService.open(ConfirmDialogComponent, {
       context: {
         title: this.translate.instant('common.title_notification'),
-        message: this.translate.instant('sys-topic.title_delete') + ' ' + data.mail
+        message: this.translate.instant('sys-topic.title_delete') + ' ' + data.name
       },
     }).onClose.subscribe(res => {
       if (res) {

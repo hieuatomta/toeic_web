@@ -12,40 +12,36 @@
         <form [formGroup]="inputForm">
           <div class="mb-4">
             <div class="row">
-<!--              <div class="col-lg-4 form-group">-->
-<!--                <label class="label">-->
-<!--                  {{ 'common.table.item_username' | translate }}-->
-<!--                </label>-->
-<!--                <input (keyup.enter)="search(0)" nbInput fullWidth formControlName="name">-->
-<!--              </div>-->
               <div class="col-lg-4 form-group">
                 <label class="label">
-                  {{ 'common.table.item_fullName' | translate }}
+                  {{ 'common.table.item_category_name' | translate }}
                 </label>
-                <input (keyup.enter)="search(0)" nbInput fullWidth formControlName="fullName">
+                <input (keyup.enter)="search(0)" nbInput fullWidth formControlName="name">
               </div>
               <div class="col-lg-4 form-group">
                 <label class="label">
-                  {{ 'common.table.item_tel' | translate }}
-                </label>
-                <input (keyup.enter)="search(0)" nbInput fullWidth formControlName="phone">
-              </div>
-              <div class="col-lg-4 form-group">
-                <label class="label">
-                  {{'common.table.item_email' | translate }}
-                </label>
-                <input (keyup.enter)="search(0)" nbInput fullWidth formControlName="mail">
-              </div>
-              <div class="col-lg-4 form-group">
-                <label class="label">
-                  {{ 'common.table.item_status' | translate }}
+                  {{ 'common.table.item_category_type' | translate }}
                 </label>
                 <ng-select fullWidth appendTo="body"
                            placeholder="{{'common.placeHolder' |translate}}"
                            notFoundText="{{'common.notFoundText' |translate}}"
                            clearAllText="{{'common.clearAllText' |translate}}"
-                           formControlName="status">
-                  <ng-option *ngFor="let item of listStatus" [value]="item.code"> {{ item.name | translate }}
+                           (change)="channeTyoe()"
+                           formControlName="idType">
+                  <ng-option *ngFor="let item of listTopic" [value]="item.id"> {{ item.name | translate }}
+                  </ng-option>
+                </ng-select>
+              </div>
+              <div class="col-lg-4 form-group">
+                <label class="label">
+                  {{'common.table.item_category_part_topic' | translate }}
+                </label>
+                <ng-select fullWidth appendTo="body"
+                           placeholder="{{'common.placeHolder' |translate}}"
+                           notFoundText="{{'common.notFoundText' |translate}}"
+                           clearAllText="{{'common.clearAllText' |translate}}"
+                           formControlName="idPartTopic">
+                  <ng-option *ngFor="let item of listPart" [value]="item.id"> {{ item.name | translate }}
                   </ng-option>
                 </ng-select>
               </div>
@@ -80,7 +76,7 @@
                   {{ page.offset * page.limit + rowIndex + 1 }}
                 </ng-container>
                 <ng-container
-                  *ngIf="col.prop ==='mail' || col.prop ==='name'|| col.prop ==='rolesName'|| col.prop ==='fullName' || col.prop ==='phone' "
+                  *ngIf="col.prop ==='nameType' || col.prop ==='name'|| col.prop ==='namePartTopic'|| col.prop ==='fullName' || col.prop ==='phone' "
                   class="text-right">
                   <span class="row-data-show"
                         title="{{value}}">{{value.length > 50 ? value.substring(0, 50).concat('...') : value}}</span>

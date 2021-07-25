@@ -56,6 +56,8 @@
       "item_description": "Mô tả",
       "item_category_code": "Mã chủ đề",
       "item_category_name": "Tên chủ đề",
+      "item_category_type": "Loại bài",
+      "item_category_part_topic": "Phần",
       "item_objects_name": "Tên chức năng",
       "item_objects_paren": "Chức năng cha",
       "item_icon": "Icon",

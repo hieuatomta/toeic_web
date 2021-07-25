@@ -15,6 +15,11 @@ export class ObjectsService {
       observe: 'response'
     });
   }
+  queryTopic(id: any): Observable<any> {
+    return this.http.get<any[]>(`${environment.apiUrl}/objects-topic/${id}`, {
+      observe: 'response'
+    });
+  }
 
   getAllObjRoleAction(id: any): Observable<any> {
     return this.http.get<any[]>(`${environment.apiUrl}/objects/${id}`, {
