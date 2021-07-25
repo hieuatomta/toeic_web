@@ -99,7 +99,7 @@ export class AppModule {
 export function getLanguage() {
   let language = localStorage.getItem('languageName');
   if (language === undefined || language === null) {
-    language = 'vi';
+    language = 'en';
   }
   return language;
 }

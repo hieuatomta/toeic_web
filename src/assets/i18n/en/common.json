@@ -1,10 +1,10 @@
 {
   "common": {
     "header": {
-      "title": "CLOTHING MANAGEMENT SYSTEM",
+      "title": "TOEIC MANAGEMENT SYSTEM",
       "menu": {
-        "profile": "Profile Information",
-        "changePass": "Change Password",
+        "profile": "Account Management",
+        "changePass": "Change password",
         "logout": "Log out"
       }
     },
@@ -27,8 +27,9 @@
     },
     "table": {
       "item_number": "No",
+      "item_avatar": "Avatar",
       "item_username": "Username",
-      "item_fullName": "fullName",
+      "item_fullName": "FullName",
       "item_passwordHash": "Password",
       "item_repassword": "Enter Password",
       "item_tel": "Phone Number",
