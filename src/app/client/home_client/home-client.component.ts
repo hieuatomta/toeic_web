@@ -13,9 +13,10 @@ export class HomeClientComponent implements OnInit, OnDestroy {
   }
 
   arr = [
-    {id: 1, link: 'assets/images/banner/banner.png'},
-    {id: 2, link: 'assets/images/banner/banner.png'},
-    {id: 3, link: 'assets/images/banner/banner2.png'},
+    {id: 1, link: 'assets/images/banner/z2668762086835_7964a166bf3643f5084113343884e551.jpg'},
+    {id: 2, link: 'assets/images/banner/z2668760300053_454f272ed55d808b819e8ebc414f6195.jpg'},
+    {id: 3, link: 'assets/images/banner/z2668756659373_3d72f7dcac64cd67242f1cd1e637e399.jpg'},
+    {id: 4, link: 'assets/images/banner/z2668766433758_b516aedc0f21a2ac1288b8912d26e70a.jpg'},
   ];
 
   ngOnInit(): void {

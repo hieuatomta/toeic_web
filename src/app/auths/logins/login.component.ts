@@ -110,12 +110,12 @@ export class LoginComponent implements OnInit {
         if (res.status === 200) {
           console.log(res.body);
           if (res.body.customUserDetails.rolesId === 1) {
-            this.router.navigate(['/admin/home']);
+            window.location.href = '/toeic-web/admin/home';
             localStorage.setItem('objects', JSON.stringify(res.body.listObjects));
             console.log('admin');
           } else if ( res.body.customUserDetails.rolesId === 2) {
-            this.router.navigate(['/trang-chu']);
             localStorage.setItem('objectsC', JSON.stringify(res.body.listObjects));
+            window.location.href = '/toeic-web/trang-chu';
             console.log('client');
           }
           localStorage.setItem('httpHeaders', res.body.httpHeaders.Authorization);
