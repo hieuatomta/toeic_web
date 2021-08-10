@@ -1,5 +1,5 @@
 export const getFormattedDate = date => {
-  var month = (1 + date.getMonth()).toString();
+  let month = (1 + date.getMonth()).toString();
   month = month.length > 1 ? month : '0' + month;
 
   let day = date.getDate().toString();

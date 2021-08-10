@@ -16,6 +16,7 @@ import {UsersService} from '../../../@core/services/users.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {getFormattedDate} from '../../../shares/utils/date-util';
+import {validEmail} from "../../../validator";
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -62,14 +63,13 @@ export class UserUpdateComponent implements OnInit {
       // name: new FormControl(this.data?.name, [Validators.required]),
       fullName: new FormControl(this.data?.fullName, [Validators.required]),
       phone: new FormControl(this.data?.phone, [Validators.pattern(/^\d{10}$/)]),
-      mail: new FormControl(this.data?.mail, [Validators.required]),
+      mail: new FormControl(this.data?.mail, [Validators.required, validEmail]),
       pathUrl: new FormControl(this.data?.pathUrl, []),
       rolesId: new FormControl(this.data?.rolesId, []),
       dateOfBirth: new FormControl(null, []),
       status: new FormControl(this.data?.status, [Validators.required]),
     });
     this.url = this.inputUser.get('pathUrl').value;
-    console.log(this.isCheck);
     if (this.isCheck === 0) {
       this.isDis = null;
     } else {

@@ -47,7 +47,7 @@ export class TopicComponent implements OnInit {
     {name: 'common.table.item_category_type', prop: 'nameType', flexGrow: 0.5},
     {name: 'common.table.item_category_part_topic', prop: 'namePartTopic', flexGrow: 0.7},
     {name: 'common.table.item_category_name', prop: 'name', flexGrow: 0.7},
-    {name: 'common.table.item_impact_time', prop: 'creationTime', flexGrow: 0.5},
+    {name: 'common.table.item_impact_time', prop: 'stCreationTime', flexGrow: 0.5},
     {name: 'common.table.item_update_time', prop: 'creationTime', flexGrow: 0.5},
     {name: 'common.table.item_action', prop: 'action_btn', flexGrow: 0.5}
   ];
@@ -61,7 +61,7 @@ export class TopicComponent implements OnInit {
     nameType: new FormControl(null, []),
     idPartTopic: new FormControl(null, []),
     namePartTopic: new FormControl(null, []),
-    creationTime: new FormControl(null, []),
+    stCreationTime: new FormControl(null, []),
   });
 
   pageCallback(pageInfo: { count?: number, pageSize?: number, limit?: number, offset?: number }) {
@@ -104,6 +104,7 @@ export class TopicComponent implements OnInit {
   }
 
   protected onSuccess(data: any | null, headers: HttpHeaders, page: number): void {
+    console.log(data.list)
     this.page.count = data.count;
     this.page.offset = page || 0;
     this.rows = data.list || [];
@@ -146,12 +147,9 @@ export class TopicComponent implements OnInit {
     this.topicService.doSearch({
       page: this.page.offset,
       page_size: this.page.limit,
-      // // name: this.inputForm.get("name").value,
-      // fullName: this.inputForm.get("fullName").value,
-      // mail: this.inputForm.get("mail").value,
-      // phone: this.inputForm.get("phone").value,
-      // dateOfBirth: this.inputForm.get("dateOfBirth").value,
-      // status: this.inputForm.get("status").value,
+      name: this.inputForm.get("name").value,
+      idType: this.inputForm.get("idType").value,
+      idPartTopic: this.inputForm.get("idPartTopic").value
     }).subscribe(
       (res) => {
         this.onSuccess(res.body.data, res.headers, pageToLoad);
