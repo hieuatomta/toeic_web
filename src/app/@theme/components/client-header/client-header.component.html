@@ -28,7 +28,7 @@
           </nb-user>
           <div class="dropdown1-content" style="min-width: 180px !important;">
             <li class="menu" (click)="viewUsers(null)">{{ 'common.header.menu.profile' | translate}}</li>
-            <li class="menu">{{ 'common.header.menu.changePass' | translate}}</li>
+            <li class="menu" (click)="router.navigate(['auths/changePass'])">{{ 'common.header.menu.changePass' | translate}}</li>
             <li class="menu" (click)="logout()">{{ 'common.header.menu.logout' | translate}}</li>
           </div>
         </div>

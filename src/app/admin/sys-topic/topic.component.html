@@ -81,7 +81,7 @@
                   <span class="row-data-show"
                         title="{{value}}">{{value.length > 50 ? value.substring(0, 50).concat('...') : value}}</span>
                 </ng-container>
-                <ng-container *ngIf="col.prop ==='dateOfBirth'">
+                <ng-container *ngIf="col.prop ==='stCreationTime'">
                   {{ value | date: 'dd-MM-yyyy'}}
                 </ng-container>
                 <ng-container  *ngIf="col.prop ==='pathUrl'">
@@ -92,9 +92,9 @@
                 </ng-container>
                 <ng-container *ngIf="col.prop ==='action_btn'" class="text-right">
                   <div>
-                    <button class="p-1" nbButton status="info" ghost title="{{ 'common.view' | translate}}"
+                    <button class="p-1" nbButton status="info" ghost title="{{ 'common.edit' | translate}}"
                             (click)="viewUsers(row)">
-                      <nb-icon icon="eye-outline" pack="eva" size="tiny"></nb-icon>
+                      <nb-icon icon="edit-2-outline" pack="eva" size="tiny"></nb-icon>
                     </button>
                     <button class="p-1" nbButton status="danger" ghost title="{{ 'common.delete' | translate }}"
                             (click)="deleteUsers(row)">
