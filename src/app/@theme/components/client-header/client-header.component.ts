@@ -34,15 +34,15 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       id: 1111,
       parenID: 0,
-      tendulieu: 'Trang chủ',
-      link: 'trang-chu',
+      tendulieu: 'Home',
+      link: 'home',
       check: false
     },
     {
       id: 2111,
       parenID: 0,
-      tendulieu: 'Giới thiệu',
-      link: 'danh-sach-san-pham',
+      tendulieu: 'About',
+      link: 'about',
       check: false
     }
   ];
@@ -50,8 +50,8 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       id: 7111,
       parenID: 0,
-      tendulieu: 'Liên lạc',
-      link: 'lien-he',
+      tendulieu: 'Contact',
+      link: 'contact',
       check: false
     },
   ];

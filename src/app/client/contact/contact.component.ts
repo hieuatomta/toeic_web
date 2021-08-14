@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {marker} from './marker';
+import {Marker} from './marker';
 
 
 @Component({
@@ -28,15 +28,15 @@ export class ContactComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  markerDragEnd(m: marker, $event: MouseEvent) {
+  markerDragEnd(m: Marker, $event: MouseEvent) {
     console.log('dragEnd', m, $event);
   }
 
-  markers: marker[] = [
+  markers: Marker[] = [
     {
       lat: 21.046905,
       lng: 105.7842351,
-      label: 'Health System',
+      label: 'Toeic online learning',
       draggable: true
     },
   ]

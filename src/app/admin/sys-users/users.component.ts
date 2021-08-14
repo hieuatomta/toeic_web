@@ -72,7 +72,7 @@ export class UsersComponent implements OnInit {
     let title;
     let isCheck;
     if (data == null) {
-      title = this.translate.instant('users.title_add');
+      title = this.translate.instant('sys-users.title_add');
       isCheck = 0;
     } else {
       title = this.translate.instant('sys-users.title_view');
