@@ -36,7 +36,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     {
       lat: 21.046905,
       lng: 105.7842351,
-      label: 'Health System',
+      label: 'Toeic online learning',
       draggable: true
     },
   ]

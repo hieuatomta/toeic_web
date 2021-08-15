@@ -48,7 +48,7 @@ export class PagesComponent implements OnInit {
 
     this.menu = [];
     this.home = {
-      title: 'Trang chủ',
+      title: 'Home',
       icon: 'home-outline',
       link: '/admin/home',
     };

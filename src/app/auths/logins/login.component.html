@@ -45,7 +45,7 @@
 <!--                              [formName]="inputUser.get('recaptchaReactive')"></ngx-inline-message>-->
           <div class="modal-buttons">
             <a routerLink="/auths/confirmEmail">{{ 'login.confirmEmail' | translate}}</a>
-            <a routerLink="/auths/registration">Đăng ký</a>
+            <a routerLink="/auths/registration">{{'login.register'| translate}}</a>
             <button class="btn btn-main" [disabled]="inputUser.invalid">{{ 'login.login' | translate}}</button>
           </div>
 
