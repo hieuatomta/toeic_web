@@ -3,7 +3,7 @@ import {
   NbAlertModule,
   NbButtonModule,
   NbCardModule,
-  NbCheckboxModule,
+  NbCheckboxModule, NbDatepickerModule,
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
@@ -33,6 +33,7 @@ import {RecentPostComponent} from './news/recent-post/recent-post.component';
 import {NewsLetterComponent} from './news/news-letter/news-letter.component';
 import {PdfViewerModule} from 'ng2-pdf-viewer';
 import {AgmCoreModule} from '@agm/core';
+import {InforUsersComponent} from "./infor_users/infor-users.component";
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {AgmCoreModule} from '@agm/core';
     ThemeModule,
     NbMenuModule,
     NbCardModule,
+    NbDatepickerModule,
     NbAlertModule,
     FormsModule,
     NbInputModule,
@@ -73,6 +75,7 @@ import {AgmCoreModule} from '@agm/core';
     ListCategoryComponent,
     RecentPostComponent,
     NewsLetterComponent,
+    InforUsersComponent,
   ],
   providers: [
     {

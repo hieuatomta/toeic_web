@@ -48,7 +48,7 @@ export class InforUsersComponent implements OnInit {
     private translate: TranslateService,
     private userService: UsersService) {
   }
-
+  valueStatus: any;
   ngOnInit(): void {
     this.data = JSON.parse(localStorage.getItem('userDetails'));
     console.log(this.data)
@@ -64,6 +64,8 @@ export class InforUsersComponent implements OnInit {
     });
     this.url = this.inputUser.get('pathUrl').value;
     this.inputUser.get('dateOfBirth').setValue(new Date(this.data?.dateOfBirth));
+    this.valueStatus = this.data?.status;
+
   };
 
 

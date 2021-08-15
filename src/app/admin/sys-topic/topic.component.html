@@ -81,8 +81,8 @@
                   <span class="row-data-show"
                         title="{{value}}">{{value.length > 50 ? value.substring(0, 50).concat('...') : value}}</span>
                 </ng-container>
-                <ng-container *ngIf="col.prop ==='stCreationTime'">
-                  {{ value | date: 'dd-MM-yyyy'}}
+                <ng-container *ngIf="col.prop ==='stCreationTime' || col.prop ==='stUpdateTime'">
+                  {{ value | date: 'dd-MM-yyyy HH:mm:ss'}}
                 </ng-container>
                 <ng-container  *ngIf="col.prop ==='pathUrl'">
                   <img style="height: 50px;width: 50px;border-radius: 50%; border: 0;" [src]="value ? value : 'https://www.w3schools.com/howto/img_avatar.png'" alt="">

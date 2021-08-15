@@ -48,7 +48,7 @@ export class TopicComponent implements OnInit {
     {name: 'common.table.item_category_part_topic', prop: 'namePartTopic', flexGrow: 0.7},
     {name: 'common.table.item_category_name', prop: 'name', flexGrow: 0.7},
     {name: 'common.table.item_impact_time', prop: 'stCreationTime', flexGrow: 0.5},
-    {name: 'common.table.item_update_time', prop: 'creationTime', flexGrow: 0.5},
+    {name: 'common.table.item_update_time', prop: 'stUpdateTime', flexGrow: 0.5},
     {name: 'common.table.item_action', prop: 'action_btn', flexGrow: 0.5}
   ];
 
@@ -62,6 +62,7 @@ export class TopicComponent implements OnInit {
     idPartTopic: new FormControl(null, []),
     namePartTopic: new FormControl(null, []),
     stCreationTime: new FormControl(null, []),
+    stUpdateTime: new FormControl(null, []),
   });
 
   pageCallback(pageInfo: { count?: number, pageSize?: number, limit?: number, offset?: number }) {
@@ -104,7 +105,7 @@ export class TopicComponent implements OnInit {
   }
 
   protected onSuccess(data: any | null, headers: HttpHeaders, page: number): void {
-    console.log(data.list)
+    console.log(data)
     this.page.count = data.count;
     this.page.offset = page || 0;
     this.rows = data.list || [];

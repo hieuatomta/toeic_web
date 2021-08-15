@@ -133,24 +133,25 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   viewUsers(data) {
-    this.router.navigate(['admin/info-users']);
-    const obj = JSON.parse(localStorage.getItem('userDetails'));
-    console.log(obj);
-    this.dialogService.open(UserUpdateClientComponent, {
-      context: {
-        title: this.translate.instant('sys-users.title_edit'),
-        data: obj,
-        isCheck: 0
-      },
-      dialogClass: 'modal-full',
-    }).onClose.subscribe(
-      value => {
-        if (value) {
-            this.toastrService.success(this.translate.instant('sys-users.content_edit_success'),
-              this.translate.instant('common.title_notification'));
-        }
-      }
-    );
+    this.router.navigate(['info-users']);
+    // this.router.navigate(['admin/info-users']);
+    // const obj = JSON.parse(localStorage.getItem('userDetails'));
+    // console.log(obj);
+    // this.dialogService.open(UserUpdateClientComponent, {
+    //   context: {
+    //     title: this.translate.instant('sys-users.title_edit'),
+    //     data: obj,
+    //     isCheck: 0
+    //   },
+    //   dialogClass: 'modal-full',
+    // }).onClose.subscribe(
+    //   value => {
+    //     if (value) {
+    //         this.toastrService.success(this.translate.instant('sys-users.content_edit_success'),
+    //           this.translate.instant('common.title_notification'));
+    //     }
+    //   }
+    // );
   }
 
   logout() {

@@ -61,6 +61,7 @@ export class TopicUpdateComponent implements OnInit {
       idPartTopic: new FormControl(this.data?.idPartTopic, [Validators.required]),
       namePartTopic: new FormControl(this.data?.namePartTopic, []),
       creationTime: new FormControl(null, []),
+      updateTime: new FormControl(null, []),
     });
     this.getTopic(0)
     console.log(this.data?.idType)
