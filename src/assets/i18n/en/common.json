@@ -29,6 +29,7 @@
       "2": "Từ chối phê duyệt"
     },
     "table": {
+      "status": "Status",
       "item_number": "No",
       "item_username": "Username",
       "item_name": "Name",
