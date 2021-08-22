@@ -57,6 +57,7 @@
       "item_category_code": "Topic code",
       "item_category_name": "Topic name",
       "item_category_type": "Type of category",
+      "item_category": "Category name",
       "item_category_part_topic": "Part",
       "item_objects_name": "Tên chức năng",
       "item_objects_paren": "Chức năng cha",

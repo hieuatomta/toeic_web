@@ -11,6 +11,7 @@ export class CategoriesService {
   constructor(private http: HttpClient) {
   }
 
+
   query(): Observable<any> {
     return this.http.get<any[]>(`${environment.apiUrl}/categories`, {
       observe: 'response'
@@ -25,14 +26,6 @@ export class CategoriesService {
     });
   }
 
-  public doSearchByClient(req?: any): Observable<any> {
-    const options = createRequestOption(req);
-    return this.http.get<any[]>(`${environment.apiUrl}/client/categories`, {
-      params: options,
-      observe: 'response'
-    });
-  }
-
   public update(data: any): Observable<any> {
     return this.http.put<any>(`${environment.apiUrl}/categories`, data, {
       observe: 'response'
@@ -40,7 +33,7 @@ export class CategoriesService {
   }
 
   public insert(data: any): Observable<any> {
-    return this.http.post <any>(`${environment.apiUrl}/categories`, data, {
+    return this.http.post<any>(`${environment.apiUrl}/categories`, data, {
       observe: 'response'
     });
   }
