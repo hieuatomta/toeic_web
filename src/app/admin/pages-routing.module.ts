@@ -21,6 +21,11 @@ const routes: Routes = [{
         .then(m => m.TopicModule),
     },
     {
+      path: 'category',
+      loadChildren: () => import('./sys-category/category.module')
+        .then(m => m.CategoryModule),
+    },
+    {
       path: 'users',
       loadChildren: () => import('./sys-users/users.module')
         .then(m => m.UsersModule),

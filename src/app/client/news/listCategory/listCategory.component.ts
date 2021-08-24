@@ -27,18 +27,18 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
               private productsService: ProductsService,
               private categoriesService: CategoriesService,
               private route: ActivatedRoute) {
-    this.categoriesService.doSearchByClient({
-      status: 1,
-    }).subscribe(
-      (res) => {
-        console.log(res.body.data);
-        this.arrCategories = res.body.data.list;
-      },
-      (error) => {
-        // this.isLoad = false;
-      },
-      // () => this.isLoad = false,
-    );
+    // this.categoriesService.doSearchByClient({
+    //   status: 1,
+    // }).subscribe(
+    //   (res) => {
+    //     console.log(res.body.data);
+    //     this.arrCategories = res.body.data.list;
+    //   },
+    //   (error) => {
+    //     // this.isLoad = false;
+    //   },
+    //   // () => this.isLoad = false,
+    // );
 
   }
 
