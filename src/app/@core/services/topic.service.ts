@@ -25,6 +25,14 @@ export class TopicService {
     });
   }
 
+  public lisTopic(req?: any): Observable<any> {
+    const options = createRequestOption(req);
+    return this.http.get<any[]>(`${environment.apiUrl}/lisTopic`, {
+      params: options,
+      observe: 'response'
+    });
+  }
+
   public update(data: any): Observable<any> {
     return this.http.put<any>(`${environment.apiUrl}/topic`, data, {
       observe: 'response'

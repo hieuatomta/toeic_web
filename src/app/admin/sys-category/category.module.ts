@@ -10,7 +10,7 @@ import {
   NbInputModule,
   NbRadioModule,
   NbSelectModule,
-  NbSpinnerModule,
+  NbSpinnerModule, NbTabsetModule,
   NbToggleModule,
   NbUserModule,
 } from '@nebular/theme';
@@ -44,6 +44,7 @@ import {HeroPickerModule} from '../../shares/directives/hero-picker/hero-picker.
     NbDatepickerModule,
     NbSelectModule,
     NbIconModule,
+    NbTabsetModule,
     ngFormsModule,
     Ng2SmartTableModule,
     NbFormFieldModule,
