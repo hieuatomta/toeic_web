@@ -42,7 +42,7 @@ export class CategoryUpdateComponent implements OnInit {
   ];
 
   listQue = [
-    {stt: 1, name: '', transscript: '', answer: null, listAnswers: [{stt: 1, value: ""}]},
+    {stt: 1, name: '', transscript: '', answer: null, status: 1, listAnswers: [{stt: 1, value: ""}]},
   ];
 
   validateListQue() {
@@ -115,9 +115,7 @@ export class CategoryUpdateComponent implements OnInit {
       namePartTopic: new FormControl(this.data?.namePartTopic, []),
       creationTime: new FormControl(null, []),
       updateTime: new FormControl(null, []),
-      status: new FormControl(null, []),
-      transscript: new FormControl(null, []),
-      question: new FormControl(null, []),
+      status: new FormControl(this.data?.status === undefined ? 1 : this.data?.status, []),
     });
     this.getTopic(0)
     console.log(this.data?.idType)
@@ -129,18 +127,18 @@ export class CategoryUpdateComponent implements OnInit {
 
   fields: any;
 
-  patch() {
-    const control = <FormArray>this.inputUser.get('type.options');
-    this.fields.type.options.forEach(x => {
-      control.push(this.patchValues(x.label, x.value))
-    })
+  // xu ly file
+  selectFile(event) {
+    if (event !== null) {
+      this.selectedFiles = event.target.files;
+      this.url = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(event.target.files[0])
+      );
+    } else {
+      this.selectedFiles = null;
+    }
   }
 
-  patchValues(label, value) {
-    return this.fb.group({
-      value: [value]
-    })
-  }
 
   addQue(type: any, obj: any) {
     if (type === 0) {
@@ -148,6 +146,7 @@ export class CategoryUpdateComponent implements OnInit {
           stt: this.listQue.length + 1,
           name: '',
           answer: null,
+          status: 1,
           transscript: '',
           listAnswers: []
         }
@@ -274,7 +273,7 @@ export class CategoryUpdateComponent implements OnInit {
       console.log(data);
       console.log(this.listQue);
       if (this.data == null) {
-        this.categoriesService.insert(data).subscribe(
+        this.categoriesService.insert(data, this.selectedFiles?.item(0)).subscribe(
           (value) => {
             this.ref.close(value);
           },

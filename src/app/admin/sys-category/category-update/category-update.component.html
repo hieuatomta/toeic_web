@@ -100,6 +100,7 @@
                                placeholder="{{'common.placeHolder' |translate}}"
                                notFoundText="{{'common.notFoundText' |translate}}"
                                clearAllText="{{'common.clearAllText' |translate}}"
+                               [clearable]="false"
                                formControlName="status">
                       <ng-option *ngFor="let item of listStatus" [value]="item.code"> {{ item.name | translate }}
                       </ng-option>
@@ -114,29 +115,10 @@
         </form>
       </nb-tab>
       <nb-tab tabTitle="Input data" id="addTab" name="addTab" #addTab>
-<!--        <form [formGroup]="inputUser">-->
-<!--          <div class="mb-4">-->
-<!--            <div class="row">-->
-<!--              <div class="col-lg-12 form-group">-->
-<!--                <div class="col-lg-12 form-group" style="display: flex">-->
-<!--                  <div class="col-lg-3">-->
-<!--                    <label class="label">-->
-<!--                      {{ 'common.table.item_category_name' | translate }} <span style="color: red">(*)</span>-->
-<!--                    </label>-->
-<!--                  </div>-->
-<!--                  <div class="col-lg-6">-->
-<!--                    <input [attr.disabled]="isDis" class="custom-border" formControlName="name" type="text" nbInput-->
-<!--                           fullWidth-->
-<!--                           trim="blur" placeholder="{{'common.table.item_category_name' |translate}}"-->
-<!--                           [ngClass]="{'status-danger': this.inputUser.get('name').touched && this.inputUser.get('name').errors}">-->
-<!--                    <ngx-inline-message [message]="'common.table.item_category_name'|translate"-->
-<!--                                        [formName]="inputUser.get('name')"></ngx-inline-message>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </form>-->
+        <div style="padding: 50px;" class="col-lg-4 form-group">
+          <img style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>
+          <input *ngIf="!isDis" accept="*"  (change)="selectFile($event)" type='file'>
+        </div>
       </nb-tab>
       <nb-tab tabTitle="Question" id="addTab1" name="addTab1" #addTab1>
 
@@ -206,6 +188,26 @@
                 <div class="col-lg-12 form-group" style="display: flex">
                   <div class="col-lg-3">
                     <label class="label">
+                      {{ 'common.table.item_status' | translate }} <span style="color: red">(*)</span>
+                    </label>
+                  </div>
+                  <div class="col-lg-6">
+                    <ng-select fullWidth appendTo="body"
+                               placeholder="{{'common.placeHolder' |translate}}"
+                               notFoundText="{{'common.notFoundText' |translate}}"
+                               clearAllText="{{'common.clearAllText' |translate}}"
+                               [clearable]="false"
+                               [(ngModel)]="listQue[i].status">
+                      <ng-option *ngFor="let item of listStatus" [value]="item.code"> {{ item.name | translate }}
+                      </ng-option>
+                    </ng-select>
+                    <ngx-inline-message [message]="'common.table.item_status'|translate"
+                                        [formName]="inputUser.get('status')"></ngx-inline-message>
+                  </div>
+                </div>
+                <div class="col-lg-12 form-group" style="display: flex">
+                  <div class="col-lg-3">
+                    <label class="label">
                       {{ 'common.table.item_description' | translate }} <span style="color: red">(*)</span>
                     </label>
                   </div>
@@ -225,8 +227,6 @@
           </div>
       </nb-tab>
     </nb-tabset>
-    <button (click)="ActivateTabAdd()">Add</button>
-
   </nb-card-body>
   <nb-card-footer class="text-right">
     <button nbButton [disabled]="inputUser.invalid" type="button" status="primary" (click)="submit()"

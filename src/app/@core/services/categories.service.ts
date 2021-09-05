@@ -32,8 +32,18 @@ export class CategoriesService {
     });
   }
 
-  public insert(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/categories`, data, {
+  // public insert(data: any): Observable<any> {
+  //   return this.http.post<any>(`${environment.apiUrl}/categories`, data, {
+  //     observe: 'response'
+  //   });
+  // }
+
+  public insert(data: any,  file?: File): Observable<any> {
+    const model: any = data;
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('model', JSON.stringify(model));
+    return this.http.post<any>(`${environment.apiUrl}/categories`, formData, {
       observe: 'response'
     });
   }
