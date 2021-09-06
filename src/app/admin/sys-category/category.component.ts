@@ -58,10 +58,12 @@ export class CategoryComponent implements OnInit {
   listPart: any;
   inputForm = new FormGroup({
     code: new FormControl(null, []),
+    id: new FormControl(null, []),
     name: new FormControl(null, []),
     idType: new FormControl(null, []),
     nameType: new FormControl(null, []),
     idPartTopic: new FormControl(null, []),
+    topicId: new FormControl(null, []),
     namePartTopic: new FormControl(null, []),
     stCreationTime: new FormControl(null, []),
     stUpdateTime: new FormControl(null, []),

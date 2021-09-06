@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ToastrService} from '../../../@core/mock/toastr-service';
 import {NbDialogRef, NbTabComponent, NbTabsetComponent, NbToastrService} from '@nebular/theme';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RolesService} from '../../../@core/services/roles.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
@@ -103,25 +103,50 @@ export class CategoryUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data);
+    this.loading = true;
     this.inputUser = new FormGroup({
       code: new FormControl(null, []),
       name: new FormControl(this.data?.name, []),
       categoryName: new FormControl(this.data?.categoryName, [Validators.required]),
-      idType: new FormControl(this.data?.idType, [Validators.required]),
+      idType: new FormControl(null, [Validators.required]),
       nameType: new FormControl(null, []),
-      idPartTopic: new FormControl(this.data?.idPartTopic, [Validators.required]),
-      topicId: new FormControl(this.data?.topicId, [Validators.required]),
+      idPartTopic: new FormControl(null, [Validators.required]),
+      topicId: new FormControl(null, [Validators.required]),
       listQue: new FormControl(null, []),
       namePartTopic: new FormControl(this.data?.namePartTopic, []),
       creationTime: new FormControl(null, []),
       updateTime: new FormControl(null, []),
       status: new FormControl(this.data?.status === undefined ? 1 : this.data?.status, []),
     });
-    this.getTopic(0)
-    console.log(this.data?.idType)
-    if (this.data?.idType !== null) {
-      this.getTopic(this.data?.idType)
-      // this.inputUser.get('namePartTopidPartTopicic').setValue(this.data?.idType);
+    if (this.data === null || this.data === undefined) {
+      this.getTopic(0)
+      console.log(this.data?.idType)
+      if (this.data?.idType !== null) {
+        this.getTopic(this.data?.idType)
+        // this.inputUser.get('namePartTopidPartTopicic').setValue(this.data?.idType);
+      }
+    } else {
+      this.categoriesService.doSearchDetail({
+        idType: this.data?.idType,
+        idPartTopic: this.data?.idPartTopic,
+        id: this.data?.id
+      }).subscribe(
+        (res) => {
+          console.log(res);
+          this.listTopic = res.body.data.list.listTopic;
+          this.listPart = res.body.data.list.listPart;
+          this.lisTopic = res.body.data.list.lisTopic;
+          this.listQue = res.body.data.list.listQue;
+          this.inputUser.get("idType").setValue(this.data?.idType);
+          this.inputUser.get("idPartTopic").setValue(this.data?.idPartTopic);
+          this.inputUser.get("topicId").setValue(this.data?.topicId);
+        },
+        (error) => {
+          console.log(error);
+          this.loading = false;
+        },
+        () => this.loading = false,
+      );
     }
   };
 
