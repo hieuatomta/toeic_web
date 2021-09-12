@@ -8,6 +8,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {ObjectsService} from "../../../@core/services/objects.service";
 import {CategoriesService} from "../../../@core/services/categories.service";
 import {TopicService} from "../../../@core/services/topic.service";
+import {Track} from "ngx-audio-player";
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -33,6 +34,21 @@ export class CategoryUpdateComponent implements OnInit {
     this.tabsetEl.selectTab(this.addTabEl);
   }
 
+  @ViewChild('audioOption') audioPlayerRef: ElementRef;
+
+  onAudioPlay() {
+    this.audioPlayerRef.nativeElement.play();
+  }
+
+  @ViewChild('figAudio') figAudio: ElementRef; // audio tag reference
+  audSrc = 'C:\\Users\\hieutt1\\Desktop\\ETS2016new-Test 01-Part1-01.mp3';
+
+  audFileSelected(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const audSrc = URL.createObjectURL(event.target.files[0]);
+      this.figAudio.nativeElement.src = this.audSrc;
+    }
+  }
 
   listRole = null;
   lstRole1 = [];
@@ -90,6 +106,7 @@ export class CategoryUpdateComponent implements OnInit {
     public ref: NbDialogRef<CategoryUpdateComponent>,
     private rolesService: RolesService,
     private sanitizer: DomSanitizer,
+    private sanitize: DomSanitizer,
     protected cd: ChangeDetectorRef,
     private toastr: NbToastrService,
     private topicService: TopicService,
@@ -100,10 +117,33 @@ export class CategoryUpdateComponent implements OnInit {
   listTopic: any;   // ds type of category
   listPart: any; // ds part
   lisTopic: any; // ds topic name
+  playAudio() {
+    const audio = new Audio();
+    audio.src = "http://localhost:4201/toeic-web/assets/audio/category/Universitye4234333333/102021120920217457_ETS2016new-Test-01-Part1-01.mp3";
+    audio.load();
+    audio.play();
+  }
+
+
+  msaapDisplayTitle = true;
+  msaapDisplayPlayList = false;
+  msaapDisplayVolumeControls = true;
+  msaapDisplayRepeatControls = false;
+  msaapDisplayArtist = false;
+  msaapDisablePositionSlider = true;
+
+// Material Style Advance Audio Player Playlist
+  msaapPlaylist: Track[] = [
+    {
+      title: 'Audio One Title',
+      link: 'http://localhost:4201/toeic-web/assets/audio/category/Universitye4234333333/102021120920217457_ETS2016new-Test-01-Part1-01.mp3',
+      artist: 'Audio One Artist',
+    }
+  ];
 
   ngOnInit(): void {
     console.log(this.isCheck);
-
+    // this.playAudio();
     this.loading = true;
     this.inputUser = new FormGroup({
       code: new FormControl(this.data?.code, []),

@@ -28,6 +28,8 @@ import {SharedModule} from '../../shares/shared.module';
 import {CategoryComponent} from './category.component';
 import {NgxMaskModule} from 'ngx-mask';
 import {HeroPickerModule} from '../../shares/directives/hero-picker/hero-picker.module';
+import {SanitizerUrlPipe} from "./category-update/sanitize-url.pipe";
+import {NgxAudioPlayerModule} from "ngx-audio-player";
 
 
 @NgModule({
@@ -52,13 +54,14 @@ import {HeroPickerModule} from '../../shares/directives/hero-picker/hero-picker.
     NgSelectModule, SharedModule,
     ReactiveFormsModule,
     NgxMaskModule,
+    NgxAudioPlayerModule,
     NgxDatatableModule,
     NbSpinnerModule, NbToggleModule, HeroPickerModule,
   ],
   entryComponents: [
     CategoryUpdateComponent
   ],
-  declarations: [CategoryComponent, CategoryUpdateComponent],
+  declarations: [CategoryComponent, CategoryUpdateComponent, SanitizerUrlPipe],
 })
 export class CategoryModule {
 }

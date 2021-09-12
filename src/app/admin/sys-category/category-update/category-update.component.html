@@ -117,8 +117,18 @@
       </nb-tab>
       <nb-tab tabTitle="Input data" id="addTab" name="addTab" #addTab>
         <div style="padding: 50px;" class="col-lg-4 form-group">
-          <img style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>
-          <input *ngIf="!isDis" accept="*" multiple="multiple" (change)="selectFile($event)" type='file'>
+<!--          <img style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>-->
+<!--          <input *ngIf="!isDis" accept="*" multiple="multiple" (change)="selectFile($event)" type='file'>-->
+<!--          <audio #audioOption style="background: black">-->
+<!--            <source src='http://localhost:4201/toeic-web/assets/audio/category/Universitye4234333333/102021120920217457_ETS2016new-Test-01-Part1-01.mp3' type="audio/mp3">-->
+
+
+<!--          </audio>-->
+          <ngx-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false"
+                            muted="muted" [displayPlaylist]="msaapDisplayPlayList"
+                            [displayVolumeControls]="msaapDisplayVolumeControls" [displayRepeatControls]="msaapDisplayRepeatControls"
+                            [disablePositionSlider]="msaapDisablePositionSlider" [displayArtist]="msaapDisplayArtist"
+                            [expanded]="true"></ngx-audio-player>
         </div>
       </nb-tab>
       <nb-tab tabTitle="Question" id="addTab1" name="addTab1" #addTab1>
