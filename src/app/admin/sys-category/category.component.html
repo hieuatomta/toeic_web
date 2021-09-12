@@ -3,7 +3,7 @@
     <nb-card>
       <nb-card-header class="d-flex">
         <label>{{ 'sys-category.title' | translate }}</label>
-        <button nbButton status="primary" size="tiny" class="ml-auto" (click)="viewUsers(null)">
+        <button nbButton status="primary" size="tiny" class="ml-auto" (click)="editUsers(null,1)">
           <nb-icon icon="plus" pack="eva"></nb-icon>
           {{ 'sys-category.insert_btn' | translate }}
         </button>
@@ -92,12 +92,16 @@
                 </ng-container>
                 <ng-container *ngIf="col.prop ==='action_btn'" class="text-right">
                   <div>
+                    <button class="p-1" nbButton status="info" ghost title="{{ 'common.view' | translate}}"
+                            (click)="editUsers(row, 0)">
+                      <nb-icon icon="eye-outline" pack="eva" size="tiny"></nb-icon>
+                    </button>
                     <button class="p-1" nbButton status="info" ghost title="{{ 'common.edit' | translate}}"
-                            (click)="viewUsers(row)">
+                            (click)="editUsers(row ,1 )">
                       <nb-icon icon="edit-2-outline" pack="eva" size="tiny"></nb-icon>
                     </button>
                     <button class="p-1" nbButton status="danger" ghost title="{{ 'common.delete' | translate }}"
-                            (click)="deleteUsers(row)">
+                            (click)="deleteUsers(row,1)">
                       <nb-icon icon="trash-2-outline" pack="eva" size="tiny"></nb-icon>
                     </button>
                   </div>

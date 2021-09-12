@@ -97,6 +97,7 @@
                   </div>
                   <div class="col-lg-6">
                     <ng-select fullWidth appendTo="body"
+                               [disabled]="true"
                                placeholder="{{'common.placeHolder' |translate}}"
                                notFoundText="{{'common.notFoundText' |translate}}"
                                clearAllText="{{'common.clearAllText' |translate}}"
@@ -117,7 +118,7 @@
       <nb-tab tabTitle="Input data" id="addTab" name="addTab" #addTab>
         <div style="padding: 50px;" class="col-lg-4 form-group">
           <img style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>
-          <input *ngIf="!isDis" accept="*"  (change)="selectFile($event)" type='file'>
+          <input *ngIf="!isDis" accept="*" multiple="multiple" (change)="selectFile($event)" type='file'>
         </div>
       </nb-tab>
       <nb-tab tabTitle="Question" id="addTab1" name="addTab1" #addTab1>
@@ -125,8 +126,8 @@
           <div class="mb-4" >
             <div *ngFor=" let list of listQue; let i = index" class="row" >
               <p>Cau hoi {{i + 1}}
-                <button nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
-                <button nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
+                <button *ngIf="!isDis" nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
+                <button *ngIf="!isDis" nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
               </p>
               <div class="col-lg-12 form-group">
                 <div class="col-lg-12 form-group" style="display: flex">
@@ -154,14 +155,14 @@
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <input class="custom-border"  [(ngModel)]="listQue[i].listAnswers[j].value" type="text" nbInput fullWidth
+                    <input class="custom-border" [attr.disabled]="isDis"  [(ngModel)]="listQue[i].listAnswers[j].value" type="text" nbInput fullWidth
                            trim="blur" placeholder="{{'common.table.item_answer_to_choose' |translate}}"   >
 <!--                           [ngClass]="{'status-danger': this.questionForm.get('name').touched && this.questionForm.get('name').errors}"-->
 
 <!--                    <ngx-inline-message [message]="'common.table.item_answer_to_choose'|translate"-->
 <!--                                        [formName]="questionForm.get('name')"></ngx-inline-message>-->
                   </div>
-                  <div class="col-lg-3">
+                  <div class="col-lg-3" *ngIf="!isDis">
                     <button nbButton type="button" nbButton (click)="addQue(1,i)" class="ml-2"> +</button>
                     <button nbButton type="button" nbButton (click)="remoteQue(1,i,j +1)" class="ml-2"> -</button>
                   </div>
@@ -174,6 +175,7 @@
                   </div>
                   <div class="col-lg-6">
                     <ng-select fullWidth appendTo="body"
+                               [disabled]="isDis"
                                placeholder="{{'common.placeHolder' |translate}}"
                                notFoundText="{{'common.notFoundText' |translate}}"
                                clearAllText="{{'common.clearAllText' |translate}}"
@@ -193,6 +195,7 @@
                   </div>
                   <div class="col-lg-6">
                     <ng-select fullWidth appendTo="body"
+                               [disabled]="isDis"
                                placeholder="{{'common.placeHolder' |translate}}"
                                notFoundText="{{'common.notFoundText' |translate}}"
                                clearAllText="{{'common.clearAllText' |translate}}"
@@ -208,7 +211,7 @@
                 <div class="col-lg-12 form-group" style="display: flex">
                   <div class="col-lg-3">
                     <label class="label">
-                      {{ 'common.table.item_description' | translate }} <span style="color: red">(*)</span>
+                      {{ 'common.table.item_description' | translate }}
                     </label>
                   </div>
                   <div class="col-lg-6">

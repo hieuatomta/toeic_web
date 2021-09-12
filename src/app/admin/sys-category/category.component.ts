@@ -51,7 +51,7 @@ export class CategoryComponent implements OnInit {
     {name: 'common.table.item_status', prop: 'status', flexGrow: 0.7},
     {name: 'common.table.item_impact_time', prop: 'stCreationTime', flexGrow: 0.5},
     {name: 'common.table.item_update_time', prop: 'stUpdateTime', flexGrow: 0.5},
-    {name: 'common.table.item_action', prop: 'action_btn', flexGrow: 0.5}
+    {name: 'common.table.item_action', prop: 'action_btn', flexGrow: 0.7}
   ];
 
   listTopic: any;
@@ -74,21 +74,27 @@ export class CategoryComponent implements OnInit {
     this.search(pageInfo.offset);
   }
 
-  viewUsers(data) {
+  editUsers(data, check) {
     let title;
     let isCheck;
-    if (data == null) {
-      title = this.translate.instant('sys-category.title_add');
-      isCheck = 0;
+    if (check === 1) {
+      if (data == null) {
+        title = this.translate.instant('sys-category.title_add');
+        isCheck = 0;
+      } else {
+        title = this.translate.instant('sys-category.title_view');
+        isCheck = 1;
+      }
     } else {
       title = this.translate.instant('sys-category.title_view');
       isCheck = 1;
     }
+
     this.dialogService.open(CategoryUpdateComponent, {
       context: {
         title: title,
         data: data,
-        isCheck: isCheck
+        isCheck: check
       },
       dialogClass: 'modal-full',
     }).onClose.subscribe(

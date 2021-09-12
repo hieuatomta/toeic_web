@@ -34,8 +34,20 @@ export class CategoriesService {
     });
   }
 
-  public update(data: any): Observable<any> {
-    return this.http.put<any>(`${environment.apiUrl}/categories`, data, {
+  // public update(data: any): Observable<any> {
+  //   return this.http.put<any>(`${environment.apiUrl}/categories`, data, {
+  //     observe: 'response'
+  //   });
+  // }
+
+  public update(data: any, file?: FileList): Observable<any> {
+    const model: any = data;
+    const formData: FormData = new FormData();
+    console.log(file);
+    formData.append('file1', JSON.stringify(file));
+    formData.append('model', JSON.stringify(model));
+    console.log(formData);
+    return this.http.put<any>(`${environment.apiUrl}/categories`, formData, {
       observe: 'response'
     });
   }
@@ -46,11 +58,13 @@ export class CategoriesService {
   //   });
   // }
 
-  public insert(data: any,  file?: File): Observable<any> {
+  public insert(data: any, file?: FileList): Observable<any> {
     const model: any = data;
     const formData: FormData = new FormData();
-    formData.append('file', file);
+    console.log(file);
+    formData.append('file1', JSON.stringify(file));
     formData.append('model', JSON.stringify(model));
+    console.log(formData);
     return this.http.post<any>(`${environment.apiUrl}/categories`, formData, {
       observe: 'response'
     });

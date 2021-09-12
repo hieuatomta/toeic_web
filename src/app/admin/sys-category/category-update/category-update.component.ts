@@ -102,22 +102,31 @@ export class CategoryUpdateComponent implements OnInit {
   lisTopic: any; // ds topic name
 
   ngOnInit(): void {
-    console.log(this.data);
+    console.log(this.isCheck);
+
     this.loading = true;
     this.inputUser = new FormGroup({
-      code: new FormControl(null, []),
+      code: new FormControl(this.data?.code, []),
       name: new FormControl(this.data?.name, []),
-      categoryName: new FormControl(this.data?.categoryName, [Validators.required]),
+      categoryName: new FormControl(this.data?.categoryName, [Validators.required, Validators.maxLength(100)]),
       idType: new FormControl(null, [Validators.required]),
       nameType: new FormControl(null, []),
       idPartTopic: new FormControl(null, [Validators.required]),
       topicId: new FormControl(null, [Validators.required]),
       listQue: new FormControl(null, []),
       namePartTopic: new FormControl(this.data?.namePartTopic, []),
-      creationTime: new FormControl(null, []),
-      updateTime: new FormControl(null, []),
+      // creationTime: new FormControl(this.data?.creationTime, []),
+      // updateTime: new FormControl(this.data?.updateTime, []),
       status: new FormControl(this.data?.status === undefined ? 1 : this.data?.status, []),
     });
+    if (this.isCheck === 0) {
+      this.inputUser.get("status").disable();
+      this.inputUser.get("idType").disable();
+      this.inputUser.get("idPartTopic").disable();
+      this.inputUser.get("topicId").disable();
+      this.isDis = true;
+
+    }
     if (this.data === null || this.data === undefined) {
       this.getTopic(0)
       console.log(this.data?.idType)
@@ -179,15 +188,20 @@ export class CategoryUpdateComponent implements OnInit {
       for (let i = 0; i < this.listQue.length; i++) {
         this.listQue[i].stt = (i + 1);
       }
-      this.listQue[obj].listAnswers.push({stt: 1, value: ''})
+      this.listQue[(this.listQue.length - 1)].listAnswers.push({stt: 1, value: ''})
     } else if (type === 1) {
-      this.listQue[obj].listAnswers.push({
-          stt: 1, value: ""
+      if (this.listQue[obj].listAnswers.length < 5) {
+        this.listQue[obj].listAnswers.push({
+            stt: 1, value: ""
+          }
+        )
+        for (let i = 0; i < this.listQue[obj].listAnswers.length; i++) {
+          this.listQue[obj].listAnswers[i].stt = (i + 1);
         }
-      )
-      for (let i = 0; i < this.listQue[obj].listAnswers.length; i++) {
-        this.listQue[obj].listAnswers[i].stt = (i + 1);
+      } else {
+        this.toastr.danger("Chi dc toi da 5 dap an", this.translate.instant('common.title_notification'));
       }
+
     }
 
   }
@@ -298,7 +312,7 @@ export class CategoryUpdateComponent implements OnInit {
       console.log(data);
       console.log(this.listQue);
       if (this.data == null) {
-        this.categoriesService.insert(data, this.selectedFiles?.item(0)).subscribe(
+        this.categoriesService.insert(data, this.selectedFiles).subscribe(
           (value) => {
             this.ref.close(value);
           },
@@ -309,7 +323,8 @@ export class CategoryUpdateComponent implements OnInit {
           () => this.loading = false,
         );
       } else {
-        this.categoriesService.update(data).subscribe(
+        console.log(data);
+        this.categoriesService.update(data,  this.selectedFiles).subscribe(
           (value) => {
             this.ref.close(value);
           },
