@@ -6,6 +6,7 @@ import {ClientComponent} from './client.component';
 import {BlogComponent} from './news/blog/blog.component';
 import {BlogDetailComponent} from './news/blog-detail/blog-detail.component';
 import {InforUsersComponent} from "./infor_users/infor-users.component";
+import {AboutComponent} from "./about/about.component";
 
 
 
@@ -32,6 +33,10 @@ const routes: Routes = [
       }, {
         path: 'contact',
         component: ContactComponent,
+      },
+      {
+        path: 'about',
+        component: AboutComponent,
       },
       {
         path: '',

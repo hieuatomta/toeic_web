@@ -55,6 +55,82 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       check: false
     },
   ];
+
+  tree3 = [
+    {
+      id: 7111,
+      parenID: 0,
+      tendulieu: 'TOEIC Listening',
+      link: 'contact',
+      check: true
+    },
+    {
+      id: 7112,
+      parenID: 7111,
+      tendulieu: 'Part 1 : Photographs',
+      link: 'about',
+      check: false
+    },
+    {
+      id: 7113,
+      parenID: 7111,
+      tendulieu: 'Part 2 : Question and Response',
+      link: 'about',
+      check: false
+    },
+    {
+      id: 7114,
+      parenID: 7111,
+      tendulieu: 'Part 3: Conservation',
+      link: 'about',
+      check: false
+    },
+    {
+      id: 7115,
+      parenID: 7111,
+      tendulieu: 'Part 4 : Short Talks',
+      link: 'about',
+      check: false
+    }
+  ];
+
+  tree4 = [
+    {
+      id: 8111,
+      parenID: 0,
+      tendulieu: 'TOEIC Reading',
+      link: 'contact',
+      check: true
+    },
+    {
+      id: 8112,
+      parenID: 8111,
+      tendulieu: 'Part 5 : Incomplete Sentences',
+      link: 'about',
+      check: false
+    },
+    {
+      id: 8113,
+      parenID: 8111,
+      tendulieu: 'Part 6 : Text Completion',
+      link: 'about',
+      check: false
+    },
+    {
+      id: 8114,
+      parenID: 8111,
+      tendulieu: 'Part 7 : Single Passages',
+      link: 'about',
+      check: false
+    },
+    {
+      id: 8115,
+      parenID: 8111,
+      tendulieu: 'Part 8 : Double Passages',
+      link: 'about',
+      check: false
+    }
+  ];
   userPictureOnly: boolean = false;
   users: any;
   openMenu = false;
@@ -71,46 +147,23 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
               private elementRef: ElementRef
   ) {
     try {
+      console.log("ad");
       const token = localStorage.getItem('httpHeaders');
       if (token.trim().length === 0 && token === null) {
         localStorage.setItem('objectsC', null);
       } else {
         this.loginService.authenticationcate({}).subscribe(res => {
             if (res.status === 200 && res.body.customUserDetails.rolesId === 2) {
-              let menu1 = [];
-              this.menu12 = [];
-              this.obj = res.body.listObjects;
-              localStorage.setItem('objectsC', JSON.stringify(this.obj));
-
-              menu1 = this.formatListPractices(this.obj, 0);
-              for (let i = 0; i < menu1.length; i++) {
-                this.menu.push(menu1[i]);
-              }
-              for (let i = 0; i < this.menu?.length; i++) {
-                const objMenu = {
-                  id: null,
-                  parenID: null,
-                  link: null,
-                  check: null,
-                  tendulieu: null
-                };
-                objMenu.tendulieu = this.menu[i].title;
-                objMenu.id = this.menu[i].id;
-                objMenu.parenID = this.menu[i].parenId;
-                objMenu.check = this.menu[i].check;
-                this.menu12.push(objMenu);
-              }
+              this.tree.push.apply(this.tree, this.tree1);
+              this.tree.push.apply(this.tree, this.tree3);
+              this.tree.push.apply(this.tree, this.tree4);
             }
           }, err => {
             // nếu có lỗi xảy ra trong qúa trình xác thực lại user thì bắn ra lỗi
-            // localStorage.clear();
-            // this.router.navigate(['auths/login']);
-
+          this.tree.push.apply(this.tree, this.tree1);
+          this.tree.push.apply(this.tree, this.tree2);
+          this.menudacap = this.dequy(0, 0, 1);
           }, () => {
-            this.tree.push.apply(this.tree, this.tree1);
-            if (this.menu12?.length !== 0) {
-              this.tree.push.apply(this.tree, this.menu12);
-            }
             this.tree.push.apply(this.tree, this.tree2);
             this.search();
           }
@@ -134,24 +187,6 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   viewUsers(data) {
     this.router.navigate(['info-users']);
-    // this.router.navigate(['admin/info-users']);
-    // const obj = JSON.parse(localStorage.getItem('userDetails'));
-    // console.log(obj);
-    // this.dialogService.open(UserUpdateClientComponent, {
-    //   context: {
-    //     title: this.translate.instant('sys-users.title_edit'),
-    //     data: obj,
-    //     isCheck: 0
-    //   },
-    //   dialogClass: 'modal-full',
-    // }).onClose.subscribe(
-    //   value => {
-    //     if (value) {
-    //         this.toastrService.success(this.translate.instant('sys-users.content_edit_success'),
-    //           this.translate.instant('common.title_notification'));
-    //     }
-    //   }
-    // );
   }
 
   logout() {
@@ -168,6 +203,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.removeEventListener = this.renderer.listen(this.elementRef.nativeElement, 'click', (event) => {
       if (event.target instanceof HTMLAnchorElement) {
+        console.log(event.target)
         // Your custom anchor click event handler
         this.handleAnchorClick(event);
       }
@@ -282,7 +318,8 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     // Prevent opening anchors the default way
     event.preventDefault();
     const anchor = event.target as HTMLAnchorElement;
-    this.router.navigate([anchor.href.replace(/^[a-z]{4,5}\:\/{2}[a-z]{1,}\:[0-9]{1,4}.(.*)/, '$1').slice(4)]);
+    console.log(anchor.href.replace(/^[a-z]{4,5}\:\/{2}[a-z]{1,}\:[0-9]{1,4}.(.*)/, '$1').slice(10));
+    this.router.navigate([anchor.href.replace(/^[a-z]{4,5}\:\/{2}[a-z]{1,}\:[0-9]{1,4}.(.*)/, '$1').slice(10)]);
   };
 
 
