@@ -1,0 +1,53 @@
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-92"
+         style="margin-top: 70px;background-image: url('/toeic-web/assets/images/contac.jpg');">
+  <h2 class="ltext-105 cl0 txt-center">
+    Part I : Photographs
+  </h2>
+</section>
+<nb-card style="position: relative;     margin-top: 70px;" [nbSpinner]="loading" fullWidth style="min-height: 500px;">
+  <div class="container" style="    display: grid;
+    border: 1px solid black;">
+
+    <nb-card-header style="    padding: 20px;" class="card-header-title">Question 1/5
+    </nb-card-header>
+    <nb-card-body>
+      <div class="container">
+        <div class="row">
+          <div style="margin: auto;" class="col-sm-6">
+            <ngx-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false"
+                              muted="muted" [displayPlaylist]="msaapDisplayPlayList"
+                              [displayVolumeControls]="msaapDisplayVolumeControls"
+                              [displayRepeatControls]="msaapDisplayRepeatControls"
+                              [disablePositionSlider]="msaapDisablePositionSlider" [displayArtist]="msaapDisplayArtist"
+                              [expanded]="true"></ngx-audio-player>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12" style="display: flex">
+            <div class="col-sm-5">
+              <div style="padding: 50px;">
+                <img style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div style="padding: 50px;">
+                <button style="margin: 15px;display: block;" *ngFor="let x of lisTopic" nbButton type="button"
+                        status="primary">{{x.name}}</button>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <button style="    width: 100%;
+    height: 100%;" nbButton status="primary" type="submit" >
+                <nb-icon style="    width: 300%;
+    height: 300%;" icon="arrowhead-right-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </nb-card-body>
+  </div>
+</nb-card>

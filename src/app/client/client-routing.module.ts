@@ -7,6 +7,8 @@ import {BlogComponent} from './news/blog/blog.component';
 import {BlogDetailComponent} from './news/blog-detail/blog-detail.component';
 import {InforUsersComponent} from "./infor_users/infor-users.component";
 import {AboutComponent} from "./about/about.component";
+import {LsListeningComponent} from "./listening/lsListening/lsListening.component";
+import {DetailsComponent} from "./listening/details/details.component";
 
 
 
@@ -28,8 +30,12 @@ const routes: Routes = [
         component: BlogComponent,
       },
       {
-        path: 'chi-tiet-tin-tuc/:key',
-        component: BlogDetailComponent,
+        path: 'topic/:id',
+        component: LsListeningComponent,
+      },
+      {
+        path: 'details/:key',
+        component: DetailsComponent,
       }, {
         path: 'contact',
         component: ContactComponent,

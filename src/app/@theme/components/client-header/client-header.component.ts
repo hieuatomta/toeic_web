@@ -68,28 +68,28 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       id: 7112,
       parenID: 7111,
       tendulieu: 'Part 1 : Photographs',
-      link: 'about',
+      link: 'topic/7',
       check: false
     },
     {
       id: 7113,
       parenID: 7111,
       tendulieu: 'Part 2 : Question and Response',
-      link: 'about',
+      link: 'topic/8',
       check: false
     },
     {
       id: 7114,
       parenID: 7111,
       tendulieu: 'Part 3: Conservation',
-      link: 'about',
+      link: 'topic/9',
       check: false
     },
     {
       id: 7115,
       parenID: 7111,
       tendulieu: 'Part 4 : Short Talks',
-      link: 'about',
+      link: 'topic/10',
       check: false
     }
   ];

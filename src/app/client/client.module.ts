@@ -34,6 +34,9 @@ import {NewsLetterComponent} from './news/news-letter/news-letter.component';
 import {PdfViewerModule} from 'ng2-pdf-viewer';
 import {AgmCoreModule} from '@agm/core';
 import {InforUsersComponent} from "./infor_users/infor-users.component";
+import {LsListeningComponent} from "./listening/lsListening/lsListening.component";
+import {DetailsComponent} from "./listening/details/details.component";
+import {NgxAudioPlayerModule} from "ngx-audio-player";
 
 
 @NgModule({
@@ -63,7 +66,8 @@ import {InforUsersComponent} from "./infor_users/infor-users.component";
     NgSelectModule,
     PdfViewerModule,
     NbRadioModule,
-    AgmCoreModule
+    AgmCoreModule,
+    NgxAudioPlayerModule
   ],
   declarations: [
     SearchFilterComponent,
@@ -73,8 +77,10 @@ import {InforUsersComponent} from "./infor_users/infor-users.component";
     HomeClientComponent,
     ContactComponent,
     ListCategoryComponent,
+    DetailsComponent,
     RecentPostComponent,
     NewsLetterComponent,
+    LsListeningComponent,
     InforUsersComponent,
   ],
   providers: [
