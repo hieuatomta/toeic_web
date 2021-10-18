@@ -9,6 +9,8 @@ import {InforUsersComponent} from "./infor_users/infor-users.component";
 import {AboutComponent} from "./about/about.component";
 import {LsListeningComponent} from "./listening/lsListening/lsListening.component";
 import {DetailsComponent} from "./listening/details/details.component";
+import {ReadingComponent} from "./reading/lsReading/reading.component";
+import {ReadingDetailsComponent} from "./reading/reading_details/reading-details.component";
 
 
 
@@ -34,6 +36,10 @@ const routes: Routes = [
         component: LsListeningComponent,
       },
       {
+        path: 'topic1/:id',
+        component: ReadingComponent,
+      },
+      {
         path: 'details/:key',
         component: DetailsComponent,
       }, {
@@ -43,6 +49,10 @@ const routes: Routes = [
       {
         path: 'about',
         component: AboutComponent,
+      },
+      {
+        path: 'readingdetails/:key',
+        component: ReadingDetailsComponent,
       },
       {
         path: '',

@@ -106,7 +106,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       id: 8112,
       parenID: 8111,
       tendulieu: 'Part 5 : Incomplete Sentences',
-      link: 'about',
+      link: 'topic1/11',
       check: false
     },
     {

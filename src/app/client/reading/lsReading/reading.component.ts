@@ -2,34 +2,33 @@ import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {TopicService} from "../../../@core/services/topic.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 
-
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'ngx-home-client',
-  styleUrls: ['./lsListening.component.scss'],
-  templateUrl: './lsListening.component.html',
+  templateUrl: './reading.component.html',
+  styleUrls: ['./reading.component.scss']
 })
-export class LsListeningComponent implements OnInit, OnDestroy {
+export class ReadingComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
-
   constructor(private topicService: TopicService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-  ) {
+              ) {
   }
-
   lisTopic;
   loading = false;
   key;
+  test;
   nextPage(x) {
-    const url = '/details/' + x.id;
+    const url = '/readingdetails/' + x.id;
     this.router.navigate([url]);
     console.log(x);
   }
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
       console.log(params);
+      console.log("reading")
       this.key = params['id'];
       this.topicService.lisTopic({
         idPartTopic: this.key,
@@ -37,8 +36,6 @@ export class LsListeningComponent implements OnInit, OnDestroy {
         (res) => {
           console.log(res);
           this.lisTopic = res.body.data.list;
-          console.log(this.lisTopic);
-          console.log(typeof(this.lisTopic));
         },
         (error) => {
           console.log(error);
@@ -48,4 +45,5 @@ export class LsListeningComponent implements OnInit, OnDestroy {
       );
     });
   }
+
 }

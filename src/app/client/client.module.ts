@@ -37,6 +37,8 @@ import {InforUsersComponent} from "./infor_users/infor-users.component";
 import {LsListeningComponent} from "./listening/lsListening/lsListening.component";
 import {DetailsComponent} from "./listening/details/details.component";
 import {NgxAudioPlayerModule} from "ngx-audio-player";
+import { ReadingComponent } from './reading/lsReading/reading.component';
+import { ReadingDetailsComponent } from './reading/reading_details/reading-details.component';
 
 
 @NgModule({
@@ -82,6 +84,8 @@ import {NgxAudioPlayerModule} from "ngx-audio-player";
     NewsLetterComponent,
     LsListeningComponent,
     InforUsersComponent,
+    ReadingComponent,
+    ReadingDetailsComponent,
   ],
   providers: [
     {
