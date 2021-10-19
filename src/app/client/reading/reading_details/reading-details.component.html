@@ -5,41 +5,73 @@
   </h2>
 </section>
 <nb-card style="position: relative;margin-top: 70px;" fullWidth style="min-height: 500px;">
-  <div class="container" style="display: grid; border: 1px solid black;">
-
-<!--    <nb-card-header style="padding: 20px;" class="card-header-title">{{listQuestion1?.name}}</nb-card-header>-->
+  <div *ngIf="historyShow; else elseBlock" class="container" style="display: grid; border: 1px solid black;">
+    <nb-card-header style="padding: 20px;" class="card-header-title">Question {{questionNumber + 1}}/{{listQuestion.length}}</nb-card-header>
     <nb-card-body>
       <div class="container">
         <div class="row">
           <div style="margin: auto;" class="col-sm-6">
-
+            <nb-card-header style="    padding: 20px;"
+                            class="card-header-title">{{genQuestion[0]?.name}}</nb-card-header>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row container">
           <div class="col-lg-12">
-            <div class="col-lg-10">
-              <div >
-<!--                <button style="margin: 15px;display: block;" type="button" status="primary" nbButton type="button">(A). {{listQuestion0?.answerToChoose}}</button>-->
-<!--                <button style="margin: 15px;display: block;" type="button" status="primary" nbButton type="button">(B). {{listQuestion1?.answerToChoose}}</button>-->
-<!--                <button style="margin: 15px;display: block;" type="button" status="primary" nbButton type="button">(C). {{listQuestion2?.answerToChoose}}</button>-->
-<!--                <button style="margin: 15px;display: block;" type="button" status="primary" nbButton type="button">(D). {{listQuestion3?.answerToChoose}}</button>-->
+            <div class="col-lg-6">
+              <div>
+                <button [ngClass]="{'back-ground': answerCheck}"  style="margin: 15px;display: block;" type="button"  nbButton type="button" (click)="checkAnswer(genQuestion[0]?.answer)">
+                  (A). {{genQuestion[0]?.answerToChoose}}</button>
+                <button [ngClass]="{'back-ground': answerCheck}" style="margin: 15px;display: block;" type="button"  nbButton type="button" (click)="checkAnswer(genQuestion[1]?.answer)">
+                  (B). {{genQuestion[1]?.answerToChoose}}</button>
+                <button [ngClass]="{'back-ground': answerCheck}" style="margin: 15px;display: block;" type="button"  nbButton type="button" (click)="checkAnswer(genQuestion[2]?.answer)">
+                  (C). {{genQuestion[2]?.answerToChoose}}</button>
+                <button [ngClass]="{'back-ground': answerCheck}" style="margin: 15px;display: block;" type="button"  nbButton type="button" (click)="checkAnswer(genQuestion[3]?.answer)">
+                  (D). {{genQuestion[3]?.answerToChoose}}</button>
               </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-6">
               <button nbButton status="primary" type="submit">
-                <nb-icon  icon="arrowhead-right-outline"></nb-icon>
+                <nb-icon icon="arrowhead-right-outline" (click)="nextQuestion()">Câu tiếp</nb-icon>
               </button>
             </div>
           </div>
-          <div class="col-lg-12">
-            Description
-          </div>
-          <div class="col-lg-12">
-<!--            {{listQuestion3?.transscript}}-->
+          <div class="col-lg-12 row">
+            <div class="col-lg-12">
+              <p1>Description</p1>
+            </div>
+            <div style="margin: auto;" class="col-lg-12">
+              <nb-card-header style="padding: 20px;"
+                              class="card-header-title">{{genQuestion[0]?.transscript}}</nb-card-header>
+            </div>
           </div>
         </div>
       </div>
     </nb-card-body>
   </div>
+  <ng-template #elseBlock>
+    <div class="container" style="display: grid; border: 1px solid black;">
+      <nb-card-header style="padding: 20px;" class="card-header-title">Lịch sử làm bài</nb-card-header>
+      <nb-card-body>
+        <div class="container">
+          <div class="row">
+            <div style="margin: auto;" class="col-sm-6">
+              <!--              <nb-card-header style="    padding: 20px;" class="card-header-title">{{genQuestion[0]?.name}}</nb-card-header>-->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="col-lg-10">
+                <div>
+                  Bảng history
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </nb-card-body>
+    </div>
+  </ng-template>
 </nb-card>

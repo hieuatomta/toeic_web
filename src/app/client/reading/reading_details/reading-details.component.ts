@@ -30,8 +30,12 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
   randomCheck = [];
   ramdomValue;
   questionNumber;
-  answerCheck = false;
-
+  answerCheck: boolean;
+  num;
+  genQuestion = [];
+  historyShow;
+  totalQuestion;
+  countClick = 1;
   selectFile(event) {
   }
 
@@ -40,9 +44,11 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
     this.key = x;
     this.ngOnInit();
   }
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.key = 15;
+      this.num = 0;
       this.questionsService.getQuestions({
         id: this.key,
       }).subscribe(
@@ -59,6 +65,9 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
             this.listQuestion.push(res.body[this.ramdomValue]);
           }
           this.questionNumber = 0;
+          this.genQuestion = this.listQuestion[this.questionNumber];
+          this.totalQuestion = this.listQuestion.length;
+          console.log(this.genQuestion);
         },
         (error) => {
           console.log(error);
@@ -67,17 +76,33 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
         () => this.loading = false,
       );
     });
+    this.historyShow = true
   }
+
   nextQuestion(): void {
-    this.questionNumber = this.questionNumber + 1 ;
-    for ( let i = 0 ; i < 4; i++ ) {
-      i = i + 1;
+    if (this.questionNumber + 1 < this.listQuestion.length) {
+      console.log(this.questionNumber);
+      this.questionNumber += 1;
+      this.genQuestion = null;
+      this.genQuestion = this.listQuestion[this.questionNumber];
+      console.log(this.genQuestion);
+      this.countClick = 1;
+    }else {
+      this.historyShow = false;
+      this.questionNumber = this.listQuestion.length
     }
   }
 
-  checkAnswer(correr_answer: number, your_answer: number) {
-    this.answerCheck = correr_answer === your_answer ? true : false;
-    this.questionNumber < this.listQuestion.length ? this.questionNumber += 1 : null;
+  checkAnswer(your_answer: string) {
+    if (this.countClick === 1) {
+      if (your_answer === '0') {
+        this.answerCheck = true;
+      }else {
+        this.answerCheck = false;
+      }
+      this.countClick = 0;
+      console.log(this.answerCheck);
+    }
   }
 
 }
