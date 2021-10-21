@@ -36,6 +36,12 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
   historyShow;
   totalQuestion;
   countClick = 1;
+  disableButton= false;
+  answerDefault: any[] = [{'choose': '(A)', 'index': 0, 'color': 'primary'},
+                          {'choose': '(B)', 'index': 1, 'color': 'primary'},
+                          {'choose': '(C)', 'index': 2, 'color': 'primary'},
+                          {'choose': '(D)', 'index': 3, 'color': 'primary'}];
+  answerDefaultCopy: any[];
   selectFile(event) {
   }
 
@@ -77,32 +83,44 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
       );
     });
     this.historyShow = true
+    this.answerDefaultCopy = this.answerDefault;
   }
 
   nextQuestion(): void {
+    this.disableButton = false;
     if (this.questionNumber + 1 < this.listQuestion.length) {
-      console.log(this.questionNumber);
       this.questionNumber += 1;
       this.genQuestion = null;
       this.genQuestion = this.listQuestion[this.questionNumber];
-      console.log(this.genQuestion);
       this.countClick = 1;
     }else {
       this.historyShow = false;
       this.questionNumber = this.listQuestion.length
     }
+    for (let i = 0; i < 4 ; i++) {
+      this.answerDefaultCopy[i].color = 'primary';
+    }
   }
 
-  checkAnswer(your_answer: string) {
+  checkAnswer(your_answer: string, order_number: number) {
+    this.disableButton = true;
     if (this.countClick === 1) {
       if (your_answer === '0') {
-        this.answerCheck = true;
+        this.answerDefaultCopy[order_number].color = 'success';
       }else {
-        this.answerCheck = false;
+        this.answerDefaultCopy[order_number].color = 'danger';
+        for (let i = 0; i < 4 ; i++) {
+          if (this.genQuestion[i].answer === '0') {
+            this.answerDefaultCopy[i].color = 'success'
+          }
+        }
       }
       this.countClick = 0;
-      console.log(this.answerCheck);
     }
+  }
+
+  counter(i: number) {
+    return new Array(i);
   }
 
 }
