@@ -6,37 +6,68 @@
 </section>
 <nb-card style="position: relative;margin-top: 70px;" fullWidth style="min-height: 500px;">
   <div *ngIf="historyShow; else elseBlock" class="container" style="display: grid; border: 1px solid black;">
-    <nb-card-header style="padding: 20px;" class="card-header-title">Question {{questionNumber + 1}}
+    <nb-card-header style="padding: 20px; font-size: 16px" class="card-header-title">Question {{questionNumber + 1}}
       /{{listQuestion.length}}</nb-card-header>
-    <nb-card-body>
+    <nb-card-body style="overflow: hidden !important;">
       <div class="container">
         <div class="row">
           <div style="margin: auto;" class="col-sm-6">
-            <nb-card-header style="    padding: 20px;"
+            <nb-card-header style="padding: 20px; font-size: 16px; border-bottom: none !important;"
                             class="card-header-title">{{genQuestion[0]?.name}}</nb-card-header>
           </div>
         </div>
 
         <div class="row container">
-          <div class="col-lg-12">
-            <div class="col-lg-6">
-              <div>
-                <button  status="{{item.color}}" style=" margin: 15px; display: block;"
-                        type="button" nbButton type="button" *ngFor="let item of answerDefaultCopy" (click)="checkAnswer(genQuestion[item.index]?.answer, item.index)">
-                  {{item.choose}}. {{genQuestion[item.index]?.answerToChoose}}  </button>
+          <div class="col-lg-12 row">
+            <div class="col-lg-10 row">
+              <div class="col-sm-12 row" style="margin: 2%">
+                <div class="col-sm-6">
+                  <div style="padding-left: 60%">
+                    <button status="{{answerDefaultCopy[0].color}}" style=" margin: 15px; width: 155px"
+                            type="button" nbButton type="button" (click)="checkAnswer(genQuestion[0]?.answer, 0)">
+                      {{answerDefaultCopy[0].choose}}. {{genQuestion[0]?.answerToChoose}}  </button>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div style="padding-left: 20%; padding-right: 45%;">
+                    <button status="{{answerDefaultCopy[1].color}}" style=" margin: 15px; width: 155px"
+                            type="button" nbButton type="button" (click)="checkAnswer(genQuestion[1]?.answer, 1)">
+                      {{answerDefaultCopy[1].choose}}. {{genQuestion[1]?.answerToChoose}}  </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 row" style="margin: 2%; margin-top: -1%">
+                <div class="col-sm-6">
+                  <div style="padding-left: 60%">
+                    <button status="{{answerDefaultCopy[2].color}}" style=" margin: 15px; width: 155px"
+                            type="button" nbButton type="button" (click)="checkAnswer(genQuestion[2]?.answer, 2)">
+                      {{answerDefaultCopy[2].choose}}. {{genQuestion[2]?.answerToChoose}}  </button>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div style="padding-left: 20%; padding-right: 45%;">
+                    <button status="{{answerDefaultCopy[3].color}}" style=" margin: 15px; width: 155px"
+                            type="button" nbButton type="button" (click)="checkAnswer(genQuestion[3]?.answer, 3)">
+                      {{answerDefaultCopy[3].choose}}. {{genQuestion[3]?.answerToChoose}}  </button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-lg-6">
-              <button nbButton status="primary" type="submit">
-                <nb-icon icon="arrowhead-right-outline" (click)="nextQuestion()">Câu tiếp</nb-icon>
+            <div class="col-lg-2">
+              <button nbButton status="primary" style="margin: 50%; width: 35%; height: 35%;" type="submit"
+                      (click)="nextQuestion()">
+                <nb-icon style="width: 150%; height: 150%;" icon="arrowhead-right-outline"></nb-icon>
               </button>
             </div>
           </div>
           <div class="col-lg-12 row" [hidden]="!disableButton">
-            <div class="col-lg-12">
-              <p1>Description</p1>
+            <div class="col-lg-12" style="margin-bottom: 2%">
+              <!--              <p1 style="font-size: 16px">Description</p1>-->
+              <nb-card-header style="padding: 20px; font-size: 16px; border-bottom: none !important;"
+                              class="card-header-title">Description
+              </nb-card-header>
             </div>
-            <div style="margin: auto;" class="col-lg-12">
+            <div style="margin: auto; border-style: solid; border-width: 1px; padding: 1%" class="col-lg-12">
               <nb-card-header style="padding: 20px;"
                               class="card-header-title">{{genQuestion[0]?.transscript}}</nb-card-header>
             </div>
@@ -47,24 +78,36 @@
   </div>
   <ng-template #elseBlock>
     <div class="container" style="display: grid; border: 1px solid black;">
-      <nb-card-header style="padding: 20px;" class="card-header-title">Lịch sử làm bài</nb-card-header>
+      <nb-card-header style="padding: 20px; font-size: 16px" class="card-header-title">Lịch sử làm bài</nb-card-header>
       <nb-card-body>
         <div class="container">
           <div class="row">
-            <div style="margin: auto;" class="col-sm-6">
-              <!--              <nb-card-header style="    padding: 20px;" class="card-header-title">{{genQuestion[0]?.name}}</nb-card-header>-->
-            </div>
-          </div>
-
-          <div class="row">
             <div class="col-lg-12">
-              <div class="col-lg-10">
-                <div>
-                  Bảng history
-                </div>
+              <div>
+                <table class="table table-bordered">
+                  <thead class="thead-light">
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Question Number</th>
+                    <th scope="col">Result</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of results">
+                    <th scope="row">{{item.index + 1}}</th>
+                    <th>Question {{item.index + 1}}</th>
+                    <td style="color: #1a34b8">{{item.result}}</td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-
+            <div class="col-lg-12">
+              <div style="text-align: center;">
+                <button status="primary" style=" margin: 15px; width: 155px"
+                        type="button" nbButton type="button">Similar exercise</button>
+              </div>
+            </div>
           </div>
         </div>
       </nb-card-body>

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation, Input} from '@angular/core';
 import {TopicService} from "../../../@core/services/topic.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {QuestionsService} from "../../../@core/services/questions.service";
@@ -11,6 +11,7 @@ import {QuestionsService} from "../../../@core/services/questions.service";
   templateUrl: './reading-details.component.html',
 })
 export class ReadingDetailsComponent implements OnInit, OnDestroy {
+
   ngOnDestroy(): void {
   }
 
@@ -23,7 +24,7 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
 
   lisTopic;
   loading = false;
-  key;
+  keyCopy
   listQuestion = [];
   dem = 0;
   questionCount = 0;
@@ -42,6 +43,9 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
                           {'choose': '(C)', 'index': 2, 'color': 'primary'},
                           {'choose': '(D)', 'index': 3, 'color': 'primary'}];
   answerDefaultCopy: any[];
+  results: Array<{index: any, result: any}> = [];
+
+  @Input() key= '';
   selectFile(event) {
   }
 
@@ -53,10 +57,10 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.key = 15;
+      this.keyCopy = this.key;
       this.num = 0;
       this.questionsService.getQuestions({
-        id: this.key,
+        id: this.keyCopy,
       }).subscribe(
         (res) => {
           if (res.body.length <= 10) {
@@ -73,6 +77,7 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
           this.questionNumber = 0;
           this.genQuestion = this.listQuestion[this.questionNumber];
           this.totalQuestion = this.listQuestion.length;
+          // this.results = Array[this.listQuestion.length];
           console.log(this.genQuestion);
         },
         (error) => {
@@ -107,8 +112,10 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
     if (this.countClick === 1) {
       if (your_answer === '0') {
         this.answerDefaultCopy[order_number].color = 'success';
+        this.results.push({index: this.questionNumber, result: 'True'});
       }else {
         this.answerDefaultCopy[order_number].color = 'danger';
+        this.results.push({index: this.questionNumber, result: 'False'});
         for (let i = 0; i < 4 ; i++) {
           if (this.genQuestion[i].answer === '0') {
             this.answerDefaultCopy[i].color = 'success'
