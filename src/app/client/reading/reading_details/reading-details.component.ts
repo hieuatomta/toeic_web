@@ -60,7 +60,7 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
       this.keyCopy = this.key;
       this.num = 0;
       this.questionsService.getQuestions({
-        id: this.keyCopy,
+        id: 15,
       }).subscribe(
         (res) => {
           if (res.body.length <= 10) {
