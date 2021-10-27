@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation, Input} from '@angular/core';
 import {TopicService} from "../../../@core/services/topic.service";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {QuestionsService} from "../../../@core/services/questions.service";
 
 
@@ -19,12 +19,13 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
   constructor(private topicService: TopicService,
               private activatedRoute: ActivatedRoute,
               private questionsService: QuestionsService,
+              private router: Router,
   ) {
   }
 
   lisTopic;
   loading = false;
-  keyCopy
+  key;
   listQuestion = [];
   dem = 0;
   questionCount = 0;
@@ -44,23 +45,16 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
                           {'choose': '(D)', 'index': 3, 'color': 'primary'}];
   answerDefaultCopy: any[];
   results: Array<{index: any, result: any}> = [];
-
-  @Input() key= '';
+  keyCopy;
   selectFile(event) {
   }
-
-  nextPage(x) {
-    console.log(x);
-    this.key = x;
-    this.ngOnInit();
-  }
-
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.keyCopy = this.key;
+      console.log("params:", params)
+      this.key = parseFloat(params['key']);
       this.num = 0;
       this.questionsService.getQuestions({
-        id: 15,
+        id: this.key,
       }).subscribe(
         (res) => {
           if (res.body.length <= 10) {
@@ -129,5 +123,11 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
   counter(i: number) {
     return new Array(i);
   }
-
+  similarExercise() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([currentUrl]);
+      console.log(currentUrl);
+    });
+  }
 }
