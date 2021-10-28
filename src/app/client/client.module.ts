@@ -39,6 +39,7 @@ import {DetailsComponent} from "./listening/details/details.component";
 import {NgxAudioPlayerModule} from "ngx-audio-player";
 import { ReadingComponent } from './reading/lsReading/reading.component';
 import { ReadingDetailsComponent } from './reading/reading_details/reading-details.component';
+import {ReadingDetailsPart6Component} from "./reading/reading_details_part6/reading-details-part6.component";
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { ReadingDetailsComponent } from './reading/reading_details/reading-detai
     InforUsersComponent,
     ReadingComponent,
     ReadingDetailsComponent,
+    ReadingDetailsPart6Component,
   ],
   providers: [
     {

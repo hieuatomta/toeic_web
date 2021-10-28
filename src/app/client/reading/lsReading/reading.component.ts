@@ -21,9 +21,16 @@ export class ReadingComponent implements OnInit, OnDestroy {
   key;
   test;
   nextPage(x) {
-    const url = '/readingdetails/' + x.id;
-    this.router.navigate([url]);
     console.log(x);
+    let url: string
+    if (x.idPartTopic === 11) {
+      url = '/readingdetails/' + x.id;
+    }else if (x.idPartTopic === 12) {
+      url = '/readingdetails-part6/' + x.id;
+    } else {
+      url = 'home';
+    }
+    this.router.navigate([url]);
   }
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
