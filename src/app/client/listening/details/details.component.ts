@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {TopicService} from "../../../@core/services/topic.service";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Track} from "ngx-audio-player";
 import {SafeUrl} from "@angular/platform-browser";
+import {QuestionsService} from "../../../@core/services/questions.service";
 
 
 @Component({
@@ -21,6 +22,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   msaapDisplayRepeatControls = false;
   msaapDisplayArtist = false;
   msaapDisablePositionSlider = true;
+  lsView;
   url: SafeUrl = '';
 
 // Material Style Advance Audio Player Playlist
@@ -30,16 +32,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
       link: 'http://localhost:4201/toeic-web/assets/audio/category/Universitye4234333333/102021120920217457_ETS2016new-Test-01-Part1-01.mp3',
       artist: 'Audio One Artist',
     }
-    ]
+  ]
 
-  constructor(private topicService: TopicService,
+  constructor(private topicService: TopicService, private router: Router,
               private activatedRoute: ActivatedRoute,
+              private questionsService: QuestionsService,
   ) {
   }
 
   lisTopic;
   loading = false;
   key;
+
   selectFile(event) {
     // if (event !== null) {
     //   this.selectedFiles = event.target.files;
@@ -50,24 +54,139 @@ export class DetailsComponent implements OnInit, OnDestroy {
     //   this.selectedFiles = null;
     // }
   }
+
+  isSelect;
+  isSize;
+  value;
+  isShowImg;
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
       console.log(params);
-      this.key = params['id'];
-      this.topicService.lisTopic({
-        idPartTopic: this.key,
-      }).subscribe(
-        (res) => {
-          console.log(res);
-          this.lisTopic = res.body.data.list;
-        },
-        (error) => {
-          console.log(error);
-          this.loading = false;
-        },
-        () => this.loading = false,
-      );
+      this.key = params['key'];
+      // this.key.slice(10)))).split('/')
+      const value = decodeURIComponent(escape(window.atob(this.key.slice(10)))).split('/');
+      if (value[0] === '-1') {
+      } else if (value[0] === '7') {
+        this.isShowImg = false;
+      } else if (value[0] === '8') {
+        this.isShowImg = true;
+      }
+      this.value = value[1];
+      console.log(value);
+      this.search();
     });
+  }
 
+  search() {
+    this.loading = true;
+    this.questionsService.getQuestionsClient({
+      categoryId: this.value,
+    }).subscribe(
+      (res) => {
+        this.lisTopic = res.body;
+        this.isSize = this.lisTopic?.length;
+        for (let i = 0; i < this.lisTopic?.length; i++) {
+          if (i === 0) {
+            this.isSelect = 1;
+            this.lisTopic[i].isView = 1;
+            this.lsView = this.lisTopic[i].listStringAnswers;
+            console.log(this.lsView)
+          } else {
+            this.lisTopic[i].isView = 0;
+          }
+        }
+        console.log(this.lisTopic)
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+      },
+      () => this.loading = false,
+    );
+  }
+
+  isNext() {
+
+    console.log(this.thisValue);
+    // xu ly goi check dap an
+
+
+    console.log("sad");
+    if (this.isSelect === this.lisTopic?.length) {
+      console.log("max cau hoi rui");
+      this.isContainer = true;
+      return;
+    }
+    this.isDisabled = false;
+    this.isHide = true;
+    this.lsView = this.lisTopic[this.isSelect].listStringAnswers;
+    console.log(this.lsView);
+    console.log(this.isSelect);
+    console.log(this.lisTopic?.length);
+    this.isSelect++;
+  }
+
+  isHide = true;
+  isContainer = false;
+  isDisabled = false;
+  isColor = 'primary';
+  thisValue;
+  rs = [];
+
+
+  isCheck(x) {
+    console.log(x);
+    this.loading = true;
+    this.thisValue = x;
+    this.isHide = false;
+    this.isDisabled = true;
+    this.questionsService.isCheckQuestionsClient({
+      categoryId: this.thisValue.categoryId,
+      value: this.thisValue.value,
+    }).subscribe(
+      (res) => {
+        console.log(res.body)
+        this.lsView = res.body;
+        for (let i = 0; i < this.lsView?.length; i++) {
+          const rs1 = {
+            categoryName: null,
+            kq: null,
+          }
+          rs1.categoryName = this.lsView[i].categoryName;
+          if (this.lsView[i].value === this.thisValue.value) {
+            if (this.lsView[i].color === 'danger') {
+              rs1.kq = 'Sai'
+            } else if (this.lsView[i].color === 'success') {
+              rs1.kq = 'Dung'
+            }
+            this.rs.push(rs1);
+            break;
+          }
+        }
+        console.log(this.rs);
+        if (res.body.answer === 1) {
+          // dap an sai
+          // this.isColor = 'danger';
+          x.color = 'danger';
+        } else if (res.body.answer === 0) {
+          // dap an dung
+          x.color = 'success';
+        }
+        this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+      },
+      () => this.loading = false,
+    );
+  }
+
+  reload() {
+    this.isContainer = false;
+    this.isDisabled = false;
+    this.isHide = true;
+    this.search();
   }
 }

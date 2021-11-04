@@ -25,6 +25,21 @@ export class QuestionsService {
     });
   }
 
+  public getQuestionsClient(req?: any): Observable<any> {
+    const options = createRequestOption(req);
+    return this.http.get<any[]>(`${environment.apiUrl}/list-question-answers-category`, {
+      params: options,
+      observe: 'response'
+    });
+  }
+
+  public isCheckQuestionsClient(req?: any): Observable<any> {
+    const options = createRequestOption(req);
+    return this.http.get<any[]>(`${environment.apiUrl}/is-check-question-answers-category`, {
+      params: options,
+      observe: 'response'
+    });
+  }
   public getQuestionsPart6(req?: any): Observable<any> {
     const options = createRequestOption(req);
     return this.http.get<any[]>(`${environment.apiUrl}/question-answers-part6`, {

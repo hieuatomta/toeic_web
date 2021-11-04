@@ -9,10 +9,11 @@
   <div class="container" style="    display: grid;
     border: 1px solid black;">
 
-    <nb-card-header style="    padding: 20px;" class="card-header-title">Question 1/5
+    <nb-card-header [hidden]="isContainer" style="    padding: 20px;" class="card-header-title">Question {{isSelect}}
+      /{{isSize}}
     </nb-card-header>
     <nb-card-body>
-      <div class="container">
+      <div [hidden]="isContainer" class="container">
         <div class="row">
           <div style="margin: auto;" class="col-sm-6">
             <ngx-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false"
@@ -23,31 +24,110 @@
                               [expanded]="true"></ngx-audio-player>
           </div>
         </div>
-
         <div class="row">
-          <div class="col-sm-12" style="display: flex">
+          <div class="col-sm-12" style="display: flex" [hidden]="isShowImg">
             <div class="col-sm-5">
               <div style="padding: 50px;">
-                <img style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>
+                <img
+                  style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;"
+                  [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>
               </div>
             </div>
             <div class="col-sm-5">
               <div style="padding: 50px;">
-                <button style="margin: 15px;display: block;" *ngFor="let x of lisTopic" nbButton type="button"
-                        status="primary">{{x.name}}</button>
+                <button disabled="{{isDisabled}}" style="margin: 15px;display: block;min-width: 200px;"
+                        *ngFor="let x of lsView"
+                        (click)="isCheck(x)" nbButton type="button" [ngClass]="x.color"
+                        status="{{x.color}}">{{x.value}}</button>
               </div>
             </div>
-            <div class="col-sm-2">
-              <button style="    width: 100%;
-    height: 100%;" nbButton status="primary" type="submit" >
-                <nb-icon style="    width: 300%;
-    height: 300%;" icon="arrowhead-right-outline"></nb-icon>
+            <div class="col-sm-2" [hidden]="isHide">
+              <button style="width: 100%; height: 100%;background: white;border: 0;" nbButton status="basic"
+                      type="submit" (click)="isNext()">
+                <nb-icon style="    width: 40%; height: 40%;" icon="arrowhead-right-outline"></nb-icon>
               </button>
             </div>
           </div>
-
+          <div class="col-sm-12" style="display: flex" [hidden]="!isShowImg">
+            <div class="col-sm-10" style="display: -webkit-box;">
+              <div style="padding: 50px; margin: auto">
+                <button disabled="{{isDisabled}}" style="margin: 15px;display: block;min-width: 200px;"
+                        *ngFor="let x of lsView"
+                        (click)="isCheck(x)" nbButton type="button" [ngClass]="x.color"
+                        status="{{x.color}}">{{x.value}}</button>
+              </div>
+            </div>
+            <div class="col-sm-2" [hidden]="isHide">
+              <button style="width: 100%; height: 100%;background: white;border: 0;" nbButton status="basic"
+                      type="submit" (click)="isNext()">
+                <nb-icon style="    width: 40%; height: 40%;" icon="arrowhead-right-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
         </div>
+        <div class="row" [hidden]="isHide">
+          <div class="col-lg-12">
+            <div class="symple-box yellow center "
+                 style="background: #fffdf3; border-radius: 2px; border: 1px solid #f2dfa4; box-sizing: border-box; color: #c4690e; float: none; font-family: Arial, sans-serif; font-size: 15px; margin: 0px auto; outline: 0px; padding: 15px 20px; vertical-align: baseline;">
+              <strong
+                style="background: transparent; border: 0px; box-sizing: initial; margin: 0px; outline: 0px; padding: 0px; vertical-align: baseline;">Transcript</strong>:
+              <ul
+                style="background: transparent; border: 0px; box-sizing: initial; margin: 0px 0px 20px 20px; outline: 0px; padding: 0px; vertical-align: baseline;">
+                <li
+                  style="background: transparent; border: 0px; box-sizing: initial; list-style: disc; margin: 5px 0px; outline: 0px; padding: 0px; vertical-align: baseline;">
+                  Mọi thắc mắc, Gợi ý hoặc Báo Link Hỏng xin chia sẻ bên dưới hoặc Gửi Tin Nhắn
+                </li>
+                <li
+                  style="background: transparent; border: 0px; box-sizing: initial; list-style: disc; margin: 5px 0px; outline: 0px; padding: 0px; vertical-align: baseline;">
+                  Không chèn liên kết quảng cáo, spam khi đăng nhận xét.
+                </li>
+                <li
+                  style="background: transparent; border: 0px; box-sizing: initial; list-style: disc; margin: 5px 0px; outline: 0px; padding: 0px; vertical-align: baseline;">
+                  Không sử dụng những từ ngữ thô tục, vi phạm thuần phong mỹ tục.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div [hidden]="!isContainer" class="container" style="display: grid; border: 1px solid black;">
+        <nb-card-header style="padding: 20px; font-size: 16px" class="card-header-title">Lịch sử làm bài
+        </nb-card-header>
+        <nb-card-body>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div>
+                  <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Result</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of rs; let i = index">
+                      <th scope="row">{{i + 1}}</th>
+                      <th>{{item?.categoryName}}</th>
+                      <td style="color: #1a34b8">{{item?.kq}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div style="text-align: center;">
+                  <button status="primary" style=" margin: 15px; width: 155px" (click)="reload()"
+                          type="button" nbButton type="button">Similar exercise
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
       </div>
     </nb-card-body>
   </div>
+
 </nb-card>
