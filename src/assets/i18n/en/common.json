@@ -54,7 +54,7 @@
       "item_roles_name": "Tên quyền",
       "item_map_popup": "Thao tác quyền với chức năng",
       "item_update_time": "Updated date",
-      "item_description": "Mô tả",
+      "item_description": "Description",
       "item_category_code": "Topic code",
       "item_category_name": "Topic name",
       "item_category_type": "Type of category",
@@ -94,6 +94,7 @@
     "delete": "Delete",
     "come": "Back",
     "kt": "End",
-    "format_date": "dd/MM/yyyy"
+    "format_date": "dd/MM/yyyy",
+    "agree": "OK"
   }
 }

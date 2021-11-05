@@ -135,7 +135,7 @@
 
           <div class="mb-4" >
             <div *ngFor=" let list of listQue; let i = index" class="row" >
-              <p>Cau hoi {{i + 1}}
+              <p>Question {{i + 1}}
                 <button *ngIf="!isDis" nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
                 <button *ngIf="!isDis" nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
               </p>
