@@ -22,9 +22,9 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
   result: Array<any> = [];
   lisTopic;
   disableButton = false;
-  results: Array<{ index: any, result: any }> = [];
+  resultTotal: Array<{ topicName: string, correct: number, total: number }> = [];
   key;
-  loading;
+  loading = false;
   answerCheck: Array<any> = [];
   listColorResult: Array<any> = [];
   submitCheck: boolean = false;
@@ -34,19 +34,26 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
   listTopic2;
   countClickNextQuestion: number = 0;
   historyShowCheck: boolean = false;
+  bodyCopy: any;
+  countExamDefault;
+  countExamIndex: number = 1;
+  correct: number = 0;
+  topicName;
   selectFile(event) {
   }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
-      console.log("params:", params)
-      this.key = parseFloat(params['key']);
+      this.loading = true;
+      this.key = parseFloat(params['key'].substr(0, params['key'].indexOf('_')));
+      this.topicName = params['key'].substr(params['key'].indexOf('_') + 1)
       this.questionsService.getQuestionsPart6({
         id: this.key,
       }).subscribe(
         (res ) => {
           this.lisTopic = res.body.listQuestion1;
           this.listTopic2 = res.body.listQuestion2;
+          this.countExamDefault = Object.keys(res.body).length
         },
         (error) => {
           console.log(error);
@@ -58,6 +65,7 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
   }
 
   nextQuestion() {
+    this.countExamIndex = this.countExamIndex + 1;
     this.answerCheck = [];
     this.listColorResult = [];
     this.result = [];
@@ -66,6 +74,8 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
     this.submitCheck = false;
     this.lisTopic = this.listTopic2;
     if (this.countClickNextQuestion === 2 || this.countClickNextQuestion > 2) {
+      this.historyShowCheck = true;
+    } else if (this.listTopic2 === undefined || this.listTopic2 === null || this.countExamDefault === 1) {
       this.historyShowCheck = true;
     }
   }
@@ -94,7 +104,7 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
       this.submitCheck = true;
       this.countAnswerCheck = true;
       this.clickBtnSubmitCheck = false;
-      this.countClickNextQuestion = this.countClickNextQuestion + 1;
+        this.countClickNextQuestion = this.countClickNextQuestion + 1;
       for (let i = 0; i < this.result.length; i++) {
         if (this.result[i] === '1') {
           this.answerCheck.push("Đáp án SAI");
@@ -102,8 +112,10 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
         } else {
           this.answerCheck.push("Đáp án ĐÚNG");
           this.listColorResult.push(true);
+          this.correct = this.correct + 1;
         }
       }
+      this.resultTotal.push({topicName: this.topicName, correct: this.correct, total: Object.keys(this.lisTopic).length})
     } else {
       this.submitCheck = false;
       this.countAnswerCheck = false;
