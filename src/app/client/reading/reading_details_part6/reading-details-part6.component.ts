@@ -79,17 +79,6 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
       this.historyShowCheck = true;
     }
   }
-
-  somethingChanged( s: string) {
-    console.log(s);
-}
-  checkAnswer(your_answer: string, order_number: number) {
-  }
-
-  counter(i: number) {
-    return new Array(i);
-  }
-
   submitComplete() {
     this.answerCheck = [];
     this.listColorResult = [];
@@ -101,18 +90,29 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
       }
     }
     if (this.countAnswer === Object.keys(this.lisTopic).length) {
+      let lisTopicCopy = new Array();
+      const valueOfLisTopic = new Array();
+      valueOfLisTopic.push(Object.values(this.lisTopic));
+      for (let i = 0; i < valueOfLisTopic.length; i++) {
+        for (let j = 0; j < valueOfLisTopic[i].length; j++) {
+          lisTopicCopy = lisTopicCopy.concat(valueOfLisTopic[i][j]);
+        }
+      }
+      lisTopicCopy = lisTopicCopy.reverse();
       this.submitCheck = true;
       this.countAnswerCheck = true;
       this.clickBtnSubmitCheck = false;
-        this.countClickNextQuestion = this.countClickNextQuestion + 1;
+      this.countClickNextQuestion = this.countClickNextQuestion + 1;
       for (let i = 0; i < this.result.length; i++) {
-        if (this.result[i] === '1') {
-          this.answerCheck.push("Đáp án SAI");
-          this.listColorResult.push(false);
-        } else {
-          this.answerCheck.push("Đáp án ĐÚNG");
-          this.listColorResult.push(true);
-          this.correct = this.correct + 1;
+        for (let j = 0; j < lisTopicCopy.length; j++) {
+          if (this.result[i] === lisTopicCopy[j].id && lisTopicCopy[j].answer === '1') {
+            this.answerCheck.push("Đáp án SAI");
+            this.listColorResult.push(false);
+          } else if (this.result[i] === lisTopicCopy[j].id && lisTopicCopy[j].answer === '0') {
+            this.answerCheck.push("Đáp án ĐÚNG");
+            this.listColorResult.push(true);
+            this.correct = this.correct + 1;
+          }
         }
       }
       this.resultTotal.push({topicName: this.topicName, correct: this.correct, total: Object.keys(this.lisTopic).length})
@@ -137,10 +137,9 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
     }
   }
   similarExercise() {
-    const currentUrl = this.router.url;
+    const currentUrl = '/readingdetails-part6/' + this.key + '_' + this.topicName;
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this.router.navigate([currentUrl]);
-      console.log(currentUrl);
     });
   }
 }

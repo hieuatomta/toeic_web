@@ -18,30 +18,55 @@
 
         <div class="col-lg-6">
 
-          <div *ngFor="let test of lisTopic | keyvalue; index as i">
-            <label id="example-radio-group-label">{{i + 1}}. {{test.value[0].name}}</label>
-            <mat-radio-group
-              [disabled]="submitCheck"
-              aria-labelledby="example-radio-group-label"
-              class="example-radio-group"
-              [(ngModel)]="result[i]"
-              (change)="radioChange()"
-              style="margin-bottom: 0px !important">
-              <mat-radio-button value="{{test.value[0].answer}}" class="example-radio-button">
-                A. {{test.value[0].answerToChoose}}</mat-radio-button>
-              <mat-radio-button value="{{test.value[1].answer}}" class="example-radio-button">
-                B. {{test.value[1].answerToChoose}}</mat-radio-button>
-              <mat-radio-button value="{{test.value[2].answer}}" class="example-radio-button">
-                C. {{test.value[2].answerToChoose}}</mat-radio-button>
-              <mat-radio-button value="{{test.value[3].answer}}" class="example-radio-button">
-                D. {{test.value[3].answerToChoose}}</mat-radio-button>
-            </mat-radio-group>
-            <!--            <div>Your favorite season is: {{result[i]}}</div>-->
-            <div style="margin-bottom: 5%" *ngIf="submitCheck">
-              <label style="font-weight: bold"
-                     [ngStyle]="{'color': listColorResult[i] ? 'green' : 'red'}">{{answerCheck[i]}}</label>
-            </div>
-          </div>
+<!--          <div *ngFor="let test of lisTopic | keyvalue; index as i">-->
+<!--            <label id="example-radio-group-label">{{i + 1}}. {{test.value[0].name}}</label>-->
+<!--            <mat-radio-group-->
+<!--              [disabled]="submitCheck"-->
+<!--              aria-labelledby="example-radio-group-label"-->
+<!--              class="example-radio-group"-->
+<!--              [(ngModel)]="result[i]"-->
+<!--              (change)="radioChange()"-->
+<!--              style="margin-bottom: 0px !important">-->
+<!--              <mat-radio-button value="{{test.value[0].answer}}" class="example-radio-button">-->
+<!--                A. {{test.value[0].answerToChoose}}</mat-radio-button>-->
+<!--              <mat-radio-button value="{{test.value[1].answer}}" class="example-radio-button">-->
+<!--                B. {{test.value[1].answerToChoose}}</mat-radio-button>-->
+<!--              <mat-radio-button value="{{test.value[2].answer}}" class="example-radio-button">-->
+<!--                C. {{test.value[2].answerToChoose}}</mat-radio-button>-->
+<!--              <mat-radio-button value="{{test.value[3].answer}}" class="example-radio-button">-->
+<!--                D. {{test.value[3].answerToChoose}}</mat-radio-button>-->
+<!--            </mat-radio-group>-->
+<!--            &lt;!&ndash;            <div>Your favorite season is: {{result[i]}}</div>&ndash;&gt;-->
+<!--            <div style="margin-bottom: 5%" *ngIf="submitCheck">-->
+<!--              <label style="font-weight: bold"-->
+<!--                     [ngStyle]="{'color': listColorResult[i] ? 'green' : 'red'}">{{answerCheck[i]}}</label>-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <nb-card *ngFor="let test of lisTopic | keyvalue; index as index">
+            <nb-card-header>{{index + 1}}. {{test.value[0].name}}</nb-card-header>
+            <nb-card-body>
+              <form ngDefaultControl >
+                <nb-radio-group [(ngModel)]="result[index]" [ngModelOptions]="{standalone: true}"  (ngModelChange)="radioChange()" [disabled]="submitCheck">
+                  <nb-radio [(value)] = "test.value[0].id">
+                    A. {{test.value[0].answerToChoose}}
+                  </nb-radio>
+                  <nb-radio [(value)] = "test.value[1].id">
+                    B. {{test.value[1].answerToChoose}}
+                  </nb-radio>
+                  <nb-radio [(value)] = "test.value[2].id">
+                    C. {{test.value[2].answerToChoose}}
+                  </nb-radio>
+                  <nb-radio [(value)] = "test.value[3].id">
+                    D. {{test.value[3].answerToChoose}}
+                  </nb-radio>
+                </nb-radio-group>
+              </form>
+            </nb-card-body>
+            <nb-card-footer style="font-weight: bold"
+              [ngStyle]="{'color': listColorResult[index] ? 'green' : 'red'}">{{answerCheck[index]}}
+            </nb-card-footer>
+          </nb-card>
 
           <div class="col-lg-12">
             <label *ngIf="!countAnswerCheck" style="color: red; margin-top: 2%; font-weight: bold; font-style: italic">
