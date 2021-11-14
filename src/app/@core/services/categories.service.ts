@@ -34,37 +34,25 @@ export class CategoriesService {
     });
   }
 
-  // public update(data: any): Observable<any> {
-  //   return this.http.put<any>(`${environment.apiUrl}/categories`, data, {
-  //     observe: 'response'
-  //   });
-  // }
-
   public update(data: any, file?: FileList): Observable<any> {
     const model: any = data;
     const formData: FormData = new FormData();
-    console.log(file);
-    formData.append('file1', JSON.stringify(file));
+    for (let i = 0; i < file.length; i++) {
+      formData.append('file1', file[i], file[i].name);
+    }
     formData.append('model', JSON.stringify(model));
-    console.log(formData);
     return this.http.put<any>(`${environment.apiUrl}/categories`, formData, {
       observe: 'response'
     });
   }
 
-  // public insert(data: any): Observable<any> {
-  //   return this.http.post<any>(`${environment.apiUrl}/categories`, data, {
-  //     observe: 'response'
-  //   });
-  // }
-
   public insert(data: any, file?: FileList): Observable<any> {
     const model: any = data;
     const formData: FormData = new FormData();
-    console.log(file);
-    formData.append('file1', JSON.stringify(file));
+    for (let i = 0; i < file.length; i++) {
+      formData.append('file1', file[i], file[i].name);
+    }
     formData.append('model', JSON.stringify(model));
-    console.log(formData);
     return this.http.post<any>(`${environment.apiUrl}/categories`, formData, {
       observe: 'response'
     });
