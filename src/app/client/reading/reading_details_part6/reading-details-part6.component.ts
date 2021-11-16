@@ -39,6 +39,7 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
   countExamIndex: number = 1;
   correct: number = 0;
   topicName;
+  pathImg;
   selectFile(event) {
   }
 
@@ -54,6 +55,8 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
           this.lisTopic = res.body.listQuestion1;
           this.listTopic2 = res.body.listQuestion2;
           this.countExamDefault = Object.keys(res.body).length
+          this.pathImg = Object.values(res.body.listQuestion1)[0][0].pathCategory
+          console.log(this.pathImg)
         },
         (error) => {
           console.log(error);
@@ -73,6 +76,7 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
     this.clickBtnSubmitCheck = false;
     this.submitCheck = false;
     this.lisTopic = this.listTopic2;
+    this.pathImg = Object.values(this.lisTopic)[0][0].pathCategory
     if (this.countClickNextQuestion === 2 || this.countClickNextQuestion > 2) {
       this.historyShowCheck = true;
     } else if (this.listTopic2 === undefined || this.listTopic2 === null || this.countExamDefault === 1) {
