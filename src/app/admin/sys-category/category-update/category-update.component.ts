@@ -65,12 +65,12 @@ export class CategoryUpdateComponent implements OnInit {
   validateListQue() {
     for (let i = 0; i < this.listQue?.length; i++) {
       if (this.listQue[i].name === '' || this.listQue[i].name === null) {
-        this.toastr.danger("Vui long dien question cau " + (i + 1), this.translate.instant('common.title_notification'));
+        this.toastr.danger("Please enter question name" + (i + 1), this.translate.instant('common.title_notification'));
         this.inputUser.get("listQue").setValue(null);
         return false;
       }
       if (this.listQue[i].listAnswers === null || this.listQue[i].listAnswers?.length === 0) {
-        this.toastr.danger("Cau hoi" + (i + 1) + " it nhat 1 dap an", this.translate.instant('common.title_notification'));
+        this.toastr.danger("Question" + (i + 1) + "have at least one answer", this.translate.instant('common.title_notification'));
         this.inputUser.get("listQue").setValue(null);
         return false;
       } else {
