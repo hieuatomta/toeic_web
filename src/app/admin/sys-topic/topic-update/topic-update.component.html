@@ -21,7 +21,7 @@
               </div>
               <div class="col-lg-6">
                 <input [attr.disabled]="isDis" class="custom-border" formControlName="name" type="text" nbInput
-                       fullWidth
+                       fullWidth [readonly]="true"
                        trim="blur" placeholder="{{'common.table.item_category_name' |translate}}"
                        [ngClass]="{'status-danger': this.inputUser.get('name').touched && this.inputUser.get('name').errors}">
                 <ngx-inline-message [message]="'common.table.item_category_name'|translate"
@@ -35,7 +35,7 @@
                 </label>
               </div>
               <div class="col-lg-6">
-                <ng-select fullWidth appendTo="body"
+                <ng-select fullWidth appendTo="body" [readonly]="true"
                            placeholder="{{'common.placeHolder' |translate}}"
                            notFoundText="{{'common.notFoundText' |translate}}"
                            clearAllText="{{'common.clearAllText' |translate}}"
@@ -56,7 +56,7 @@
                 </label>
               </div>
               <div class="col-lg-6">
-                <ng-select fullWidth appendTo="body"
+                <ng-select fullWidth appendTo="body" [readonly]="true"
                            placeholder="{{'common.placeHolder' |translate}}"
                            notFoundText="{{'common.notFoundText' |translate}}"
                            clearAllText="{{'common.clearAllText' |translate}}"
@@ -73,9 +73,7 @@
       </div>
     </form>
   </nb-card-body>
-  <nb-card-footer class="text-right">
-    <button nbButton [disabled]="inputUser.invalid" type="button" status="primary" (click)="submit()"
-            id="dialogCancelBtn">{{ 'common.save' | translate }}</button>
-    <button nbButton type="button" nbButton (click)="cancel()" class="ml-2"> {{ 'common.cancel' | translate }} </button>
+  <nb-card-footer class="text-center">
+    <button nbButton type="button" nbButton (click)="cancel()" class="ml-2"> {{ 'common.close' | translate }} </button>
   </nb-card-footer>
 </nb-card>

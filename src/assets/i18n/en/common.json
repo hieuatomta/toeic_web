@@ -11,7 +11,7 @@
         "logout": "Logout"
       }
     },
-    "title_notification": "Notification",
+    "title_notification": "Confirm deletion",
     "status": {
       "active": "Active",
       "inactive": "Inactive",
@@ -54,7 +54,7 @@
       "item_roles_name": "Tên quyền",
       "item_map_popup": "Thao tác quyền với chức năng",
       "item_update_time": "Updated date",
-      "item_description": "Mô tả",
+      "item_description": "Description",
       "item_category_code": "Topic code",
       "item_category_name": "Topic name",
       "item_category_type": "Type of category",
@@ -62,7 +62,7 @@
       "item_question": "Question",
       "item_answer_to_choose": "Answer to choose ",
       "item_answer": "Answers",
-      "item_test_name": "Test name",
+      "item_test_name": "Category name",
       "item_category_part_topic": "Part",
       "item_objects_name": "Tên chức năng",
       "item_objects_paren": "Chức năng cha",
@@ -94,6 +94,7 @@
     "delete": "Delete",
     "come": "Back",
     "kt": "End",
-    "format_date": "dd/MM/yyyy"
+    "format_date": "dd/MM/yyyy",
+    "close": "Close"
   }
 }
