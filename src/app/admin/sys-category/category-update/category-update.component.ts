@@ -241,7 +241,7 @@ export class CategoryUpdateComponent implements OnInit {
       }
       this.listQue[(this.listQue.length - 1)].listAnswers.push({stt: 1, value: ''})
     } else if (type === 1) {
-      if (this.listQue[obj].listAnswers.length < 5) {
+      if (this.listQue[obj].listAnswers.length < 4) {
         this.listQue[obj].listAnswers.push({
             stt: 1, value: ""
           }
@@ -250,7 +250,7 @@ export class CategoryUpdateComponent implements OnInit {
           this.listQue[obj].listAnswers[i].stt = (i + 1);
         }
       } else {
-        this.toastr.danger("Chi dc toi da 5 dap an", this.translate.instant('common.title_notification'));
+        this.toastr.danger("Chi dc toi da 4 dap an", this.translate.instant('common.title_notification'));
       }
 
     }
