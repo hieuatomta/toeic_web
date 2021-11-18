@@ -52,6 +52,7 @@ export class CategoryUpdateComponent implements OnInit {
 
   listRole = null;
   lstRole1 = [];
+  lisFile = [];
   listStatus = [
     {name: 'common.status.1', code: 1},
     {name: 'common.status.0', code: 0}
@@ -135,9 +136,9 @@ export class CategoryUpdateComponent implements OnInit {
 // Material Style Advance Audio Player Playlist
   msaapPlaylist: Track[] = [
     {
-      title: 'Audio One Title',
-      link: 'http://localhost:4201/toeic-web/assets/audio/category/Universitye4234333333/102021120920217457_ETS2016new-Test-01-Part1-01.mp3',
-      artist: 'Audio One Artist',
+      title: null,
+      link: null,
+      artist: null,
     }
   ];
 
@@ -155,8 +156,6 @@ export class CategoryUpdateComponent implements OnInit {
       topicId: new FormControl(null, [Validators.required]),
       listQue: new FormControl(null, []),
       namePartTopic: new FormControl(this.data?.namePartTopic, []),
-      // creationTime: new FormControl(this.data?.creationTime, []),
-      // updateTime: new FormControl(this.data?.updateTime, []),
       status: new FormControl(this.data?.status === undefined ? 1 : this.data?.status, []),
     });
     if (this.isCheck === 0) {
@@ -171,8 +170,7 @@ export class CategoryUpdateComponent implements OnInit {
       this.getTopic(0)
       console.log(this.data?.idType)
       if (this.data?.idType !== null) {
-        this.getTopic(this.data?.idType)
-        // this.inputUser.get('namePartTopidPartTopicic').setValue(this.data?.idType);
+        this.getTopic(this.data?.idType);
       }
     } else {
       this.categoriesService.doSearchDetail({
@@ -182,10 +180,21 @@ export class CategoryUpdateComponent implements OnInit {
       }).subscribe(
         (res) => {
           console.log(res);
+          this.lisFile = [];
           this.listTopic = res.body.data.list.listTopic;
           this.listPart = res.body.data.list.listPart;
           this.lisTopic = res.body.data.list.lisTopic;
           this.listQue = res.body.data.list.listQue;
+          this.lisFile = res.body.data.list.lisFile;
+          for (let i = 0; i < this.lisFile?.length; i++) {
+            console.log(this.lisFile[i]);
+            if (this.lisFile[i].typeFile === '1') {
+              this.url = this.lisFile[i].path;
+            } else if (this.lisFile[i].typeFile === '0') {
+              this.msaapPlaylist[0].link = this.lisFile[i].path;
+              console.log(this.msaapPlaylist)
+            }
+          }
           this.inputUser.get("idType").setValue(this.data?.idType);
           this.inputUser.get("idPartTopic").setValue(this.data?.idPartTopic);
           this.inputUser.get("topicId").setValue(this.data?.topicId);
@@ -205,6 +214,7 @@ export class CategoryUpdateComponent implements OnInit {
   selectFile(event) {
     if (event !== null) {
       this.selectedFiles = event.target.files;
+      console.log(this.selectedFiles);
       this.url = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(event.target.files[0])
       );
@@ -230,7 +240,7 @@ export class CategoryUpdateComponent implements OnInit {
       }
       this.listQue[(this.listQue.length - 1)].listAnswers.push({stt: 1, value: ''})
     } else if (type === 1) {
-      if (this.listQue[obj].listAnswers.length < 5) {
+      if (this.listQue[obj].listAnswers.length < 4) {
         this.listQue[obj].listAnswers.push({
             stt: 1, value: ""
           }
@@ -352,6 +362,7 @@ export class CategoryUpdateComponent implements OnInit {
       console.log(data);
       console.log(this.listQue);
       if (this.data == null) {
+        console.log(this.selectedFiles);
         this.categoriesService.insert(data, this.selectedFiles).subscribe(
           (value) => {
             this.ref.close(value);

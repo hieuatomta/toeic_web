@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {TopicService} from "../../../@core/services/topic.service";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Track} from "ngx-audio-player";
 import {SafeUrl} from "@angular/platform-browser";
 import {QuestionsService} from "../../../@core/services/questions.service";
@@ -32,9 +32,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
       link: 'http://localhost:4201/toeic-web/assets/audio/category/Universitye4234333333/102021120920217457_ETS2016new-Test-01-Part1-01.mp3',
       artist: 'Audio One Artist',
     }
-    ]
+  ]
 
-  constructor(private topicService: TopicService,
+  constructor(private topicService: TopicService, private router: Router,
               private activatedRoute: ActivatedRoute,
               private questionsService: QuestionsService,
   ) {
@@ -57,38 +57,53 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   isSelect;
   isSize;
+  value;
+  isShowImg;
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
       console.log(params);
       this.key = params['key'];
-      console.log(this.key);
-
-      this.questionsService.getQuestionsClient({
-        categoryId: this.key,
-      }).subscribe(
-        (res) => {
-          this.lisTopic = res.body;
-          this.isSize = this.lisTopic?.length;
-          for (let i = 0; i < this.lisTopic?.length; i++) {
-            if (i === 0) {
-              this.isSelect = 1;
-              this.lisTopic[i].isView = 1;
-              this.lsView = this.lisTopic[i].listStringAnswers;
-              console.log(this.lsView)
-            } else {
-              this.lisTopic[i].isView = 0;
-            }
-          }
-          console.log(this.lisTopic)
-        },
-        (error) => {
-          console.log(error);
-          this.loading = false;
-        },
-        () => this.loading = false,
-      );
+      // this.key.slice(10)))).split('/')
+      const value = decodeURIComponent(escape(window.atob(this.key.slice(10)))).split('/');
+      if (value[0] === '-1') {
+      } else if (value[0] === '7') {
+        this.isShowImg = false;
+      } else if (value[0] === '8') {
+        this.isShowImg = true;
+      }
+      this.value = value[1];
+      console.log(value);
+      this.search();
     });
+  }
+
+  search() {
+    this.loading = true;
+    this.questionsService.getQuestionsClient({
+      categoryId: this.value,
+    }).subscribe(
+      (res) => {
+        this.lisTopic = res.body;
+        this.isSize = this.lisTopic?.length;
+        for (let i = 0; i < this.lisTopic?.length; i++) {
+          if (i === 0) {
+            this.isSelect = 1;
+            this.lisTopic[i].isView = 1;
+            this.lsView = this.lisTopic[i].listStringAnswers;
+            console.log(this.lsView)
+          } else {
+            this.lisTopic[i].isView = 0;
+          }
+        }
+        console.log(this.lisTopic)
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+      },
+      () => this.loading = false,
+    );
   }
 
   isNext() {
@@ -166,8 +181,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
       },
       () => this.loading = false,
     );
+  }
 
-
-    //
+  reload() {
+    this.isContainer = false;
+    this.isDisabled = false;
+    this.isHide = true;
+    this.search();
   }
 }
