@@ -232,7 +232,7 @@
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <input [attr.disabled]="isDis" class="custom-border"  [(ngModel)]="listQue[i].transscript" type="text"
+                    <input [attr.disabled]="isDis" class="custom-border"  [(ngModel)]="listQue[i].transscript" type="textarea"
                            nbInput
                            fullWidth
                            trim="blur" placeholder="{{'common.table.item_description' |translate}}">
@@ -249,8 +249,8 @@
     </nb-tabset>
   </nb-card-body>
   <nb-card-footer class="text-center">
-<!--    <button nbButton [disabled]="inputUser.invalid" type="button" status="primary" (click)="submit()"-->
-<!--            id="dialogCancelBtn">{{ 'common.save' | translate }}</button>-->
+    <button nbButton [disabled]="inputUser.invalid" type="button" status="primary" (click)="submit()"
+            id="dialogCancelBtn">{{ 'common.save' | translate }}</button>
     <button nbButton type="button" nbButton (click)="cancel()" class="ml-2"> {{ 'common.close' | translate }} </button>
   </nb-card-footer>
 </nb-card>

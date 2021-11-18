@@ -11,7 +11,7 @@
         "logout": "Logout"
       }
     },
-    "title_notification": "Confirm deletion",
+    "title_notification": "Notification",
     "status": {
       "active": "Active",
       "inactive": "Inactive",
