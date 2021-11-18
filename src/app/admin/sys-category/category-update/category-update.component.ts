@@ -170,8 +170,7 @@ export class CategoryUpdateComponent implements OnInit {
       this.getTopic(0)
       console.log(this.data?.idType)
       if (this.data?.idType !== null) {
-        this.getTopic(this.data?.idType)
-        // this.inputUser.get('namePartTopidPartTopicic').setValue(this.data?.idType);
+        this.getTopic(this.data?.idType);
       }
     } else {
       this.categoriesService.doSearchDetail({
