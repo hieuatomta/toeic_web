@@ -37,7 +37,7 @@ export class CategoriesService {
   public update(data: any, file?: FileList): Observable<any> {
     const model: any = data;
     const formData: FormData = new FormData();
-    for (let i = 0; i < file.length; i++) {
+    for (let i = 0; i < file?.length; i++) {
       formData.append('file1', file[i], file[i].name);
     }
     formData.append('model', JSON.stringify(model));
@@ -49,7 +49,7 @@ export class CategoriesService {
   public insert(data: any, file?: FileList): Observable<any> {
     const model: any = data;
     const formData: FormData = new FormData();
-    for (let i = 0; i < file.length; i++) {
+    for (let i = 0; i < file?.length; i++) {
       formData.append('file1', file[i], file[i].name);
     }
     formData.append('model', JSON.stringify(model));
