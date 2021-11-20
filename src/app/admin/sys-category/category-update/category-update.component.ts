@@ -141,10 +141,27 @@ export class CategoryUpdateComponent implements OnInit {
       artist: null,
     }
   ];
+  isShow: boolean;
+  tabs = [ { title: 'Tab1', active: false }, { title: 'Tab2', active: true } ];
+  setActiveSearch: boolean = false;
+  setActiveAdd: boolean = false;
+
+  // ActivateTabAdd() {
+  //   this.setActiveAdd = true;
+  // }
+  onEvento(e) {
+    // if (e.tabTitle === 'Input data' || e.tabTitle === 'Question') {
+    //   this.setActiveSearch = true;
+    //   this.setActiveAdd = false;
+    //   this.toastr.danger("Vui lòng nhập đẩy đủ thông tin", this.translate.instant('common.title_notification'));
+    // }
+    console.log(e.tabTitle)
+  }
 
   ngOnInit(): void {
     console.log(this.isCheck);
     // this.playAudio();
+    console.log(this.isShow);
     this.loading = true;
     this.inputUser = new FormGroup({
       code: new FormControl(this.data?.code, []),
@@ -164,6 +181,7 @@ export class CategoryUpdateComponent implements OnInit {
       this.inputUser.get("idPartTopic").disable();
       this.inputUser.get("topicId").disable();
       this.isDis = true;
+      this.isShow = true;
 
     }
     if (this.data === null || this.data === undefined) {
@@ -173,6 +191,11 @@ export class CategoryUpdateComponent implements OnInit {
         this.getTopic(this.data?.idType);
       }
     } else {
+      if (this.data?.idPartTopic === 7 || this.data?.idPartTopic === 8) {
+        this.isShow = true;
+      } else {
+        this.isShow = false;
+      }
       this.categoriesService.doSearchDetail({
         idType: this.data?.idType,
         idPartTopic: this.data?.idPartTopic,
@@ -310,6 +333,11 @@ export class CategoryUpdateComponent implements OnInit {
   getLisTopic() {
     if (this.inputUser.get('idType').value !== null && this.inputUser.get('idPartTopic').value !== null) {
       // goi api lay ds topic name
+      if (this.inputUser.get('idPartTopic').value === 7 || this.inputUser.get('idPartTopic').value === 8) {
+        this.isShow = true;
+      } else {
+        this.isShow = false;
+      }
       this.loading = true;
       this.inputUser.get('topicId').setValue(null);
       this.lisTopic = null;
