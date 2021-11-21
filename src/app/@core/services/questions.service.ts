@@ -40,6 +40,13 @@ export class QuestionsService {
       observe: 'response'
     });
   }
+  public getQuestionsPart6(req?: any): Observable<any> {
+    const options = createRequestOption(req);
+    return this.http.get<any[]>(`${environment.apiUrl}/question-answers-part6`, {
+      params: options,
+      observe: 'response'
+    });
+  }
 
   delete(id: any): Observable<any> {
     return this.http.delete<any>(`${environment.apiUrl}/question-answers-category/${id}`);

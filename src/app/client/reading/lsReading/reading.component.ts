@@ -1,6 +1,8 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {TopicService} from "../../../@core/services/topic.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {NbToastrService} from "@nebular/theme";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -14,6 +16,8 @@ export class ReadingComponent implements OnInit, OnDestroy {
   constructor(private topicService: TopicService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
+              private toastrService: NbToastrService,
+              private translate: TranslateService,
               ) {
   }
   lisTopic;
@@ -21,12 +25,16 @@ export class ReadingComponent implements OnInit, OnDestroy {
   key;
   test;
   nextPage(x) {
-    console.log(x);
+    if (x.isLength === 0) {
+      this.toastrService.danger('Chủ đề chưa có đề bài',
+        this.translate.instant('common.title_notification'));
+      return;
+    }
     let url: string
     if (x.idPartTopic === 11) {
       url = '/readingdetails/' + x.id;
     }else if (x.idPartTopic === 12) {
-      url = '/readingdetails-part6/' + x.id;
+      url = '/readingdetails-part6/' + x.id + '_' + x.name;
     } else {
       url = 'home';
     }

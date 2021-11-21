@@ -1,23 +1,23 @@
 <!-- Title page -->
-<section class="bg-img1 txt-center p-lr-15 p-tb-92">
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="margin-top: 70px;background-image: url('/toeic-web/assets/images/img_study/about.jpeg');">
   <h2 class="ltext-105 cl0 txt-center">
-    Part V : Photographs
+    Part V: Incomplete Sentences
   </h2>
 </section>
-<nb-card style="position: relative;margin-top: 70px;" fullWidth style="min-height: 500px;">
+<nb-card style="position: relative;margin-top: 70px;" fullWidth style="min-height: 500px;" [nbSpinner]="loading">
   <div *ngIf="historyShow; else elseBlock" class="container" style="display: grid; border: 1px solid black;">
-    <nb-card-header style="padding: 20px; font-size: 16px" class="card-header-title">Question {{questionNumber + 1}}
-      /{{listQuestion.length}}</nb-card-header>
-    <nb-card-body style="overflow: hidden !important;">
+    <nb-card-header style="padding: 20px; font-size: 16px; color: black; padding-left: 5%; padding-left: 49px !important;"
+                    class="card-header-title">Question {{questionNumber + 1}}/{{listQuestion.length}}</nb-card-header>
+    <nb-card-body >
       <div class="container">
         <div class="row">
           <div style="margin: auto;" class="col-sm-6">
-            <nb-card-header style="padding: 20px; font-size: 16px; border-bottom: none !important;"
+            <nb-card-header style="padding: 20px; font-size: 16px; border-bottom: none !important; color: black !important;"
                             class="card-header-title">{{genQuestion[0]?.name}}</nb-card-header>
           </div>
         </div>
 
-        <div class="row container">
+        <div class="row" style="margin-left: 0px !important;">
           <div class="col-lg-12 row">
             <div class="col-lg-10 row">
               <div class="col-sm-12 row" style="margin: 2%">
@@ -53,22 +53,23 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-2">
-              <button nbButton status="primary" style="margin: 50%; width: 35%; height: 35%;" type="submit"
+            <div class="col-sm-2" [hidden]="!disableButton">
+              <button style="width: 100%; height: 100%; background: white;border: 0;" nbButton status="basic"
+                      type="submit"
                       (click)="nextQuestion()">
-                <nb-icon style="width: 150%; height: 150%;" icon="arrowhead-right-outline"></nb-icon>
+                <nb-icon style="width: 40%; height: 40%;" icon="arrowhead-right-outline"></nb-icon>
               </button>
             </div>
           </div>
-          <div class="col-lg-12 row" [hidden]="!disableButton">
-            <div class="col-lg-12" style="margin-bottom: 2%">
+          <div class="col-lg-12 row" [hidden]="!disableButton" style="padding-left: 2%">
+            <div class="col-lg-12" style="margin-bottom: 2%; padding-left: 0px">
               <!--              <p1 style="font-size: 16px">Description</p1>-->
-              <nb-card-header style="padding: 20px; font-size: 16px; border-bottom: none !important;"
+              <nb-card-header style="padding: 20px; font-size: 16px; border-bottom: none !important; color: black; padding-left: 0px"
                               class="card-header-title">Description
               </nb-card-header>
             </div>
             <div style="margin: auto; border-style: solid; border-width: 1px; padding: 1%" class="col-lg-12">
-              <nb-card-header style="padding: 20px;"
+              <nb-card-header style="padding: 20px; color: black"
                               class="card-header-title">{{genQuestion[0]?.transscript}}</nb-card-header>
             </div>
           </div>
@@ -78,7 +79,7 @@
   </div>
   <ng-template #elseBlock>
     <div class="container" style="display: grid; border: 1px solid black;">
-      <nb-card-header style="padding: 20px; font-size: 16px" class="card-header-title">Lịch sử làm bài</nb-card-header>
+      <nb-card-header style="padding: 20px; font-size: 16px" class="card-header-title">Result</nb-card-header>
       <nb-card-body>
         <div class="container">
           <div class="row">

@@ -9,8 +9,8 @@ import {NbDialogRef} from '@nebular/theme';
 export class ConfirmDialogComponent implements OnInit, AfterViewInit {
   @Input() title?: string = 'Thông báo'
   @Input() message: string
-  @Input() okTitle?: string = 'Đồng ý'
-  @Input() cancelTitle?: string = 'Huỷ';
+  @Input() okTitle?: string = 'OK'
+  @Input() cancelTitle?: string = 'Cancel';
   @Input() hideCancel?;
 
   constructor(protected ref: NbDialogRef<ConfirmDialogComponent>) {

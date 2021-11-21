@@ -53,6 +53,7 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
       console.log("params:", params)
       this.key = parseFloat(params['key']);
       this.num = 0;
+      this.loading = true;
       this.questionsService.getQuestions({
         id: this.key,
       }).subscribe(
@@ -72,7 +73,7 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
           this.genQuestion = this.listQuestion[this.questionNumber];
           this.totalQuestion = this.listQuestion.length;
           // this.results = Array[this.listQuestion.length];
-          console.log(this.genQuestion);
+          // console.log(this.genQuestion);
         },
         (error) => {
           console.log(error);
@@ -131,3 +132,4 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
     });
   }
 }
+

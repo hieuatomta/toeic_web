@@ -5,6 +5,7 @@ nb-layout-header nav {
   padding: 0 !important;
   align-items: normal !important;
 }
+
 nav.limiter-menu-desktop.container {
   box-shadow: 0 0 black;
 
@@ -13,6 +14,18 @@ nav.limiter-menu-desktop.container {
 p {
   color: black !important;
 }
-mat-card.mat-card.ngx-d-flex.ngx-justify-content-center.ngx-audio-player.z-depth-1.mat-elevation-z2 {
-  border: 1px solid gray !important;
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
 }
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.card-header-title {
+  border: none !important;
+}
+
