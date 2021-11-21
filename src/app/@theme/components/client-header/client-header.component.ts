@@ -77,20 +77,6 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       tendulieu: 'Part 2 : Question and Response',
       link: 'topic/8',
       check: false
-    },
-    {
-      id: 7114,
-      parenID: 7111,
-      tendulieu: 'Part 3: Conservation',
-      link: 'topic/9',
-      check: false
-    },
-    {
-      id: 7115,
-      parenID: 7111,
-      tendulieu: 'Part 4 : Short Talks',
-      link: 'topic/10',
-      check: false
     }
   ];
 
@@ -114,20 +100,6 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       parenID: 8111,
       tendulieu: 'Part 6 : Text Completion',
       link: 'topic1/12',
-      check: false
-    },
-    {
-      id: 8114,
-      parenID: 8111,
-      tendulieu: 'Part 7 : Single Passages',
-      link: 'about',
-      check: false
-    },
-    {
-      id: 8115,
-      parenID: 8111,
-      tendulieu: 'Part 8 : Double Passages',
-      link: 'about',
       check: false
     }
   ];
