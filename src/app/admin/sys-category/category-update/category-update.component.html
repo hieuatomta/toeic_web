@@ -145,6 +145,9 @@
               <p>Cau hoi {{i + 1}}
                 <button *ngIf="!isShow" nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
                 <button *ngIf="!isShow" nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
+              <p>Cau hoi {{i + 1}}
+                <button *ngIf="!isDis" nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
+                <button *ngIf="!isDis" nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
               </p>
               <div class="col-lg-12 form-group">
                 <div class="col-lg-12 form-group" style="display: flex" *ngIf="!isShow">
@@ -232,6 +235,7 @@
                     </label>
                   </div>
                   <div class="col-lg-6">
+                    <textarea [attr.disabled]="isDis" class="custom-border"  [(ngModel)]="listQue[i].transscript" type="text"
                     <input [attr.disabled]="isDis" class="custom-border"  [(ngModel)]="listQue[i].transscript" type="text"
                            nbInput
                            fullWidth
@@ -249,6 +253,7 @@
     </nb-tabset>
   </nb-card-body>
   <nb-card-footer *ngIf="!isDis" class="text-right">
+  <nb-card-footer class="text-right">
     <button nbButton [disabled]="inputUser.invalid" type="button" status="primary" (click)="submit()"
             id="dialogCancelBtn">{{ 'common.save' | translate }}</button>
     <button nbButton type="button" nbButton (click)="cancel()" class="ml-2"> {{ 'common.cancel' | translate }} </button>
