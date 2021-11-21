@@ -65,7 +65,7 @@
             <div class="col-lg-12 form-group" style="display: flex">
               <div class="col-lg-3">
                 <label class="label">
-                  {{ 'common.table.item_dateOfBirth' | translate }} <span style="color: red">(*)</span>
+                 <span> {{ 'common.table.item_dateOfBirth' | translate }} </span>
                 </label>
               </div>
               <div class="col-lg-6">
@@ -108,5 +108,6 @@
     <button nbButton [disabled]="inputUser.invalid" type="button" status="primary" (click)="submit()"
             id="dialogCancelBtn">{{ 'common.save' | translate }}</button>
     <button nbButton type="button" nbButton (click)="cancel()" class="ml-2"> {{ 'common.cancel' | translate }} </button>
+
   </nb-card-footer>
 </nb-card>

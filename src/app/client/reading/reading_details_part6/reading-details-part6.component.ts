@@ -15,63 +15,48 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-
   constructor(private topicService: TopicService,
               private activatedRoute: ActivatedRoute,
               private questionsService: QuestionsService,
-              private router: Router,
-  ) {
-  }
-
+              private router: Router) {}
+  result: Array<any> = [];
   lisTopic;
-  loading = false;
+  disableButton = false;
+  resultTotal: Array<{ topicName: string, correct: number, total: number }> = [];
   key;
-  listQuestion = [];
-  dem = 0;
-  questionCount = 0;
-  randomCheck = [];
-  ramdomValue;
-  questionNumber;
-  answerCheck: boolean;
-  num;
-  genQuestion = [];
-  historyShow;
-  totalQuestion;
-  countClick = 1;
-  disableButton= false;
-  answerDefault: any[] = [{'choose': '(A)', 'index': 0, 'color': 'primary'},
-                          {'choose': '(B)', 'index': 1, 'color': 'primary'},
-                          {'choose': '(C)', 'index': 2, 'color': 'primary'},
-                          {'choose': '(D)', 'index': 3, 'color': 'primary'}];
-  answerDefaultCopy: any[];
-  results: Array<{index: any, result: any}> = [];
-  keyCopy;
+  loading = false;
+  answerCheck: Array<any> = [];
+  listColorResult: Array<any> = [];
+  submitCheck: boolean = false;
+  countAnswerCheck: boolean = true;
+  countAnswer: number = 0;
+  clickBtnSubmitCheck: boolean = false;
+  listTopic2;
+  countClickNextQuestion: number = 0;
+  historyShowCheck: boolean = false;
+  bodyCopy: any;
+  countExamDefault;
+  countExamIndex: number = 1;
+  correct: number = 0;
+  topicName;
+  pathImg;
   selectFile(event) {
   }
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
-      console.log("params:", params)
-      this.key = parseFloat(params['key']);
-      this.num = 0;
-      this.questionsService.getQuestions({
+      this.loading = true;
+      this.key = parseFloat(params['key'].substr(0, params['key'].indexOf('_')));
+      this.topicName = params['key'].substr(params['key'].indexOf('_') + 1)
+      this.questionsService.getQuestionsPart6({
         id: this.key,
       }).subscribe(
-        (res) => {
-          console.log(res.body);
-          if (res.body.length <= 10) {
-            this.questionCount = res.body.length
-          } else this.questionCount = 10;
-          for (let i = 0; i < this.questionCount; i++) {
-            this.ramdomValue = Math.floor(Math.random() * res.body.length);
-            while (this.randomCheck.includes(this.ramdomValue)) {
-              this.ramdomValue = Math.floor(Math.random() * res.body.length);
-            }
-            this.randomCheck.push(this.ramdomValue);
-            this.listQuestion.push(res.body[this.ramdomValue]);
-          }
-          this.questionNumber = 0;
-          this.genQuestion = this.listQuestion[this.questionNumber];
-          this.totalQuestion = this.listQuestion.length;
+        (res ) => {
+          this.lisTopic = res.body.listQuestion1;
+          this.listTopic2 = res.body.listQuestion2;
+          this.countExamDefault = Object.keys(res.body).length
+          this.pathImg = Object.values(res.body.listQuestion1)[0][0].pathCategory
+          console.log(this.pathImg)
         },
         (error) => {
           console.log(error);
@@ -80,53 +65,85 @@ export class ReadingDetailsPart6Component implements OnInit, OnDestroy {
         () => this.loading = false,
       );
     });
-    this.historyShow = true
-    this.answerDefaultCopy = this.answerDefault;
   }
 
-  nextQuestion(): void {
-    this.disableButton = false;
-    if (this.questionNumber + 1 < this.listQuestion.length) {
-      this.questionNumber += 1;
-      this.genQuestion = null;
-      this.genQuestion = this.listQuestion[this.questionNumber];
-      this.countClick = 1;
-    }else {
-      this.historyShow = false;
-      this.questionNumber = this.listQuestion.length
-    }
-    for (let i = 0; i < 4 ; i++) {
-      this.answerDefaultCopy[i].color = 'primary';
+  nextQuestion() {
+    this.countExamIndex = this.countExamIndex + 1;
+    this.answerCheck = [];
+    this.listColorResult = [];
+    this.result = [];
+    this.countAnswer = 0;
+    this.clickBtnSubmitCheck = false;
+    this.submitCheck = false;
+    this.lisTopic = this.listTopic2;
+    this.pathImg = Object.values(this.lisTopic)[0][0].pathCategory
+    if (this.countClickNextQuestion === 2 || this.countClickNextQuestion > 2) {
+      this.historyShowCheck = true;
+    } else if (this.listTopic2 === undefined || this.listTopic2 === null || this.countExamDefault === 1) {
+      this.historyShowCheck = true;
     }
   }
-
-  checkAnswer(your_answer: string, order_number: number) {
-    this.disableButton = true;
-    if (this.countClick === 1) {
-      if (your_answer === '0') {
-        this.answerDefaultCopy[order_number].color = 'success';
-        this.results.push({index: this.questionNumber, result: 'True'});
-      }else {
-        this.answerDefaultCopy[order_number].color = 'danger';
-        this.results.push({index: this.questionNumber, result: 'False'});
-        for (let i = 0; i < 4 ; i++) {
-          if (this.genQuestion[i].answer === '0') {
-            this.answerDefaultCopy[i].color = 'success'
+  submitComplete() {
+    this.answerCheck = [];
+    this.listColorResult = [];
+    this.countAnswer = 0;
+    this.clickBtnSubmitCheck = true;
+    for (let i = 0; i < this.result.length; i++) {
+      if (this.result[i] !== null && this.result[i] !== undefined) {
+        this.countAnswer++;
+      }
+    }
+    if (this.countAnswer === Object.keys(this.lisTopic).length) {
+      let lisTopicCopy = new Array();
+      const valueOfLisTopic = new Array();
+      valueOfLisTopic.push(Object.values(this.lisTopic));
+      for (let i = 0; i < valueOfLisTopic.length; i++) {
+        for (let j = 0; j < valueOfLisTopic[i].length; j++) {
+          lisTopicCopy = lisTopicCopy.concat(valueOfLisTopic[i][j]);
+        }
+      }
+      lisTopicCopy = lisTopicCopy.reverse();
+      this.submitCheck = true;
+      this.countAnswerCheck = true;
+      this.clickBtnSubmitCheck = false;
+      this.countClickNextQuestion = this.countClickNextQuestion + 1;
+      for (let i = 0; i < this.result.length; i++) {
+        for (let j = 0; j < lisTopicCopy.length; j++) {
+          if (this.result[i] === lisTopicCopy[j].id && lisTopicCopy[j].answer === '1') {
+            this.answerCheck.push("Đáp án SAI");
+            this.listColorResult.push(false);
+          } else if (this.result[i] === lisTopicCopy[j].id && lisTopicCopy[j].answer === '0') {
+            this.answerCheck.push("Đáp án ĐÚNG");
+            this.listColorResult.push(true);
+            this.correct = this.correct + 1;
           }
         }
       }
-      this.countClick = 0;
+      this.resultTotal.push({topicName: this.topicName, correct: this.correct, total: Object.keys(this.lisTopic).length})
+    } else {
+      this.submitCheck = false;
+      this.countAnswerCheck = false;
+    }
+
+
+  }
+  radioChange() {
+    this.countAnswer = 0;
+    for (let i = 0; i < this.result.length; i++) {
+      if (this.result[i] !== null && this.result[i] !== undefined) {
+        this.countAnswer++;
+      }
+    }
+    if (this.countAnswer === Object.keys(this.lisTopic).length) {
+      this.countAnswerCheck = true;
+    } else if (this.clickBtnSubmitCheck) {
+      this.countAnswerCheck = false;
     }
   }
-
-  counter(i: number) {
-    return new Array(i);
-  }
   similarExercise() {
-    const currentUrl = this.router.url;
+    const currentUrl = '/readingdetails-part6/' + this.key + '_' + this.topicName;
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this.router.navigate([currentUrl]);
-      console.log(currentUrl);
     });
   }
 }

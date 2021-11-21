@@ -70,7 +70,7 @@ export class CategoryUpdateComponent implements OnInit {
         return false;
       }
       if (this.listQue[i].listAnswers === null || this.listQue[i].listAnswers?.length === 0) {
-        this.toastr.danger("Question" + (i + 1) + "at least one answer", this.translate.instant('common.title_notification'));
+        this.toastr.danger("Cau hoi" + (i + 1) + " it nhat 1 dap an", this.translate.instant('common.title_notification'));
         this.inputUser.get("listQue").setValue(null);
         return false;
       } else {
@@ -170,7 +170,8 @@ export class CategoryUpdateComponent implements OnInit {
       this.getTopic(0)
       console.log(this.data?.idType)
       if (this.data?.idType !== null) {
-        this.getTopic(this.data?.idType);
+        this.getTopic(this.data?.idType)
+        // this.inputUser.get('namePartTopidPartTopicic').setValue(this.data?.idType);
       }
     } else {
       this.categoriesService.doSearchDetail({
@@ -240,7 +241,7 @@ export class CategoryUpdateComponent implements OnInit {
       }
       this.listQue[(this.listQue.length - 1)].listAnswers.push({stt: 1, value: ''})
     } else if (type === 1) {
-      if (this.listQue[obj].listAnswers.length < 4) {
+      if (this.listQue[obj].listAnswers.length < 5) {
         this.listQue[obj].listAnswers.push({
             stt: 1, value: ""
           }
@@ -249,7 +250,7 @@ export class CategoryUpdateComponent implements OnInit {
           this.listQue[obj].listAnswers[i].stt = (i + 1);
         }
       } else {
-        this.toastr.danger("Maximun is 5 answers", this.translate.instant('common.title_notification'));
+        this.toastr.danger("Chi dc toi da 5 dap an", this.translate.instant('common.title_notification'));
       }
 
     }
@@ -259,7 +260,7 @@ export class CategoryUpdateComponent implements OnInit {
   remoteQue(type: any, obj: any, idRemote: any) {
     if (type === 0) {
       if (this.listQue.length <= 1) {
-        this.toastr.danger("Category have at least one question", this.translate.instant('common.title_notification'));
+        this.toastr.danger("1 chu de co it nhat 1 cau hoi", this.translate.instant('common.title_notification'));
         return;
       }
       const index = this.listQue.findIndex(x => x.stt === obj);
@@ -274,7 +275,7 @@ export class CategoryUpdateComponent implements OnInit {
         return;
       }
       if (this.listQue[obj].listAnswers.length <= 1) {
-        this.toastr.danger("1 question have at least a answer", this.translate.instant('common.title_notification'));
+        this.toastr.danger("1 cau hoi co it nhat 1 cau tl", this.translate.instant('common.title_notification'));
         return;
       }
       console.log(this.listQue[obj].listAnswers);

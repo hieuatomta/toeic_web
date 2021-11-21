@@ -28,7 +28,7 @@
     "title_add": "Add new category",
     "title_edit": "Category information",
     "title_view": "Category details",
-    "title_delete": "Confirm deletion",
+    "title_delete": "Are you sure you want to delete",
     "unknown_error": "Unknown error",
     "content_add_success": "Category has added sucessful !",
     "content_edit_success": "Category has updated sucessful !",
