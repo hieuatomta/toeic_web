@@ -115,14 +115,14 @@
           </div>
         </form>
       </nb-tab>
-      <nb-tab tabTitle="Input data" active="{{setActiveAdd}}"  id="addTab" name="addTab" #addTab>
+      <nb-tab tabTitle="Input data" *ngIf="isShowTab" active="{{setActiveAdd}}"  id="addTab" name="addTab" #addTab>
         <div style="padding: 50px; display: flex" class="col-lg-12 form-group">
-          <div class="col-lg-6">
+          <div class="col-lg-6" *ngIf="isShowImg">
             <img
               style=" margin: auto;display: block;  height: 200px; width: 400px;border: 2px solid #000;"
               [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" > <br/>
           </div>
-          <div class="col-lg-6">
+          <div class="col-lg-6" *ngIf="isShowAudio">
             <ngx-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false"
                               muted="muted" [displayPlaylist]="msaapDisplayPlayList"
                               [displayVolumeControls]="msaapDisplayVolumeControls"
@@ -131,23 +131,25 @@
                               [expanded]="true"></ngx-audio-player>
           </div>
         </div>
-        <div class="col-sm-12" style="    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;">
+<!--        // upload anh-->
+        <div *ngIf="isShowImg && !isShowAudio" class="col-sm-12" style="    margin: auto;display: flex;justify-content: center;align-items: center;">
+          <input *ngIf="!isDis" accept=".png, .jpg, .jpeg, .gif" multiple="multiple" (change)="selectFile($event)" type='file'>
+        </div>
+        <!--        // upload audio-->
+        <div *ngIf="isShowAudio && !isShowImg" class="col-sm-12" style="    margin: auto;display: flex;justify-content: center;align-items: center;">
+          <input *ngIf="!isDis" accept=".mp3" multiple="multiple" (change)="selectFile($event)" type='file'>
+        </div>
+        <div *ngIf="isShowAudio && isShowImg" class="col-sm-12" style="    margin: auto;display: flex;justify-content: center;align-items: center;">
           <input *ngIf="!isDis" accept=".png, .jpg, .jpeg, .gif, .mp3" multiple="multiple" (change)="selectFile($event)" type='file'>
         </div>
       </nb-tab>
-      <nb-tab tabTitle="Question" id="addTab1"  active="{{setActiveAdd}}"  name="addTab1" #addTab1>
+      <nb-tab tabTitle="Question" *ngIf="isShowTabQuestion" id="addTab1"  active="{{setActiveAdd}}"  name="addTab1" #addTab1>
 
           <div class="mb-4" >
             <div *ngFor=" let list of listQue; let i = index" class="row" >
               <p>Cau hoi {{i + 1}}
                 <button *ngIf="!isShow" nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
                 <button *ngIf="!isShow" nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
-              <p>Cau hoi {{i + 1}}
-                <button *ngIf="!isDis" nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
-                <button *ngIf="!isDis" nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
               </p>
               <div class="col-lg-12 form-group">
                 <div class="col-lg-12 form-group" style="display: flex" *ngIf="!isShow">
@@ -160,10 +162,6 @@
                     <input [attr.disabled]="isDis" class="custom-border"  [(ngModel)]="listQue[i].name" type="text" nbInput
                            fullWidth
                            trim="blur" placeholder="{{'common.table.item_question' |translate}}"     >
-<!--                           [ngClass]="{'status-danger': this.questionForm.get('question').touched && this.questionForm.get('question').errors}"-->
-
-<!--                    <ngx-inline-message [message]="'common.table.item_question'|translate"-->
-<!--                                        [formName]="questionForm.get('question')"></ngx-inline-message>-->
                   </div>
                 </div>
                 <div *ngFor="let answer of list.listAnswers ; let j = index" class="col-lg-12 form-group"
@@ -177,10 +175,6 @@
                   <div class="col-lg-6">
                     <input class="custom-border" [attr.disabled]="isDis"  [(ngModel)]="listQue[i].listAnswers[j].value" type="text" nbInput fullWidth
                            trim="blur" placeholder="{{'common.table.item_answer_to_choose' |translate}}"   >
-<!--                           [ngClass]="{'status-danger': this.questionForm.get('name').touched && this.questionForm.get('name').errors}"-->
-
-<!--                    <ngx-inline-message [message]="'common.table.item_answer_to_choose'|translate"-->
-<!--                                        [formName]="questionForm.get('name')"></ngx-inline-message>-->
                   </div>
                   <div class="col-lg-3" *ngIf="!isDis">
                     <button nbButton type="button" nbButton (click)="addQue(1,i)" class="ml-2"> +</button>
@@ -203,8 +197,6 @@
                       <ng-option *ngFor="let item of list.listAnswers" [value]="item.stt"> {{ item.value | translate }}
                       </ng-option>
                     </ng-select>
-<!--                    <ngx-inline-message [message]="'common.table.item_answer'|translate"-->
-<!--                                        [formName]="questionForm.get('answer')"></ngx-inline-message>-->
                   </div>
                 </div>
                 <div class="col-lg-12 form-group" style="display: flex">
@@ -236,14 +228,9 @@
                   </div>
                   <div class="col-lg-6">
                     <textarea [attr.disabled]="isDis" class="custom-border"  [(ngModel)]="listQue[i].transscript" type="text"
-                    <input [attr.disabled]="isDis" class="custom-border"  [(ngModel)]="listQue[i].transscript" type="text"
                            nbInput
                            fullWidth
-                           trim="blur" placeholder="{{'common.table.item_description' |translate}}">
-<!--                           [ngClass]="{'status-danger': this.questionForm.get('description').touched && this.questionForm.get('description').errors}"-->
-
-<!--                    <ngx-inline-message [message]="'common.table.item_description'|translate"-->
-<!--                                        [formName]="questionForm.get('description')"></ngx-inline-message>-->
+                           trim="blur" placeholder="{{'common.table.item_description' |translate}}"></textarea>
                   </div>
                 </div>
               </div>
@@ -253,7 +240,6 @@
     </nb-tabset>
   </nb-card-body>
   <nb-card-footer *ngIf="!isDis" class="text-right">
-  <nb-card-footer class="text-right">
     <button nbButton [disabled]="inputUser.invalid" type="button" status="primary" (click)="submit()"
             id="dialogCancelBtn">{{ 'common.save' | translate }}</button>
     <button nbButton type="button" nbButton (click)="cancel()" class="ml-2"> {{ 'common.cancel' | translate }} </button>

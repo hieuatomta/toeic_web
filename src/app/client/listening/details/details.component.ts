@@ -16,8 +16,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  msaapDisplayTitle = true;
-  msaapDisplayPlayList = false;
+  msaapDisplayTitle = false;
+  msaapDisplayPlayList = true;
   msaapDisplayVolumeControls = true;
   msaapDisplayRepeatControls = false;
   msaapDisplayArtist = false;
@@ -187,6 +187,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.isContainer = false;
     this.isDisabled = false;
     this.isHide = true;
+    this.rs = [];
     this.search();
   }
 }
