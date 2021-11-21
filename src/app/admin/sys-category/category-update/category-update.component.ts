@@ -160,7 +160,6 @@ export class CategoryUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.isCheck);
-    // this.playAudio();
     console.log(this.isShow);
     this.loading = true;
     this.inputUser = new FormGroup({
