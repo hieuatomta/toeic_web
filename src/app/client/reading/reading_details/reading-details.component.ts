@@ -132,3 +132,4 @@ export class ReadingDetailsComponent implements OnInit, OnDestroy {
     });
   }
 }
+
