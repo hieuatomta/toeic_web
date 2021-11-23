@@ -199,11 +199,6 @@ export class CategoryUpdateComponent implements OnInit {
   isShowAudio: boolean
 
   onEvento(e) {
-    // if (e.tabTitle === 'Input data' || e.tabTitle === 'Question') {
-    //   this.setActiveSearch = true;
-    //   this.setActiveAdd = false;
-    //   this.toastr.danger("Vui lòng nhập đẩy đủ thông tin", this.translate.instant('common.title_notification'));
-    // }
     console.log(e.tabTitle)
   }
 
@@ -214,6 +209,7 @@ export class CategoryUpdateComponent implements OnInit {
     this.isShowTab = false;
     this.isShowTabQuestion = false;
     if (this.data?.idPartTopic === 7 || this.data?.idPartTopic === 8) {
+      this.isAudio = true;
       this.isShow = true;
     } else {
       this.isShow = false;
@@ -282,7 +278,6 @@ export class CategoryUpdateComponent implements OnInit {
       console.log(this.data?.idType)
       if (this.data?.idType !== null) {
         this.getTopic(this.data?.idType)
-        // this.inputUser.get('namePartTopidPartTopicic').setValue(this.data?.idType);
       }
     } else {
       this.categoriesService.doSearchDetail({
