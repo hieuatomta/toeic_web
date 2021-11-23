@@ -79,7 +79,12 @@ export class CategoryUpdateComponent implements OnInit {
             this.toastr.danger("Vui lòng upload audio ", this.translate.instant('common.title_notification'));
             return false;
           }
-        } else if (this.inputUser.get('idPartTopic').value === 8 || this.inputUser.get('idPartTopic').value === 12) {
+        } else if (this.inputUser.get('idPartTopic').value === 8 ) {
+          if (this.url === undefined || this.url === '') {
+            this.toastr.danger("Vui lòng upload audio ", this.translate.instant('common.title_notification'));
+            return false;
+          }
+        } else if (this.inputUser.get('idPartTopic').value === 12) {
           if (this.url === undefined || this.url === '') {
             this.toastr.danger("Vui lòng upload img ", this.translate.instant('common.title_notification'));
             return false;
@@ -396,7 +401,7 @@ export class CategoryUpdateComponent implements OnInit {
         return;
       }
       console.log(this.listQue[obj].listAnswers);
-      const index = this.listQue[obj].listAnswers.findIndex(x => x.stt === idRemote);
+      const index = this.listQue[obj].listAnswers.findIndex(x => x.stt == idRemote);
       if (index > -1) {
         this.listQue[obj].listAnswers.splice(index, 1);
         for (let i = 0; i < this.listQue[obj].listAnswers.length; i++) {

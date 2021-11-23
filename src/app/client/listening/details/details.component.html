@@ -5,7 +5,7 @@
   </h2>
 </section>
 <nb-card style="position: relative;     margin-top: 70px;" [nbSpinner]="loading" fullWidth style="min-height: 500px;">
-  <div class="container" style="display: grid;">
+  <div class="container" style="display: grid; border: 1px solid black;">
 
     <nb-card-header [hidden]="isContainer" style="    padding: 20px;" class="card-header-title">Question {{isSelect}}
       /{{isSize}}
@@ -27,8 +27,8 @@
             <div class="col-sm-5">
               <div style="padding: 50px;">
                 <img
-                  style=" margin: auto;display: block;  height: 200px; width: 200px;border: 5px solid #000;border-radius: 50%;"
-                  [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> <br/>
+                  style=" margin: auto;display: block;  height: 200px; width: 400px;border: 2px solid #000;"
+                  [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" > <br/>
               </div>
             </div>
             <div class="col-sm-5">
@@ -71,17 +71,9 @@
                 style="background: transparent; border: 0px; box-sizing: initial; margin: 0px; outline: 0px; padding: 0px; vertical-align: baseline;">Transcript</strong>:
               <ul
                 style="background: transparent; border: 0px; box-sizing: initial; margin: 0px 0px 20px 20px; outline: 0px; padding: 0px; vertical-align: baseline;">
-                <li
-                  style="background: transparent; border: 0px; box-sizing: initial; list-style: disc; margin: 5px 0px; outline: 0px; padding: 0px; vertical-align: baseline;">
-                  Mọi thắc mắc, Gợi ý hoặc Báo Link Hỏng xin chia sẻ bên dưới hoặc Gửi Tin Nhắn
-                </li>
-                <li
-                  style="background: transparent; border: 0px; box-sizing: initial; list-style: disc; margin: 5px 0px; outline: 0px; padding: 0px; vertical-align: baseline;">
-                  Không chèn liên kết quảng cáo, spam khi đăng nhận xét.
-                </li>
-                <li
-                  style="background: transparent; border: 0px; box-sizing: initial; list-style: disc; margin: 5px 0px; outline: 0px; padding: 0px; vertical-align: baseline;">
-                  Không sử dụng những từ ngữ thô tục, vi phạm thuần phong mỹ tục.
+                <li *ngFor="let x of transscript"
+                    style="background: transparent; border: 0px; box-sizing: initial; list-style: disc; margin: 5px 0px; outline: 0px; padding: 0px; vertical-align: baseline;">
+                  {{x}}
                 </li>
               </ul>
             </div>

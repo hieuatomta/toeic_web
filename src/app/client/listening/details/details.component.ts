@@ -23,16 +23,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
   msaapDisplayArtist = false;
   msaapDisablePositionSlider = true;
   lsView;
+  lsQ;
   url: SafeUrl = '';
 
 // Material Style Advance Audio Player Playlist
   msaapPlaylist: Track[] = [
     {
-      title: 'Audio One Title',
-      link: 'http://localhost:4201/toeic-web/assets/audio/category/Universitye4234333333/102021120920217457_ETS2016new-Test-01-Part1-01.mp3',
-      artist: 'Audio One Artist',
+      title: null,
+      link: null,
+      artist: null,
     }
-  ]
+  ];
 
   constructor(private topicService: TopicService, private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -44,16 +45,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   loading = false;
   key;
 
-  selectFile(event) {
-    // if (event !== null) {
-    //   this.selectedFiles = event.target.files;
-    //   this.url = this.sanitizer.bypassSecurityTrustUrl(
-    //     window.URL.createObjectURL(event.target.files[0])
-    //   );
-    // } else {
-    //   this.selectedFiles = null;
-    // }
-  }
 
   isSelect;
   isSize;
@@ -85,21 +76,27 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }).subscribe(
       (res) => {
         this.lisTopic = res.body;
+        console.log(this.lisTopic)
         this.isSize = this.lisTopic?.length;
+        for (let i = 0; i < this.lisTopic[0].fileUploadDTOs?.length; i++) {
+          if (this.lisTopic[0].fileUploadDTOs[i].typeFile == 1) {
+            this.url = this.lisTopic[0].fileUploadDTOs[i].path;
+          } else {
+            this.msaapPlaylist[0].link = this.lisTopic[0].fileUploadDTOs[i].path;
+            console.log(this.msaapPlaylist)
+          }
+        }
         for (let i = 0; i < this.lisTopic?.length; i++) {
           if (i === 0) {
             this.isSelect = 1;
             this.lisTopic[i].isView = 1;
             this.lsView = this.lisTopic[i].listStringAnswers;
-            console.log(this.lsView)
           } else {
             this.lisTopic[i].isView = 0;
           }
         }
-        console.log(this.lisTopic)
       },
       (error) => {
-        console.log(error);
         this.loading = false;
       },
       () => this.loading = false,
@@ -107,23 +104,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   isNext() {
-
-    console.log(this.thisValue);
-    // xu ly goi check dap an
-
-
-    console.log("sad");
     if (this.isSelect === this.lisTopic?.length) {
-      console.log("max cau hoi rui");
       this.isContainer = true;
       return;
     }
     this.isDisabled = false;
     this.isHide = true;
     this.lsView = this.lisTopic[this.isSelect].listStringAnswers;
-    console.log(this.lsView);
-    console.log(this.isSelect);
-    console.log(this.lisTopic?.length);
     this.isSelect++;
   }
 
@@ -134,25 +121,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
   thisValue;
   rs = [];
 
-
+  transscript = [];
   isCheck(x) {
-    console.log(x);
     this.loading = true;
     this.thisValue = x;
-    this.isHide = false;
-    this.isDisabled = true;
     this.questionsService.isCheckQuestionsClient({
       categoryId: this.thisValue.categoryId,
       value: this.thisValue.value,
     }).subscribe(
       (res) => {
-        console.log(res.body)
         this.lsView = res.body;
+        let jstransscript = ''
         for (let i = 0; i < this.lsView?.length; i++) {
           const rs1 = {
             categoryName: null,
             kq: null,
           }
+          jstransscript = this.lsView[i].transscript
           rs1.categoryName = this.lsView[i].categoryName;
           if (this.lsView[i].value === this.thisValue.value) {
             if (this.lsView[i].color === 'danger') {
@@ -164,22 +149,24 @@ export class DetailsComponent implements OnInit, OnDestroy {
             break;
           }
         }
-        console.log(this.rs);
         if (res.body.answer === 1) {
-          // dap an sai
-          // this.isColor = 'danger';
           x.color = 'danger';
         } else if (res.body.answer === 0) {
           // dap an dung
           x.color = 'success';
         }
+        const words = jstransscript.split('\n');
+        this.transscript = words;
         this.loading = false;
       },
       (error) => {
-        console.log(error);
         this.loading = false;
       },
-      () => this.loading = false,
+      () => {
+        this.loading = false;
+        this.isHide = false;
+        this.isDisabled = true;
+      },
     );
   }
 

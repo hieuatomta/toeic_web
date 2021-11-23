@@ -132,6 +132,7 @@ export class CategoryComponent implements OnInit {
         } else  {
           this.listPart = res.body
         }
+        this.isLoad = false;
         // this.onSuccess(res.body.data, res.headers, pageToLoad);
       },
       (error) => {
@@ -164,6 +165,7 @@ export class CategoryComponent implements OnInit {
     }).subscribe(
       (res) => {
         this.onSuccess(res.body.data, res.headers, pageToLoad);
+        this.isLoad = false;
       },
       (error) => {
         this.isLoad = false;
