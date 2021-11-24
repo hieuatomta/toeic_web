@@ -266,7 +266,7 @@ export class CategoryUpdateComponent implements OnInit {
       nameType: new FormControl(null, []),
       idPartTopic: new FormControl(null, [Validators.required]),
       topicId: new FormControl(null, [Validators.required]),
-      // isValidate: new FormControl(null, [Validators.required]),
+      oldCategoryName: new FormControl(this.data?.categoryName, []),
       listQue: new FormControl(null, []),
       namePartTopic: new FormControl(this.data?.namePartTopic, []),
       status: new FormControl(this.data?.status === undefined ? 1 : this.data?.status, []),
