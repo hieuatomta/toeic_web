@@ -147,12 +147,12 @@
 
           <div class="mb-4" >
             <div *ngFor=" let list of listQue; let i = index" class="row" >
-              <p>Cau hoi {{i + 1}}
+              <p>Question {{i + 1}}
                 <button *ngIf="!isShow" nbButton type="button" nbButton (click)="addQue(0,i+1)" class="ml-2"> +</button>
                 <button *ngIf="!isShow" nbButton type="button" nbButton (click)="remoteQue(0,i+1, -1)" class="ml-2"> -</button>
               </p>
               <div class="col-lg-12 form-group">
-                <div class="col-lg-12 form-group" style="display: flex" *ngIf="!isShow">
+                <div class="col-lg-12 form-group" style="display: flex" *ngIf="!isShowQ">
                   <div class="col-lg-3">
                     <label class="label">
                       {{ 'common.table.item_question' | translate }} <span style="color: red">(*)</span>

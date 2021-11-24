@@ -73,36 +73,36 @@ export class CategoryUpdateComponent implements OnInit {
       if ((this.listQue[i].name === '' || this.listQue[i].name === null)) {
         if (this.inputUser.get('idPartTopic').value === 7) {
           if (this.url === undefined || this.url === '') {
-            this.toastr.danger("Vui lòng upload img ", this.translate.instant('common.title_notification'));
+            this.toastr.danger("Please upload image file ", this.translate.instant('common.title_notification'));
             return false;
           } else if (this.isAudio === false || this.isAudio === undefined) {
-            this.toastr.danger("Vui lòng upload audio ", this.translate.instant('common.title_notification'));
+            this.toastr.danger("Please upload audio ", this.translate.instant('common.title_notification'));
             return false;
           }
         } else if (this.inputUser.get('idPartTopic').value === 8 ) {
-          if (this.url === undefined || this.url === '') {
-            this.toastr.danger("Vui lòng upload audio ", this.translate.instant('common.title_notification'));
+          if (this.isAudio === false || this.isAudio === undefined) {
+            this.toastr.danger("Please upload audio ", this.translate.instant('common.title_notification'));
             return false;
           }
         } else if (this.inputUser.get('idPartTopic').value === 12) {
           if (this.url === undefined || this.url === '') {
-            this.toastr.danger("Vui lòng upload img ", this.translate.instant('common.title_notification'));
+            this.toastr.danger("Please upload image  ", this.translate.instant('common.title_notification'));
             return false;
           }
         } else {
-          this.toastr.danger("Vui long dien question cau " + (i + 1), this.translate.instant('common.title_notification'));
+          this.toastr.danger("Vui long dien question cau file" + (i + 1), this.translate.instant('common.title_notification'));
           this.inputUser.get("listQue").setValue(null);
           return false;
         }
       }
       if (this.listQue[i].listAnswers === null || this.listQue[i].listAnswers?.length === 0) {
-        this.toastr.danger("Cau hoi" + (i + 1) + " it nhat 1 dap an", this.translate.instant('common.title_notification'));
+        this.toastr.danger("Question" + (i + 1) + "have at least one answers", this.translate.instant('common.title_notification'));
         this.inputUser.get("listQue").setValue(null);
         return false;
       } else {
         for (let j = 0; j < this.listQue[i].listAnswers.length; j++) {
           if (this.listQue[i].listAnswers[j].value === '' || this.listQue[i].listAnswers[j].value === null) {
-            this.toastr.danger("Dien day du thong tin dap an cau hoi " + (i + 1), this.translate.instant('common.title_notification'));
+            this.toastr.danger("Fill in the answer information completely " + (i + 1), this.translate.instant('common.title_notification'));
             this.inputUser.get("listQue").setValue(null);
             return false;
           }
@@ -191,6 +191,7 @@ export class CategoryUpdateComponent implements OnInit {
     }
   ];
   isShow: boolean;
+  isShowQ: boolean;
   tabs = [{title: 'Tab1', active: false}, {title: 'Tab2', active: true}];
   setActiveSearch: boolean = false;
   setActiveAdd: boolean = false;
@@ -208,11 +209,17 @@ export class CategoryUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.isShowTab = false;
     this.isShowTabQuestion = false;
+    this.isShowQ = false;
+
     if (this.data?.idPartTopic === 7 || this.data?.idPartTopic === 8) {
       this.isAudio = true;
+      this.isShowQ = true;
       this.isShow = true;
+
     } else {
+      this.isShowQ = false;
       this.isShow = false;
+
     }
     if (this.data?.idPartTopic === 7 || this.data?.idPartTopic === 8 || this.data?.idPartTopic === 12) {
       this.isShowTab = true;
@@ -271,7 +278,6 @@ export class CategoryUpdateComponent implements OnInit {
       this.inputUser.get("topicId").disable();
       this.isDis = true;
       this.isShow = true;
-
     }
     if (this.data === null || this.data === undefined) {
       this.getTopic(0)
@@ -367,7 +373,7 @@ export class CategoryUpdateComponent implements OnInit {
           this.listQue[obj].listAnswers[i].stt = (i + 1);
         }
       } else {
-        this.toastr.danger("Chi dc toi da 4 dap an", this.translate.instant('common.title_notification'));
+        this.toastr.danger("Maximum 4 answer options", this.translate.instant('common.title_notification'));
       }
 
     }
@@ -377,7 +383,7 @@ export class CategoryUpdateComponent implements OnInit {
   remoteQue(type: any, obj: any, idRemote: any) {
     if (type === 0) {
       if (this.listQue.length <= 1) {
-        this.toastr.danger("1 chu de co it nhat 1 cau hoi", this.translate.instant('common.title_notification'));
+        this.toastr.danger("1 categories has at least 1 question", this.translate.instant('common.title_notification'));
         return;
       }
       const index = this.listQue.findIndex(x => x.stt === obj);
@@ -392,7 +398,7 @@ export class CategoryUpdateComponent implements OnInit {
         return;
       }
       if (this.listQue[obj].listAnswers.length <= 1) {
-        this.toastr.danger("1 cau hoi co it nhat 1 cau tl", this.translate.instant('common.title_notification'));
+        this.toastr.danger("1 question has at least 1 answer option", this.translate.instant('common.title_notification'));
         return;
       }
       console.log(this.listQue[obj].listAnswers);
@@ -428,11 +434,14 @@ export class CategoryUpdateComponent implements OnInit {
   getLisTopic() {
     this.isShowTab = false;
     this.isShowTabQuestion = true;
+    this.isShowQ = false;
     if (this.inputUser.get('idType').value !== null && this.inputUser.get('idPartTopic').value !== null) {
       // goi api lay ds topic name
       if (this.inputUser.get('idPartTopic').value === 7 || this.inputUser.get('idPartTopic').value === 8) {
+        this.isShowQ = true;
         this.isShow = true;
       } else {
+        this.isShowQ = false;
         this.isShow = false;
       }
       if (this.inputUser.get('idPartTopic').value === 11) {

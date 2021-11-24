@@ -51,7 +51,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       id: 7111,
       parenID: 0,
       tendulieu: 'Contact',
-      link: 'contact',
+      link: 'contact', // link đến trang thông tin tương ứng
       check: false
     },
   ];
@@ -98,7 +98,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       id: 8113,
       parenID: 8111,
-      tendulieu: 'Part 6 : Text Completion',
+      tendulieu: 'Part  7: Single passages',
       link: 'topic1/12',
       check: false
     }

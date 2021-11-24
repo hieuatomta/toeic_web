@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {createRequestOption} from '../../shares/utils/request-util';
 
-@Injectable({
+@Injectable({ // Nhúng 1 serviec vào 1 service khác
   providedIn: 'root'
 })
 export class CategoriesService {

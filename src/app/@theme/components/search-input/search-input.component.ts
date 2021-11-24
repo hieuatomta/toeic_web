@@ -14,9 +14,9 @@ import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/c
   `,
 })
 export class SearchInputComponent {
-  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef; // @ViewChild decorator :  truy cập vào các child component, directive hay DOM element từ parent component. Việc này thật dễ dàng khi đã có ViewChild decorator
 
-  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+  @Output() search: EventEmitter<string> = new EventEmitter<string>(); // sử dụng Output decorator để gắn property add như một sự kiện mà component có thể kích hoạt để gửi dữ liệu đến cha của nó.
 
   isInputShown = false;
 

@@ -111,6 +111,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.isDisabled = false;
     this.isHide = true;
     this.lsView = this.lisTopic[this.isSelect].listStringAnswers;
+    for (let i = 0; i < this.lisTopic[this.isSelect].fileUploadDTOs?.length; i++) {
+      if (this.lisTopic[this.isSelect].fileUploadDTOs[i].typeFile == 1) {
+        this.url = this.lisTopic[this.isSelect].fileUploadDTOs[i].path;
+      } else {
+        this.msaapPlaylist[0].link = this.lisTopic[this.isSelect].fileUploadDTOs[i].path;
+        console.log(this.msaapPlaylist)
+      }
+    }
     this.isSelect++;
   }
 
