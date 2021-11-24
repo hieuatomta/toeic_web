@@ -108,10 +108,14 @@ export class CategoryUpdateComponent implements OnInit {
           }
         }
       }
-      this.inputUser.get("listQue").setValue(this.listQue);
-      console.log(this.inputUser);
-      return true;
+      if (this.listQue[i].answer === null) {
+        this.toastr.danger("Nhaapj dap an cau hoi " + (i + 1), this.translate.instant('common.title_notification'));
+        return false;
+      }
     }
+    this.inputUser.get("listQue").setValue(this.listQue);
+    console.log(this.inputUser);
+    return true;
   }
 
   validateFile() {
